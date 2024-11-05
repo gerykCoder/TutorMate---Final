@@ -1,0 +1,70 @@
+.sidebar{
+  width: 220px;
+  background-color: #616060;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 150;
+}
+
+.roleDashboard{
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sidebar-link{
+  height: 75px;
+  width: 100%;
+  border: none;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white; /* Default text color */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-link.active {
+  background-color: #D9D9D9; /* Active background color */
+  color: black; /* Active text color */
+}
+
+.sidebar-link:hover {
+  background-color: #D9D9D9;
+  color: black;
+}
+
+.sidebar-lower{
+  height: 90px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sidebar-lower:hover {
+  background-color: #D9D9D9;
+  color: black;
+}
+
+.dashboard{
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tutor{
+  font-size: 13px;
+}

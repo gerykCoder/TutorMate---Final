@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tutor Dashboard - TutorMate</title>
+
+  <link rel="icon" type="image" href="/Pictures/logo.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="tutor-header.css">
+  <link rel="stylesheet" href="tutor-sidebar.css">
+  <link rel="stylesheet" href="tutor-main.css">
+  <link rel="stylesheet" href="tutor-general.css">
+
+</head>
+<body>
+  <header class="header">
+    <div class="header-left-section">
+      <i class="fa-solid fa-bell"></i>
+      <i class="fa-solid fa-user"></i>
+      Tutor
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <div class="sidebar-upper">
+      <div class="roleDashboard">
+        <div class="dashboard">DASHBOARD</div>
+        <div class="tutor">TUTOR</div>
+      </div>
+      <div class="sidebar-link" onclick="openPage('home', this, '#D9D9D9')" id="defaultOpen">
+        <div>HOME</div>
+      </div>
+      <div class="sidebar-link" onclick="openPage('tutorial-history', this, '#D9D9D9')">
+        <div>TUTORIAL HISTORY</div>
+      </div>
+      <div class="sidebar-link" onclick="openPage('tutorial-availability', this, '#D9D9D9')">
+        <div>TIME AVAILABILITY</div>
+      </div>
+    </div>
+    <div class="sidebar-lower">
+      <div>Logout</div>
+    </div>
+  </nav>
+
+  <main>
+    <div id="home" class="tabcontent">
+      <div class="main-home-tutor">
+        <section class="upper-main">
+          <div class="upper-main-header">
+            Pending Tutorials
+          </div>
+          <div class="upper-main-content">
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="pending-tutorial">
+              <div class="pending-tutorial-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="pending-tutorial-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <section class="lower-main">
+          <div class="lower-main-header">
+            Schedule Tutorials
+          </div>
+          <div class="lower-main-content">
+            <div class="schedule-tutorials">
+              <div class="schedule-tutorials-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="schedule-tutorials-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="schedule-tutorials">
+              <div class="schedule-tutorials-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="schedule-tutorials-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="schedule-tutorials">
+              <div class="schedule-tutorials-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="schedule-tutorials-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="schedule-tutorials">
+              <div class="schedule-tutorials-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="schedule-tutorials-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="schedule-tutorials">
+              <div class="schedule-tutorials-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="schedule-tutorials-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+            <div class="schedule-tutorials">
+              <div class="schedule-tutorials-left">
+                <i class="fa-solid fa-user"></i>
+                Jose Grayson Atun
+              </div>
+              <div class="schedule-tutorials-right">
+                <button class="view-details"> View Details</button>
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square-xmark"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    
+    <div id="tutorial-history" class="tabcontent">
+      <div class="main-tutorial-history-tutor">
+        <div class="tutorial-history-header">
+          Tutorial History
+        </div>
+        <div class="tutorial-history-table">
+          <table>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Student</th>
+                <th>Program</th>
+                <th>Course</th>
+                <th>Topic</th>
+                <th>No. of Attendees</th>
+                <th>Date</th>
+                <th>Room No.</th>
+                <th>Total Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Geryk Kean Barrot</td>
+                <td>Architecture</td>
+                <td>Calculus 1</td>
+                <td>Functions</td>
+                <td>9</td>
+                <td>09/24/24</td>
+                <td>Q-9207</td>
+                <td>120 mins</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="tutorial-availability" class="tabcontent">
+      <div class="main-tutorial-availability-tutor">
+        <div class="schedule-header">
+          Availability Schedule
+        </div>
+        <div class="schedule">
+          <div class="schedule-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Time Intervals</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                  <th>Saturday</th>
+                </tr>
+              </thead>
+              <tr>
+                <th>9:00 AM - 9:30 AM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>9:30 AM - 10:00 AM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>10:00 AM - 10:30 AM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>10:30 AM - 11:00 AM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>11:00 AM - 11:30 AM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>11:30 AM - 12:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>12:00 PM - 12:30 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>12:30 PM - 1:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>1:00 PM - 1:30 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>1:30 PM - 2:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>2:00 PM - 2:30 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>2:30 PM - 3:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>3:00 PM - 3:30 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>3:30 PM - 4:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>4:00 PM - 4:30 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>4:30 PM - 5:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>5:00 PM - 5:30 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>5:30 PM - 6:00 PM</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr> 
+            </table>
+          </div>
+        </div>
+        <div class="schedule-button">
+          <button class="edit-button">
+            EDIT
+          </button>
+          <button class="save-button">
+            SAVE
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="tutor.js"></script>
+  </main>
+</body>
+</html>

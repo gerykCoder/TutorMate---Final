@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - TutorMate</title>
+    <link rel="icon" type="image" href="../Pictures/logo.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="sign-up-general.css">
+  <link rel="stylesheet" href="sign-up-left.css">
+  <link rel="stylesheet" href="sign-up-right.css">
+
+</head>
+<body>
+  <div class="wrapper">
+    <div class="LeftSignUp">
+      <div class="header">
+        <h1>Create Account</h1>
+      </div>
+      <div class="PersoInfo">
+        <input class="PersoInfoInput" type="firstName" placeholder="First Name" required>
+        <input class="PersoInfoInput" type="text" placeholder="Last Name" required>
+        <input class="PersoInfoInput" type="program" placeholder="Program" required>
+        <input class="PersoInfoInput" type="yearLevel" placeholder="Year Level" required>
+        <input class="PersoInfoInput" type="tel" placeholder="Contact Number" required>
+      </div>
+      <div class="Agreement">
+        Already have an account? <a href="/Login/login.html">Log in!</a> <br>
+        <input type="checkbox"> I agree to the <a href="">Terms and Conditions</a>
+      </div>
+    </div>
+    <div class="RightSignUp">
+      <div class="NoteInfo">
+        Note: Your registration will undergo verification by the admin which may take up to one day. Please monitor your gmail account for a notification confirming that your registration has been successfully completed.
+      </div>
+      <div class="SchoolInfo">
+        <input class="SchoolInfoInput" type="text" placeholder="Student Number" required>
+        <input class="SchoolInfoInput" type="email" placeholder="TIP Email" required>
+        <input class="SchoolInfoInput" type="password" placeholder="Password" required>
+      </div>
+      <div class="SchoolInfoFile">
+        Profile Picture <br>
+        <input type="file" id="profPic" name="profPic"><br><br>
+        Registration Form (PDF File) <br>
+        <input type="file" id="regForm" name="regForm">
+      </div>
+      <div class="SelectRole">
+        Select your role: <br>
+        <input type="radio" name="selectStatus">
+        <label for="student">Student</label> <br>
+        <input type="radio" name="selectStatus">
+        <label for="tutor">Tutor</label>
+      </div>
+      <div class="SignUpButton">
+        <Button>
+          SIGN UP
+        </Button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

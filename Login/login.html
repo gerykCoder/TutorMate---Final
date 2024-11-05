@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login - TutorMate</title>
+  <link rel="icon" type="image" href="../Pictures/logo.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="login-general.css">
+  <link rel="stylesheet" href="login-left-side.css">
+  <link rel="stylesheet" href="login-right-side.css">
+
+</head>
+<body>
+  <div class="container">
+    <div class="left-hand-side">
+      <div class="Logo">
+        <img class="LogoLS" src="/Pictures/logoLS.png" alt="Logo">
+      </div>
+      <div class="IntroductoryMessage">
+        Welcome to TutorMate, your go-to platform for effortless tutorial session management! Whether you're a student looking for academic guidance or a tutor ready to share your expertise, TutorMate makes connecting easy. With just a few clicks, you can register, schedule, and manage your tutorial sessions, ensuring a smooth and efficient learning experience. Let’s make learning more accessible and convenient with TutorMate—where every session helps you grow!
+      </div>
+      <div class="RoleSelection">
+        Please select your role: 
+        <div class="RoleSelectionButton">
+          <Button class="tablink" onclick="openPage('admin', this, '#616060')">
+            <i class="fa-solid fa-user-tie"></i>
+            ADMIN
+          </Button>
+          <Button class="tablink" onclick="openPage('tutee', this, '#616060')" id="defaultOpen">
+            <i class="fa-solid fa-user-graduate"></i>
+            TUTEE
+          </Button>
+          <Button class="tablink" onclick="openPage('tutor', this, '#616060')">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            TUTOR
+          </Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-hand-side">
+      
+      <div id="admin" class="tabcontent">
+        <div class="Header">
+          <h1 class="head1">WELCOME!</h1>
+          <h2 class="head2">Login to Continue</h2>
+        </div>
+        <div class="Credentials">
+          <div class="TIPEmail">
+            Username:
+            <input class="EmailBox" type="text">
+          </div>
+          <div class="Password">
+            Password: 
+            <input class="PasswordBox" type="text">
+          </div>
+        </div>
+        <div class="Login">
+          <Button class="LoginButton" onclick="redirectToAdminDashboard()">
+            LOGIN
+          </Button>
+        </div>
+      </div>
+
+      <div id="tutee" class="tabcontent">
+        <div class="Header">
+          <h1 class="head1">WELCOME!</h1>
+          <h2 class="head2">Login to Continue</h2>
+        </div>
+        <div class="Credentials">
+          <div class="TIPEmail">
+            TIP Email:
+            <input class="EmailBox" type="text">
+          </div>
+          <div class="Password">
+            Password: 
+            <input class="PasswordBox" type="text">
+          </div>
+          <a href="">Forgot your password?</a><br>
+          <a href="/Sign Up/sign-up.html">Sign up!</a>
+        </div>
+        <div class="Login">
+          <Button class="LoginButton" onclick="redirectToTuteeDashboard()">
+            LOGIN
+          </Button>
+        </div>
+      </div>
+
+      <div id="tutor" class="tabcontent">
+        <div class="Header">
+          <h1 class="head1">WELCOME!</h1>
+          <h2 class="head2">Login to Continue</h2>
+        </div>
+        <div class="Credentials">
+          <div class="TIPEmail">
+            TIP Email:
+            <input class="EmailBox" type="text">
+          </div>
+          <div class="Password">
+            Password: 
+            <input class="PasswordBox" type="text">
+          </div>
+          <a href="">Forgot your password?</a><br>
+          <a href="">Sign up!</a>
+        </div>
+        <div class="Login">
+          <Button class="LoginButton" onclick="redirectToTutorDashboard()">
+            LOGIN
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="login.js"></script>
+</body>
+</html>

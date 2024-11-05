@@ -1,0 +1,403 @@
+/******************************** Home Main ********************************/ 
+
+.main-home-admin{
+  
+}
+
+/******** SUMMARY BAR ********/
+
+.upper-main{
+  background-color: white;
+  display: flex;
+  justify-content:space-between;
+  align-items: start;
+  text-align: center;
+  min-height: 15vh;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 10px 0;
+}
+
+.summary-info{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-number{
+  height: 5vw;
+  width: 7vw;
+  background-color: #616060;
+  margin: 10px 0;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 3vw;
+  font-weight: 700;
+  color: white;
+}
+
+/******** PROFILE DETAILS ********/
+
+.lower-main{
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  column-gap: 10px;
+}
+
+.left-section, .right-section{
+  border-radius: 8px;
+  background-color: white;
+
+  height: 73vh;
+  margin-bottom: 10px;
+  min-width: 100%;
+
+  position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.right-section-header, .left-section-header{
+  position: sticky;
+  z-index: 200;
+  padding: 10px 15px;
+  top: 0;
+  background-color: white;
+}
+
+.left-section-content, .right-section-content{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/******** Left Side ********/
+
+.tutor-count{
+  display: flex;
+  width: 95%;
+  height: 55px;
+  background-color: #D9D9D9;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content:space-between;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.count-number{
+  background-color: #616060;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: white;
+}
+
+.main-home .fa-user{
+  margin: 0 10px 0 14px;
+}
+
+/******** Right Side ********/
+
+.for-approval{
+  display: flex;
+  width: 97%;
+  height: 55px;
+  background-color: #D9D9D9;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content:space-between;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.for-approval-right{
+  display: flex;
+  margin-right: 15px;
+}
+
+.view-details{
+  height: 25px;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.fa-square-check, .fa-square-xmark{
+  font-size: 26px;
+  margin-left: 10px;
+}
+
+/******************************** Tutorial Session Main ********************************/ 
+
+.main-tutorial-session{
+  margin-right: 5px;
+  height: calc(100vh - 80px); 
+  border-radius: .8rem;
+  display: grid;
+  grid-template-rows: 1fr 50px;
+}
+
+.main-table{
+  background-color: white;
+  width: 100%;
+  max-height: 100%;
+  margin: .2rem auto;
+  border-radius: .6rem;
+  overflow: auto;
+}
+
+.main-table::-webkit-scrollbar{
+  width: .5rem;
+  height: .5rem;
+}
+
+.main-table::-webkit-scrollbar-thumb{
+  border-radius: .5rem;
+  background-color: #0004;
+}
+
+.main-tutorial-session table{
+  width: 100%;
+  text-align: center;
+}
+
+.main-tutorial-session table, th, td{
+  padding: .5rem;
+  border-collapse: collapse;
+}
+
+.main-tutorial-session th{
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #616060;
+  color: white;
+  padding: .9rem 0rem;
+}
+
+.main-tutorial-session tbody tr:nth-child(even){
+  background-color: #D9D9D9;
+}
+
+.main-tutorial-session tbody tr:nth-child(odd){
+  .view-details{
+    background-color: #616060;
+    color: white;
+  }
+}
+
+.main-tutorial-session td:nth-child(1) {
+  width: 60%;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.main-tutorial-session .view-details{
+  height: auto;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.tutorial-cancellation{
+  display: flex;
+  align-items: center;
+}
+
+.tutorial-cancellation button{
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 7px;
+  background-color: white;
+  box-shadow: 0 .2rem 1rem rgba(80, 80, 80, .2);
+}
+
+/******************************** Tutorial History Main ********************************/ 
+
+.main-tutorial-history{
+  height: calc(100vh - 80px); 
+  display: grid;
+  grid-template-rows: 50px 1fr;
+}
+
+/***** Generate Report Button *****/
+
+.generate-report{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0 0 10px 0;
+  
+}
+
+.generate-report-button{
+  padding: 10px 20px;
+  font-size: 1vw;
+  border: none;
+  border-radius: 7px;
+  background-color: white;
+  box-shadow: 0 .2rem 1rem rgba(80, 80, 80, .2);
+}
+
+/***** Tutorial History Table *****/
+
+.tutorial-history{
+  background-color: white;
+  max-width: 87vw ;
+  padding-bottom: 10px;
+
+  overflow: hidden;
+  
+  border-radius: 8px;
+  box-shadow: 0 .4rem .8rem gray;
+}
+
+.tutorial-history-header{
+  padding: 1rem;
+  font-weight: 700;
+  width: 100%; 
+  height: 2%;
+}
+
+.tutorial-history-table{
+
+  width: 97%;
+  max-height: 91%;
+
+  margin: .2rem auto;
+  border-radius: .6rem;
+  overflow: auto;
+}
+
+.tutorial-history-table::-webkit-scrollbar{
+  width: .5rem;
+  height: .5rem;
+}
+
+.tutorial-history-table::-webkit-scrollbar-thumb{
+  border-radius: .5rem;
+  background-color: #0004;
+}
+
+
+.main-tutorial-history table{
+  width: 100%;
+  text-align: center;
+}
+
+.main-tutorial-history table, th, td{
+  padding: .5rem;
+  border-collapse: collapse;
+}
+
+.main-tutorial-history thead th{
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #616060;
+  color: white;
+}
+
+.main-tutorial-history tbody tr:nth-child(even){
+  background-color: #D9D9D9;
+}
+
+.main-tutorial-history table tr td:nth-child(7),
+.main-tutorial-history table tr td:nth-child(1){
+  width: 70px;
+}
+
+
+
+/******************************** Registered Main ********************************/ 
+
+.main-registered{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: calc(100vw - 245px) ;
+  height: calc(100vh - 80px);
+  column-gap: 15px;
+}
+
+.right-side, .left-side{
+  height: 100%;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 .4rem .8rem gray;
+  position: relative;
+  overflow: auto;
+}
+ 
+/*
+.left-side::-webkit-scrollbar {
+  width: .1rem;
+  height: .5rem;
+}
+
+.left-side::-webkit-scrollbar-thumb {
+  border-radius: .5rem; 
+  background-color: #0004;
+  visibility: hidden;
+}
+  */
+
+.right-side-content, .left-side-content{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side-header, .left-side-header{
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: white;
+
+  position: sticky;
+  z-index: 200;
+  top: 0;
+}
+
+.list-of-tutor, .list-of-tutee{
+  display: flex;
+  width: 97%;
+  height: 55px;
+  background-color: #D9D9D9;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content:space-between;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.main-registered .fa-user{
+  margin: 0 10px 0 14px;
+}
+
+.main-registered .view-details{
+  height: 25px;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-right: 15px;
+}

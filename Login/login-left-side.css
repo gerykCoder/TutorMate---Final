@@ -1,0 +1,60 @@
+.left-hand-side{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0px;
+}
+
+.IntroductoryMessage{
+  text-align: justify;
+  margin: 20px 0px;
+  font-size: 32px;
+  font-weight: 400;
+  width: 90%;
+}
+
+.RoleSelection{
+  width: 100%;
+  font-size: 25px;
+  width: 90%;
+}
+
+.RoleSelectionButton .fa-solid{
+  display: block;
+  margin-bottom: 5px;
+  font-size: 80px;
+}
+
+.RoleSelectionButton{
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.RoleSelectionButton button{
+  border: none;
+  border-radius: 8px;
+  padding:20px;
+  width: 25%;
+  font-size: 35px;
+  font-weight: 600;
+  background-color: #D9D9D9;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.RoleSelectionButton button:hover{
+  background-color: #616060;
+}
+
+/*
+.RoleSelectionButton button:active{
+  background-color: #616060;
+  color: white;
+}
+*/
+
+
