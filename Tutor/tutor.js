@@ -23,3 +23,20 @@ function openPage(pageName, elmnt, color) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 
+/********************** LOGOUT BUTTON *********************/
+
+// Get the modal
+var modal = document.getElementById("logout-modal");
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+// Function to handle logout
+function logout() {
+  // Redirect to the login page
+  window.location.href = "/Login/login.html"; // Change this to your actual login page URL
+}

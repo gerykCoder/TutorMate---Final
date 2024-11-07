@@ -65,7 +65,7 @@
 
 .right-section-header, .left-section-header{
   position: sticky;
-  z-index: 200;
+  z-index: 100;
   padding: 10px 15px;
   top: 0;
   background-color: white;
@@ -373,7 +373,7 @@
   background-color: white;
 
   position: sticky;
-  z-index: 200;
+  z-index: 100;
   top: 0;
 }
 

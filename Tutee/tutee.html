@@ -45,7 +45,7 @@
         <div>LIST OF TUTORS</div>
       </div>
     </div>
-    <div class="sidebar-lower">
+    <div class="sidebar-lower" onclick="document.getElementById('logout-modal').style.display='block'">
       <div>Logout</div>
     </div>
   </nav>
@@ -377,6 +377,22 @@
       </div>
     </div>
   </main>
+
+  <!-- modal HTML -->
+  <div id="logout-modal" class="modal">
+    <span onclick="document.getElementById('logout-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <form class="modal-content" action="/action_page.php">
+      <div class="container">
+        <h1>Log out</h1>
+        <p>Are you sure you want to logout?</p>
+  
+        <div class="clearfix">
+          <button type="button" class="cancelbtn" onclick="document.getElementById('logout-modal').style.display='none'">Cancel</button>
+          <button type="button" class="logoutbtn" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
   <script src="tutee.js"></script>
 </body>
