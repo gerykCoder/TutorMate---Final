@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="admin-sidebar.css">
   <link rel="stylesheet" href="admin-main.css">
   <link rel="stylesheet" href="admin-header.css">
+  <link rel="stylesheet" href="admin-modal.css">
 
 </head>
 <body>
@@ -61,33 +62,43 @@
         <section class="upper-main">
           <div class="summary-info">
             <div class="summary-number">
-              12
+              <div>
+                12
+              </div>
             </div>
             Pending Tutorials
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              12
+              <div>
+                12
+              </div>
             </div>
-            Upcoming Tutorials
+            Scheduled Tutorials
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              12
+              <div>
+                12
+              </div>
             </div>
             Total Tutorial for this sem
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              12
+              <div>
+                12
+              </div>
             </div>
             Cancelled Tutorials
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              12
+              <div>
+                12
+              </div>
             </div>
-            Registration Approval
+            Accounts for Approval
           </div>
         </section>
     
@@ -99,28 +110,15 @@
             <div class="left-section-content">
               <div class="tutor-count">
                 <div class="tutor-count-left">
-                  <i class="fa-solid fa-user"></i>
                   Jarque 
                 </div>
                 <div class="tutor-count-right">
                   <div class="count-number">
-                    12
-                  </div>
-                </div>
-              </div>
-              <div class="tutor-count">
-                <div class="tutor-count-left">
-                  <i class="fa-solid fa-user"></i>
-                  Jarque 
-                </div>
-                <div class="tutor-count-right">
-                  <div class="count-number">
-                    12
+                    <div>12</div>
                   </div>
                 </div>
               </div>
             </div>
-            
           </div>
     
           <div class="right-section">
@@ -130,26 +128,16 @@
             <div class="right-section-content">
               <div class="for-approval">
                 <div class="for-approval-left">
-                  <i class="fa-solid fa-user"></i>
                   Jose Grayson Atun 
                 </div>
                 <div class="for-approval-right">
-                  <button class="view-details"> View Details</button>
-                  <i class="fa-solid fa-square-check"></i>
-                  <i class="fa-solid fa-square-xmark"></i>
+                  <button class="admin-home-view-details" onclick="document.getElementById('admin-home-view-details-modal').style.display='block'"> 
+                    View Details
+                  </button>
+                  <i id="check-button" class="fa-solid fa-square-check" onclick="document.getElementById('admin-home-check-modal').style.display='block'"></i>
+                  <i id="x-button" class="fa-solid fa-square-xmark" onclick="document.getElementById('admin-home-deny-modal').style.display='block'"></i>
                 </div>
-              </div>
-              <div class="for-approval">
-                <div class="for-approval-left">
-                  <i class="fa-solid fa-user"></i>
-                  Jose Grayson Atun 
-                </div>
-                <div class="for-approval-right">
-                  <button class="view-details"> View Details</button>
-                  <i class="fa-solid fa-square-check"></i>
-                  <i class="fa-solid fa-square-xmark"></i>
-                </div>
-              </div>           
+              </div>      
             </div>
           </div>
         </section>
@@ -173,7 +161,7 @@
               <td><div class="pending-count">4</div></td>
               <td><div class="scheduled-count">1</div></td>
               <td>
-                <button class="view-details">
+                <button class="admin-tutorial-session-view-details" onclick="document.getElementById('admin-tutorial-session-view-details-modal').style.display='block'">
                   View Details
                 </button>
               </td>
@@ -183,293 +171,7 @@
               <td><div class="pending-count">4</div></td>
               <td><div class="scheduled-count">1</div></td>
               <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
-                  View Details
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jose Grayson Atun</td>
-              <td><div class="pending-count">4</div></td>
-              <td><div class="scheduled-count">1</div></td>
-              <td>
-                <button class="view-details">
+                <button class="admin-tutorial-session-view-details" onclick="document.getElementById('admin-tutorial-session-view-details-modal').style.display='block'">
                   View Details
                 </button>
               </td>
@@ -477,7 +179,9 @@
           </table>
         </div>
         <div class="tutorial-cancellation">
-          <button>Tutorial Cancellation</button>
+          <button class="admin-tutorial-session-cancellation" onclick="document.getElementById('admin-tutorial-session-cancellation-modal').style.display='block'">
+            Tutorial Cancellation
+          </button>
         </div>
       </div>
     </div>
@@ -485,7 +189,7 @@
     <div id="tutorial-history" class="tabcontent">
       <div class="main-tutorial-history">
         <div class="generate-report">
-          <button class="generate-report-button">
+          <button class="generate-report-button" onclick="document.getElementById('admin-tutorial-history-report-modal').style.display='block'">
             Generate Report
           </button>
         </div>
@@ -534,318 +238,6 @@
                   <td>Q-9207</td>
                   <td>120 mins</td>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Justin Edwin Guiriba</td>
-                  <td>Geryk Kean Barrot</td>
-                  <td>Architecture</td>
-                  <td>Calculus 1</td>
-                  <td>Functions</td>
-                  <td>9</td>
-                  <td>09/24/24</td>
-                  <td>Q-9207</td>
-                  <td>120 mins</td>
-                </tr>
               </tbody>
             </table>
           </section>
@@ -862,154 +254,10 @@
           <div class="left-side-content">
             <div class="list-of-tutor">
               <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
                 Jose Grayson Atun
               </div>
               <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutor">
-              <div class="list-of-tutor-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutor-right">
-                <button class="view-details"> 
+                <button class="view-details" onclick="document.getElementById('admin-registered-view-details-modal').style.display='block'"> 
                   View Details
                 </button>
               </div>
@@ -1024,165 +272,10 @@
           <div class="right-side-content">
             <div class="list-of-tutee">
               <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
                 Jose Grayson Atun
               </div>
               <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
-                  View Details
-                </button>
-              </div>
-            </div>
-            <div class="list-of-tutee">
-              <div class="list-of-tutee-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="list-of-tutees-right">
-                <button class="view-details"> 
+                <button class="view-details" onclick="document.getElementById('admin-registered-view-details-modal').style.display='block'"> 
                   View Details
                 </button>
               </div>
@@ -1195,7 +288,7 @@
   </main>
 
   <!-- modal HTML -->
-  <div id="logout-modal" class="modal">
+  <div id="logout-modal" class="logout-modal modal">
     <span onclick="document.getElementById('logout-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="modal-content" action="/action_page.php">
       <div class="container">
@@ -1208,6 +301,119 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div id="admin-home-view-details-modal" class="account-for-approval-modal modal">
+    <div class="account-for-approval-view-detials-modal">
+      <div class="home-view-details-modal-header">
+        <h2>ACCOUNT FOR APPROVAL</h2>
+      </div>
+      <div class="home-view-details-modal-content">
+        <div class="home-left-side-content">
+          <div>First Name: </div>
+          <div>Last Name:</div>
+          <div>Role:</div>
+          <div>Program:</div>
+          <div>Year Level:</div>
+          <div>Contact Number:</div>
+          <div>Student Number:</div>
+          <div>TIP Email:</div>
+          <div>Registration Form:</div>
+        </div>
+        <div class="home-right-side-content">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-home-check-modal" class="admin-home-check-modal modal">
+    <div class="check-content">
+      <h1>Approval of Account</h1>
+      <p>Are you sure you want to approve this account?</p>
+
+      <div class="account-approval-buttons">
+        <button class="account-approval-cancel-button" onclick="document.getElementById('admin-home-check-modal').style.display='none'">
+          Cancel
+        </button>
+        <button class="account-approval-approve-button">
+          Approve
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-home-deny-modal" class="admin-home-deny-modal modal">
+    <div class="deny-content">
+      <h1>Denial of Account</h1>
+      <p>Are you sure you want to deny this account?</p>
+
+      <div class="account-denial-buttons">
+        <button class="account-denial-cancel-button" onclick="document.getElementById('admin-home-deny-modal').style.display='none'">
+          Cancel
+        </button>
+        <button class="account-denial-deny-button">
+          Deny
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-tutorial-session-view-details-modal" class="pending-scheduled-tutorials-modal modal">
+  </div>
+
+  <div id="admin-tutorial-session-cancellation-modal" class="tutorial-cancellation-modal modal">
+  </div>
+
+  <div id="admin-tutorial-history-report-modal" class="generate-report-modal modal">
+  </div>
+
+  <div id="admin-registered-tutor-view-details-modal" class="tutor-view-details-modal modla">
+  </div>
+
+  <div id="admin-registered-view-details-modal" class="admin-registered-view-details-modal modal">
+    <div class="registered-view-details-modal">
+      <div class="registered-view-details-modal-header">
+        <h2>ACCOUNT DETAILS</h2>
+      </div>
+      <div class="registered-view-details-modal-content">
+        <div class="registered-left-side-content">
+          <div>First Name: </div>
+          <div>Last Name:</div>
+          <div>Role:</div>
+          <div>Program:</div>
+          <div>Year Level:</div>
+          <div>Contact Number:</div>
+          <div>Student Number:</div>
+          <div>TIP Email:</div>
+          <div>Registration Form:</div>
+        </div>
+        <div class="registered-right-side-content">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <div class="registered-view-details-modal-ban-button">
+        <button>
+          Ban
+        </button>
+      </div>
+    </div>
   </div>
 
   <script src="admin.js"></script>

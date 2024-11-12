@@ -27,15 +27,31 @@ document.getElementById("defaultOpen").click();
 
 /********************** LOGOUT BUTTON *********************/
 
-// Get the modal
-var modal = document.getElementById("logout-modal");
+/*// Get the modal
+var modals = [
+  document.getElementById("logout-modal"),
+  document.getElementById("admin-home-view-details-modal")
+];
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+}*/
+
+window.onclick = function(event) {
+  // Get all modal containers
+  var modals = document.querySelectorAll(".modal");
+  
+  modals.forEach(function(modal) {
+      // Check if the click happened outside the modal content
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  });
+};
+
 
 // Function to handle logout
 function logout() {

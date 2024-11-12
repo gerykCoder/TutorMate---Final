@@ -73,18 +73,17 @@
 
 .left-section-content, .right-section-content{
   position: absolute;
-  width: 100%;
+  width: calc(100% - 30px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 15px 0 15px;
 }
 
-/******** Left Side ********/
-
-.tutor-count{
+.tutor-count, .for-approval{
   display: flex;
-  width: 95%;
+  width: calc(100% - 30px);
   height: 55px;
   background-color: #D9D9D9;
   align-items: center;
@@ -92,12 +91,15 @@
   justify-content:space-between;
   align-items: center;
   border-radius: 8px;
+  padding: 0 15px 0 15px;
 }
+
+/******** Left Side ********/
+
 
 .count-number{
   background-color: #616060;
   padding: 10px 20px;
-  margin-right: 10px;
   border-radius: 8px;
   font-weight: 700;
   color: white;
@@ -109,34 +111,28 @@
 
 /******** Right Side ********/
 
-.for-approval{
-  display: flex;
-  width: 97%;
-  height: 55px;
-  background-color: #D9D9D9;
-  align-items: center;
-  margin-bottom: 10px;
-  justify-content:space-between;
-  align-items: center;
-  border-radius: 8px;
-}
 
 .for-approval-right{
   display: flex;
-  margin-right: 15px;
 }
 
-.view-details{
+.for-approval-right button{
+  margin-left: 10px;
+}
+
+.admin-home-view-details{
   height: 25px;
   border: none;
   background-color: white;
   font-size: 16px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .fa-square-check, .fa-square-xmark{
   font-size: 26px;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 /******************************** Tutorial Session Main ********************************/ 
@@ -187,12 +183,12 @@
   padding: .9rem 0rem;
 }
 
-.main-tutorial-session tbody tr:nth-child(even){
+.main-tutorial-session tbody tr:nth-child(odd){
   background-color: #D9D9D9;
 }
 
-.main-tutorial-session tbody tr:nth-child(odd){
-  .view-details{
+.main-tutorial-session tbody tr:nth-child(even){
+  .admin-tutorial-session-view-details{
     background-color: #616060;
     color: white;
   }
@@ -204,13 +200,14 @@
   padding-left: 20px;
 }
 
-.main-tutorial-session .view-details{
+.admin-tutorial-session-view-details{
   height: auto;
   border: none;
   background-color: white;
   font-size: 16px;
   border-radius: 5px;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .tutorial-cancellation{
@@ -225,6 +222,7 @@
   border-radius: 7px;
   background-color: white;
   box-shadow: 0 .2rem 1rem rgba(80, 80, 80, .2);
+  cursor: pointer;
 }
 
 /******************************** Tutorial History Main ********************************/ 
@@ -252,6 +250,7 @@
   border-radius: 7px;
   background-color: white;
   box-shadow: 0 .2rem 1rem rgba(80, 80, 80, .2);
+  cursor: pointer;
 }
 
 /***** Tutorial History Table *****/
@@ -326,7 +325,7 @@
 
 /******************************** Registered Main ********************************/ 
 
-.main-registered{
+.main-registered {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: calc(100vw - 245px) ;
@@ -358,11 +357,12 @@
 
 .right-side-content, .left-side-content{
   position: absolute;
-  width: 100%;
+  width: calc(100% - 40px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 25px 0 15px;
 }
 
 .right-side-header, .left-side-header{
@@ -379,19 +379,17 @@
 
 .list-of-tutor, .list-of-tutee{
   display: flex;
-  width: 97%;
+  width: calc(100% - 30px);
   height: 55px;
   background-color: #D9D9D9;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 0 0 10px 0;
   justify-content:space-between;
   align-items: center;
   border-radius: 8px;
+  padding: 0 15px 0 15px;
 }
 
-.main-registered .fa-user{
-  margin: 0 10px 0 14px;
-}
 
 .main-registered .view-details{
   height: 25px;
@@ -399,5 +397,5 @@
   background-color: white;
   font-size: 16px;
   border-radius: 5px;
-  margin-right: 15px;
+  cursor: pointer;
 }

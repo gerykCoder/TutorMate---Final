@@ -1,0 +1,266 @@
+/******************************** LOGOUT ********************************/ 
+
+/* Set a style for all buttons */
+.logout-modal button {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.logout-modal button:hover {
+  opacity:1;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.logout-modal .cancelbtn, .logout-modal .logoutbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add a color to the cancel button */
+.logout-modal .cancelbtn {
+  background-color: #D9D9D9;
+  color: black;
+}
+
+/* Add a color to the delete button */
+.logout-modal .logoutbtn {
+  background-color: #616060;
+}
+
+/* Add padding and center-align text to the container */
+.logout-modal .container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.logout-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  color: black;
+}
+ 
+/* The Modal Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.modal .close:hover,
+.modal .close:focus {
+  color: #616060;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.modal .clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+  .modal .cancelbtn, .modal .deletebtn {
+     width: 100%;
+  }
+}
+
+/******************************** HOME - VIEW DETAILS ********************************/ 
+
+.account-for-approval-modal{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.account-for-approval-view-detials-modal, .registered-view-details-modal{
+  background-color: white;
+  width: 600px;
+  margin: 5% auto auto auto;
+  padding: 20px;
+  border-radius: 1rem;
+}
+
+.home-view-details-modal-content, .registered-view-details-modal-content{
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+}
+
+.home-left-side-content, .registered-left-side-content{
+  flex: 1;
+  text-align: end;
+}
+
+.home-view-details-modal-header, .registered-view-details-modal-header{
+  text-align: center;
+}
+
+.home-left-side-content div,
+.home-right-side-content div,
+.registered-left-side-content div,
+.registered-right-side-content div{
+  margin: 10px 10px;
+}
+
+.home-right-side-content, .registered-right-side-content{
+  flex: 1;
+}
+
+/******************************** HOME - APPROVAL ********************************/ 
+
+.admin-home-check-modal, .admin-home-deny-modal{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.check-content, .deny-content{
+  background-color: white;
+  width: 30%;
+  margin: 5% auto auto auto;
+  padding: 20px;
+  border-radius: 1rem;
+  text-align: center;
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+.check-content button, .deny-content button{
+  width: 50%;
+  margin: 8px 0;
+  padding: 14px 20px;
+  float: left;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.check-content button:hover,
+.deny-content button:hover {
+  opacity:1;
+}
+
+.account-approval-cancel-button,
+.account-denial-cancel-button{
+  background-color: #D9D9D9;
+}
+
+.account-approval-approve-button,
+.account-denial-deny-button{
+  background-color: #616060;
+  color: white;
+}
+
+
+/******************************** TUTORIAL SESSION - VIEW DETAILS ********************************/ 
+
+.pending-scheduled-tutorials-modal{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+}
+
+/******************************** TUTORIAL SESSION - TUTORIAL CANCELLATION ********************************/ 
+
+.tutorial-cancellation-modal{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+}
+
+/******************************** TUTORIAL HISTORY - GENERATE REPORT ********************************/ 
+
+.generate-report-modal{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+}
+
+/******************************** REGISTERED - VIEW DETAILS ********************************/ 
+
+.admin-registered-view-details-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, .7);
+}
+
+.registered-view-details-modal-ban-button{
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.registered-view-details-modal-ban-button button{
+  background-color: #616060;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  padding: .6rem 1.2rem;
+  border-radius: .5rem;
+  cursor: pointer;
+}

@@ -126,9 +126,12 @@
   text-align: center;
 }
 
-.main-tutorial-history-tutor table, th, td{
+.main-tutorial-history-tutor table, 
+.main-tutorial-history-tutor th, 
+.main-tutorial-history-tutor td{
   padding: .5rem;
   border-collapse: collapse;
+  border: none;
 }
 
 .main-tutorial-history-tutor thead th{
@@ -198,9 +201,12 @@
   background-color: #D9D9D9;
 }
 
-.main-tutorial-availability-tutor table, th, td{
+.main-tutorial-availability-tutor table,
+.main-tutorial-availability-tutor th,
+.main-tutorial-availability-tutor td{
   border: 1px solid black;
   border-collapse: collapse;
+  padding: .5rem;
 }
 
 .main-tutorial-availability-tutor table tr th:nth-child(1){
@@ -213,7 +219,9 @@
   justify-content: end;
 }
 
-.edit-button, .save-button{
+.edit-button,
+.cancel-button,
+.save-button {
   padding: 1vh 4vh;
   margin: 15px 25px 13px 0;
   font-weight: 700;
@@ -222,4 +230,21 @@
   color: white;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
 }
+
+.schedule-table td {
+  cursor: pointer; /* Show pointer on hover */
+}
+
+/*
+
+.schedule-table td.available {
+  background-color: #90EE90; 
+}
+
+.schedule-table td.selected {
+  background-color: #FFCCCB; 
+}
+
+*/
