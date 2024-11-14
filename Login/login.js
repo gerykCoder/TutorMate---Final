@@ -39,7 +39,7 @@ function redirectToTutorDashboard() {
 
 
 function redirectToSignup() {
-  window.location.href = "/Sign Up/sign-up.html";
+  window.location.href = "/SignUp/sign-up.html";
 }
 
 
