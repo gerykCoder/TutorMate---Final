@@ -220,6 +220,43 @@
   background-color: rgba(0, 0, 0, .7);
 }
 
+.tutorial-cancellation-content{
+  background-color: white;
+  width: 40%;
+  margin: 5% auto auto auto;
+  padding: 0 20px 20px 20px;
+  border-radius: 1rem;
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.confirm-btn {
+  background-color:#616060;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: .7;
+}
+
+.tutorial-cancellation-content button:hover {
+  opacity: 1;
+}
+
+.cancel-btn {
+  background-color: #616060;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: .7;
+}
+
+
 /******************************** TUTORIAL HISTORY - GENERATE REPORT ********************************/ 
 
 .generate-report-modal{

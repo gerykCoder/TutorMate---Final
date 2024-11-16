@@ -59,3 +59,18 @@ function logout() {
   window.location.href = "/Login/login.html"; // Change this to your actual login page URL
 }
 
+/********************** TUTORIAL CANCELLATION *********************/
+
+var modal = document.getElementById("admin-tutorial-session-cancellation-modal");
+var btn = document.getElementById("admin-tutorial-session-cancellation");
+var cancelBtn = document.getElementById("cancelBtn");
+
+// Open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// Close the modal on 'Cancel' button click
+cancelBtn.onclick = function() {
+  modal.style.display = "none";
+}

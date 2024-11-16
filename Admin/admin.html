@@ -179,7 +179,7 @@
           </table>
         </div>
         <div class="tutorial-cancellation">
-          <button class="admin-tutorial-session-cancellation" onclick="document.getElementById('admin-tutorial-session-cancellation-modal').style.display='block'">
+          <button id="admin-tutorial-session-cancellation" class="admin-tutorial-session-cancellation">
             Tutorial Cancellation
           </button>
         </div>
@@ -374,8 +374,23 @@
   </div>
 
   <div id="admin-tutorial-session-cancellation-modal" class="tutorial-cancellation-modal modal">
-    <div>
+    <div class="tutorial-cancellation-content">
+      <h2>Cancel Tutorials for Selected Date</h2>
+    
+      <!-- Date Selection -->
+      <label for="cancelDate">Select the date for tutorial suspension:</label><br>
+      <input type="date" id="cancelDate" name="cancelDate"><br><br>
 
+      <!-- Reason for Cancellation (Optional) -->
+      <label for="cancelReason">Reason for cancellation (optional):</label><br>
+      <textarea id="cancelReason" name="cancelReason" rows="4" cols="50" placeholder="E.g. School suspension, unexpected holiday..."></textarea><br><br>
+
+      <!-- Confirmation Message -->
+      <p>Are you sure you want to cancel all tutorials on the selected date? A notification will be sent to all students and tutors.</p>
+
+      <!-- Buttons -->
+      <button id="confirmCancelBtn" class="confirm-btn">Confirm Cancellation</button>
+      <button id="cancelBtn" class="cancel-btn">Cancel</button>
     </div>
   </div>
 

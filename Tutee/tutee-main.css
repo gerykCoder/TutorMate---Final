@@ -22,15 +22,14 @@
 }
 
 .mytabs .tab {
-  padding: 2rem;
+  padding: 1rem 2rem 2rem 2rem;
   background-color: white;
   order: 1;
   display: none;
   border-radius: 0 15px 15px 15px;
-}
-
-.mytabs .tab p {
-  text-align: justify;
+  overflow: auto;
+  height: calc(100vh - 170px);
+  width: 100%;
 }
 
 .mytabs input[type="radio"]:checked + label + .tab{
@@ -39,6 +38,19 @@
 
 .mytabs input[type="radio"]:checked + label{
   background-color: white;
+}
+
+.announcement-container{
+  width: calc(100% - 40px);
+  background-color: #616060;
+  color: white;
+  padding: 20px;
+  border-radius: 1rem;
+  margin-bottom: 10px;
+}
+
+.offered-courses li{
+  margin-bottom: 10px;
 }
 
 /******************************** Registration Main ********************************/ 
