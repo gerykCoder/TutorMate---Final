@@ -25,15 +25,17 @@ document.getElementById("defaultOpen").click();
 
 /********************** LOGOUT BUTTON *********************/
 
-// Get the modal
-var modal = document.getElementById("logout-modal");
-
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+    // Get all modal containers
+    var modals = document.querySelectorAll(".modal");
+    
+    modals.forEach(function(modal) {
+        // Check if the click happened outside the modal content
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    });
+};
 
 // Function to handle logout
 function logout() {
@@ -41,6 +43,16 @@ function logout() {
   window.location.href = "/Login/login.html"; // Change this to your actual login page URL
 }
 
+
+/********************** HOME *********************/
+
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+  }
+  
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
 
 /********************** TUTORIAL AVAILABILITY *********************/
 
@@ -120,3 +132,5 @@ function cancelChanges() {
     alert('Changes canceled!'); // Placeholder for actual cancel logic
     toggleEditMode(); // Exit edit mode after canceling
 }
+
+

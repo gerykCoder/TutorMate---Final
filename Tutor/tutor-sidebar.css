@@ -69,9 +69,16 @@
   font-size: 13px;
 }
 
+.logout-modal-content{
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  color: black;
+}
+
 /* Set a style for all buttons */
-.modal button {
-  background-color: #04AA6D;
+.logout-modal button {
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -81,7 +88,7 @@
   opacity: 0.7;
 }
 
-.modal button:hover {
+.logout-modal button:hover {
   opacity:1;
 }
 
@@ -120,15 +127,6 @@
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0, 0, 0, .7);
   padding-top: 50px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
-  color: black;
 }
 
 /* Style the horizontal ruler */

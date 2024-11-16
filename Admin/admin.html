@@ -310,7 +310,7 @@
       </div>
       <div class="home-view-details-modal-content">
         <div class="home-left-side-content">
-          <div>First Name: </div>
+          <div>First Name:</div>
           <div>Last Name:</div>
           <div>Role:</div>
           <div>Program:</div>
@@ -428,7 +428,24 @@
         </div>
       </div>
       <div class="registered-view-details-modal-ban-button">
-        <button>
+        <button onclick="document.getElementById('admin-registered-view-details-ban-modal').style.display='block'">
+          Ban
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-registered-view-details-ban-modal"
+  class="admin-registered-view-details-ban-modal modal">
+    <div class="banning-content">
+      <h1>Banning of Account</h1>
+      <p>Are you sure you want to ban this account?</p>
+
+      <div class="account-approval-buttons">
+        <button class="account-banning-cancel-button" onclick="document.getElementById('admin-registered-view-details-ban-modal').style.display='none'">
+          Cancel
+        </button>
+        <button class="account-banning-ban-button">
           Ban
         </button>
       </div>

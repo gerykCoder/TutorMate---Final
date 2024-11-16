@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="tutor-sidebar.css">
   <link rel="stylesheet" href="tutor-main.css">
   <link rel="stylesheet" href="tutor-general.css">
+  <link rel="stylesheet" href="tutor-modal.css">
 
 </head>
 <body>
@@ -64,20 +65,11 @@
                 Jose Grayson Atun
               </div>
               <div class="pending-tutorial-right">
-                <button class="view-details"> View Details</button>
-                <i class="fa-solid fa-square-check"></i>
-                <i class="fa-solid fa-square-xmark"></i>
-              </div>
-            </div>
-            <div class="pending-tutorial">
-              <div class="pending-tutorial-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="pending-tutorial-right">
-                <button class="view-details"> View Details</button>
-                <i class="fa-solid fa-square-check"></i>
-                <i class="fa-solid fa-square-xmark"></i>
+                <button class="view-details" onclick="openModal('tutor-home-view-details-modal')"> 
+                  View Details
+                </button>
+                <i class="fa-solid fa-square-check" onclick="openModal('tutor-home-accept-modal')"></i>
+                <i class="fa-solid fa-square-xmark" onclick="openModal('tutor-home-deny-modal')"></i>
               </div>
             </div>
           </div>
@@ -94,20 +86,11 @@
                 Jose Grayson Atun
               </div>
               <div class="schedule-tutorials-right">
-                <button class="view-details"> View Details</button>
-                <i class="fa-solid fa-square-check"></i>
-                <i class="fa-solid fa-square-xmark"></i>
-              </div>
-            </div>
-            <div class="schedule-tutorials">
-              <div class="schedule-tutorials-left">
-                <i class="fa-solid fa-user"></i>
-                Jose Grayson Atun
-              </div>
-              <div class="schedule-tutorials-right">
-                <button class="view-details"> View Details</button>
-                <i class="fa-solid fa-square-check"></i>
-                <i class="fa-solid fa-square-xmark"></i>
+                <button class="view-details" onclick="openModal('tutor-home-view-details-modal')"> 
+                  View Details
+                </button>
+                <i class="fa-solid fa-square-check" onclick="openModal('tutor-home-complete-modal')"></i>
+                <i class="fa-solid fa-square-xmark" onclick="openModal('tutor-home-cancel-modal')"></i>
               </div>
             </div>
           </div>
@@ -369,10 +352,11 @@
     <script src="tutor.js"></script>
   </main>
 
-  <!-- modal HTML -->
-  <div id="logout-modal" class="modal">
+  <!-- Modal HTML -->
+
+  <div id="logout-modal" class="logout-modal modal">
     <span onclick="document.getElementById('logout-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
-    <form class="modal-content" action="/action_page.php">
+    <form class="logout-modal-content" action="/action_page.php">
       <div class="container">
         <h1>Log out</h1>
         <p>Are you sure you want to logout?</p>
@@ -383,6 +367,155 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div id="tutor-home-view-details-modal" class="tutor-home-view-details-modal modal">
+    <div class="tutor-home-view-details-modal-content">
+      <h3>Tutorial Details</h3>
+      <!-- <div class="tutor-home-view-details-modal-container"> 
+        <div class="home-view-details-left-side-content">
+          <div>Status:</div>
+          <div>Tutee Name:</div>
+          <div>Program:</div>
+          <div>Course of Tutorial:</div>
+          <div>Topic:</div>
+          <div>Expected Number of Attendees:</div>
+          <div>Date of Tutorial:</div>
+          <div>Tutorial Starting Time:</div>
+          <div>Tutorial Ending Time:</div>
+        </div>
+        <div class="home-view-details-right-side-content">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div> -->
+      <table class="tutorial-details">
+        <tr>
+          <td>Status:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tutee Name:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Program:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Course of Tutorial:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Topic:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Expected Number of Attendees:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Date of Tutorial:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tutorial Starting Time:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tutorial Ending Time:</td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="button-container">
+        <button class="home-view-details-close-button" onclick="closeModal('tutor-home-view-details-modal')">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tutor-home-accept-modal" class="tutor-home-accept-modal modal">
+    <div class="modal-content">
+      <h3>Accept Tutorial</h3>
+      <p>Are you sure you want to accept this tutorial?</p>
+      <div class="button-container">
+        <button class="btn" onclick="closeModal('tutor-home-accept-modal')">
+          Yes
+        </button>
+        <button class="tutor-home-accept-no-btn" onclick="closeModal('tutor-home-accept-modal')">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tutor-home-deny-modal" class="tutor-home-deny-modal modal">
+    <div class="modal-content">
+      <h3>Deny Tutorial</h3>
+      <p>Provide a reason for denying this tutorial (optional):</p>
+      <textarea rows="3" cols="50"></textarea>
+      <div class="button-container">
+        <button class="btn" onclick="closeModal('tutor-home-deny-modal')">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tutor-home-cancel-modal" class="tutor-home-cancel-modal modal">
+    <div class="modal-content">
+      <h3>Cancel Tutorial</h3>
+      <p>Are you sure you want to cancel this tutorial?</p>
+      <textarea rows="3" cols="50"></textarea>
+      <div class="button-container">
+        <button class="btn" onclick="closeModal('tutor-home-cancel-modal')">
+          Yes
+        </button>
+        <button class="tutor-home-cancel-no-btn" onclick="closeModal('tutor-home-cancel-modal')">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tutor-home-complete-modal" class="tutor-home-complete-modal modal">
+    <div class="modal-content">
+      <h3>Complete Tutorial</h3>
+      <table class="tutorial-details">
+        <tr>
+          <td>Course of Tutorial:</td>
+          <td><input type="text" name="course" /></td>
+        </tr>
+        <tr>
+          <td>Topic:</td>
+          <td><input type="text" name="topic" /></td>
+        </tr>
+        <tr>
+          <td>Number of Attendees:</td>
+          <td><input type="text" name="attendees" /></td>
+        </tr>
+        <tr>
+          <td>Room No.:</td>
+          <td><input type="text" name="room-number" /></td>
+        </tr>
+        <tr>
+          <td>Total Time of Tutorial:</td>
+          <td><input type="text" name="total-time" /></td>
+        </tr>
+      </table>
+      <div class="button-container">
+        <button class="btn complete-btn" onclick="closeModal('tutor-home-complete-modal')">Complete</button>
+        <button class="btn tutor-home-complete-cancel-btn" onclick="closeModal('tutor-home-complete-modal')">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <script src="tutor.js"></script>
