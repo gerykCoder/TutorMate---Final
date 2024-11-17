@@ -18,17 +18,19 @@
 
 </head>
 <body>
+  <form id="signUpForm" action="/signup" method="post">
   <div class="wrapper">
     <div class="LeftSignUp">
       <div class="header">
         <h1>Create Account</h1>
       </div>
       <div class="PersoInfo">
-        <input class="PersoInfoInput" type="firstName" placeholder="First Name" required>
-        <input class="PersoInfoInput" type="text" placeholder="Last Name" required>
-        <input class="PersoInfoInput" type="program" placeholder="Program" required>
-        <input class="PersoInfoInput" type="yearLevel" placeholder="Year Level" required>
-        <input class="PersoInfoInput" type="tel" placeholder="Contact Number" required>
+        <input type="hidden" name="status" value="pending">
+        <input class="PersoInfoInput" type="text" name="firstName" placeholder="First Name" required>
+        <input class="PersoInfoInput" type="text" name="lastName" placeholder="Last Name" required>
+        <input class="PersoInfoInput" type="program" name="program" placeholder="Program" required>
+        <input class="PersoInfoInput" type="yearLevel" name="yearLvl" placeholder="Year Level" required>
+        <input class="PersoInfoInput" type="tel" name="contactNo" placeholder="Contact Number" required>
       </div>
       <div class="Agreement">
         Already have an account? <a href="/Login/login.html">Log in!</a> <br>
@@ -40,9 +42,9 @@
         Note: Your registration will undergo verification by the admin which may take up to one day. Please monitor your gmail account for a notification confirming that your registration has been successfully completed.
       </div>
       <div class="SchoolInfo">
-        <input class="SchoolInfoInput" type="text" placeholder="Student Number" required>
-        <input class="SchoolInfoInput" type="email" placeholder="TIP Email" required>
-        <input class="SchoolInfoInput" type="password" placeholder="Password" required>
+        <input class="SchoolInfoInput" type="text" name="studentNo" placeholder="Student Number" required>
+        <input class="SchoolInfoInput" type="email" name="email" placeholder="TIP Email" required>
+        <input class="SchoolInfoInput" type="password" name="password" placeholder="Password" required>
       </div>
       <div class="SchoolInfoFile">
         Profile Picture <br>
@@ -52,18 +54,19 @@
       </div>
       <div class="SelectRole">
         Select your role: <br>
-        <input type="radio" name="selectStatus">
+        <input type="radio" name="role" value="tutee">
         <label for="student">Student</label> <br>
-        <input type="radio" name="selectStatus">
+        <input type="radio" name="role" value="tutor">
         <label for="tutor">Tutor</label>
       </div>
       <div class="SignUpButton">
-        <Button>
+        <Button type="submit">
           SIGN UP
         </Button>
       </div>
     </div>
   </div>
+  </form>
 
   <!-- Modal HTML -->
   <div id="terms-and-conditions-modal" class="modal">

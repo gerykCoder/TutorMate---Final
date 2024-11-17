@@ -1,3 +1,4 @@
+
 // Get the modal
 var modal = document.getElementById("terms-and-conditions-modal");
 
@@ -7,3 +8,5 @@ window.onclick = function(event) {
       modal.style.display = "none";
     }
 }
+
+

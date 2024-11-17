@@ -22,7 +22,7 @@
   <div class="container">
     <div class="left-hand-side">
       <div class="Logo">
-        <img class="LogoLS" src="/Pictures/logoLS.png" alt="Logo">
+        <img class="LogoLS" src="/logoLS.png" alt="Logo"/>
       </div>
       <div class="IntroductoryMessage">
         Welcome to TutorMate, your go-to platform for effortless tutorial session management! Whether you're a student looking for academic guidance or a tutor ready to share your expertise, TutorMate makes connecting easy. With just a few clicks, you can register, schedule, and manage your tutorial sessions, ensuring a smooth and efficient learning experience. Let’s make learning more accessible and convenient with TutorMate—where every session helps you grow!
@@ -47,7 +47,8 @@
     </div>
 
     <div class="right-hand-side">
-      
+    
+    <form id="adminForm" action="/" method="post">
       <div id="admin" class="tabcontent">
         <div class="Header">
           <h1 class="head1">WELCOME!</h1>
@@ -56,20 +57,24 @@
         <div class="Credentials">
           <div class="TIPEmail">
             Username:
-            <input class="EmailBox" type="text">
+            <input class="EmailBox" type="text" name="email" id="email">
           </div>
           <div class="Password">
             Password: 
-            <input class="PasswordBox" type="text">
+            <input class="PasswordBox" type="password" name="password" id="password">
           </div>
         </div>
+        <!--Hidden role-->
+        <input type="hidden" name="role" id="role" value="admin">
         <div class="Login">
-          <Button class="LoginButton" onclick="redirectToAdminDashboard()">
+          <Button class="LoginButton" type="submit">
             LOGIN
           </Button>
         </div>
       </div>
+    </form>
 
+    <form id="tuteeForm" action="/" method="post">
       <div id="tutee" class="tabcontent">
         <div class="Header">
           <h1 class="head1">WELCOME!</h1>
@@ -78,22 +83,26 @@
         <div class="Credentials">
           <div class="TIPEmail">
             TIP Email:
-            <input class="EmailBox" type="text">
+            <input class="EmailBox" type="text" name="email" id="email">
           </div>
           <div class="Password">
             Password: 
-            <input class="PasswordBox" type="text">
+            <input class="PasswordBox" type="password" name="password" id="password">
           </div>
           <a href="">Forgot your password?</a><br>
-          <a href="/SignUp/sign-up.html">Sign up!</a>
+          <a href="/signup">Sign up!</a>
         </div>
+        <!--Hidden role-->
+        <input type="hidden" name="role" id="role" value="tutee">
         <div class="Login">
-          <Button class="LoginButton" onclick="redirectToTuteeDashboard()">
+          <Button class="LoginButton" type="submit">
             LOGIN
           </Button>
         </div>
       </div>
+    </form>
 
+    <form id="tutorForm" action="/" method="post">
       <div id="tutor" class="tabcontent">
         <div class="Header">
           <h1 class="head1">WELCOME!</h1>
@@ -102,21 +111,24 @@
         <div class="Credentials">
           <div class="TIPEmail">
             TIP Email:
-            <input class="EmailBox" type="text">
+            <input class="EmailBox" type="text" name="email" id="email">
           </div>
           <div class="Password">
             Password: 
-            <input class="PasswordBox" type="text">
+            <input class="PasswordBox" type="password" name="password" id="password">
           </div>
           <a href="">Forgot your password?</a><br>
-          <a href="">Sign up!</a>
+          <a href="/signup">Sign up!</a>
         </div>
+        <!--Hidden role-->
+        <input type="hidden" name="role" id="role" value="tutee">
         <div class="Login">
-          <Button class="LoginButton" onclick="redirectToTutorDashboard()">
+          <Button class="LoginButton" type="submit">
             LOGIN
           </Button>
         </div>
       </div>
+    </form>
     </div>
   </div>
   <script src="login.js"></script>
