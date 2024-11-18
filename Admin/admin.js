@@ -75,17 +75,20 @@ cancelBtn.onclick = function() {
   modal.style.display = "none";
 }
 
+//Function to reload page
 function reloadPage(){
   window.location.reload();
 }
-// Function to handle pending registrations 
+
+// Function to loading pending registrations in home
 function loadPendingRegistrations(){
   fetch('/admin/pending-users')
   .then(res => res.json())
   .then(data => {
+
     const panel = document.getElementById('pendingRegistrationsPanel');
-    // panel.innerHTML = ''; //Clear panel before populating
-  data.forEach(user => {
+
+    data.forEach(user => {
     //Create user entry
 
     const userDiv = document.createElement('div'); //Parent
@@ -98,10 +101,10 @@ function loadPendingRegistrations(){
                   ${user.firstName} ${user.lastName}
                 </div>
                 <div class="for-approval-right">
-                  <button class="admin-home-view-details" onclick="showDetailsModal(${user.userId})"> 
+                  <button class="admin-home-view-details" onclick="showDetailsHomeModal(${user.userId})"> 
                     View Details
                   </button>
-                  <i id="check-button" class="fa-solid fa-square-check" onclick="openApprovalModal(${user.userId})"></i>
+                  <i id="check-button" class="fa-solid fa-square-check" onclick="openApprovalModal(${user.userId}, '${user.firstName}', '${user.lastName}', '${user.role}')"></i>
                   <i id="x-button" class="fa-solid fa-square-xmark" onclick="openDenyModal(${user.userId})"></i>
                 </div>
       `;
@@ -112,8 +115,68 @@ function loadPendingRegistrations(){
   .catch(error => console.error('Error fetching pending users', error));
 };
 
-//Show details modal
-function showDetailsModal(userId) {
+//Function for loading registered tutors in registered
+function loadRegisteredTutors(){
+  fetch('/admin/registered-tutors')
+  .then(res=>res.json())
+  .then(data=>{
+
+    const registeredTutorsPanel = document.getElementById('registeredTutors');
+
+    data.forEach(user=>{
+
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('list-of-tutor');
+      userDiv.setAttribute('data-user-id', user.userId);
+
+      userDiv.innerHTML = `
+              <div class="list-of-tutor-left">
+              ${user.firstName} ${user.lastName}
+              </div>
+              <div class="list-of-tutor-right">
+                <button class="view-details" onclick="showDetailsRegisteredModalTutors(${user.userId})"> 
+                  View Details
+                </button>
+              </div>`
+
+      registeredTutorsPanel.appendChild(userDiv);
+    });
+    
+  }).catch(error => console.error('Error fetching pending users', error));
+};
+
+//Function for loading registered tutees in registered
+function loadRegisteredTutees(){
+  fetch('/admin/registered-tutees')
+  .then(res=>res.json())
+  .then(data=>{
+
+    const registeredTuteesPanel = document.getElementById('registeredTutees');
+
+    data.forEach(user=>{
+
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('list-of-tutee');
+      userDiv.setAttribute('data-user-id', user.userId);
+
+      userDiv.innerHTML = `
+              <div class="list-of-tutee-left">
+              ${user.firstName} ${user.lastName}
+              </div>
+              <div class="list-of-tutees-right">
+                <button class="view-details" onclick="showDetailsRegisteredModalTutees(${user.userId})"> 
+                  View Details
+                </button>
+              </div>`
+
+      registeredTuteesPanel.appendChild(userDiv);
+    });
+    
+  }).catch(error => console.error('Error fetching pending users', error));
+};
+
+//Show details modal for home
+function showDetailsHomeModal(userId) {
 
   fetch('/admin/pending-users')
   .then(res=>res.json())
@@ -156,20 +219,113 @@ function showDetailsModal(userId) {
 
 };
 
+//Show details modal for registered tutors
+function showDetailsRegisteredModalTutors(userId){
+
+  fetch('/admin/registered-tutors')
+  .then(res=>res.json())
+  .then(data=>{
+
+    const user = data.find(u=>u.userId === userId);
+    const modal = document.getElementById('admin-registered-view-details-modal');
+    
+    const fields = modal.querySelector('.registered-right-side-content').children;
+
+    fields[0].textContent = user.firstName;
+    fields[1].textContent = user.lastName;
+    fields[2].textContent = user.role;
+    fields[3].textContent = user.program;
+    fields[4].textContent = user.yearLvl;
+    fields[5].textContent = user.contactNo;
+    fields[6].textContent = user.studentNo;
+    fields[7].textContent = user.email;
+    fields[8].textContent = user.regForm;
+
+    // Handle Blob for Registration Form
+    if (user.regForm) {
+      const blob = new Blob([user.regForm], { type: 'image/png' }); // Assuming it's a PDF
+      const blobUrl = URL.createObjectURL(blob);
+
+      // Example for PDF
+      const regFormContainer = document.createElement('iframe');
+      regFormContainer.src = blobUrl;
+      regFormContainer.width = '100%';
+      regFormContainer.height = '500px';
+
+      fields[8].textContent = ''; // Clear existing content
+      fields[8].appendChild(regFormContainer);
+    } else {
+      fields[8].textContent = 'No registration form available.';
+    }
+
+      // Link the "Ban" button in the modal to the correct userId
+      const banButton = modal.querySelector('.openBanButtonModal')
+      banButton.onclick = () => openBanModal(userId);
+
+    modal.style.display = 'block';
+  })
+};
+
+//Show details modal for registered tutees
+function showDetailsRegisteredModalTutees(userId){
+
+  fetch('/admin/registered-tutees')
+  .then(res=>res.json())
+  .then(data=>{
+
+    const user = data.find(u=>u.userId === userId);
+    const modal = document.getElementById('admin-registered-view-details-modal');
+    
+    const fields = modal.querySelector('.registered-right-side-content').children;
+
+    fields[0].textContent = user.firstName;
+    fields[1].textContent = user.lastName;
+    fields[2].textContent = user.role;
+    fields[3].textContent = user.program;
+    fields[4].textContent = user.yearLvl;
+    fields[5].textContent = user.contactNo;
+    fields[6].textContent = user.studentNo;
+    fields[7].textContent = user.email;
+    fields[8].textContent = user.regForm;
+
+    // Handle Blob for Registration Form
+    if (user.regForm) {
+      const blob = new Blob([user.regForm], { type: 'image/png' }); // Assuming it's a PDF
+      const blobUrl = URL.createObjectURL(blob);
+
+      // Example for PDF
+      const regFormContainer = document.createElement('iframe');
+      regFormContainer.src = blobUrl;
+      regFormContainer.width = '100%';
+      regFormContainer.height = '500px';
+
+      fields[8].textContent = ''; // Clear existing content
+      fields[8].appendChild(regFormContainer);
+    } else {
+      fields[8].textContent = 'No registration form available.';
+    }
+
+      // Link the "Ban" button in the modal to the correct userId
+      const banButton = modal.querySelector('.openBanButtonModal')
+      banButton.onclick = () => openBanModal(userId);
+
+    modal.style.display = 'block';
+  })
+};
+
 //Function for opening the approval modal
-function openApprovalModal(userId) {
+function openApprovalModal(userId, firstName, lastName, role) {
 
   const modal = document.getElementById('admin-home-check-modal');
 
   // Dynamically update the approve button's onclick handler
   const approveButton = modal.querySelector('.account-approval-approve-button');
-  approveButton.onclick = () => approveUser(userId);
+  approveButton.onclick = () => approveUser(userId, firstName, lastName, role);
 
   modal.style.display = 'block';
-}
+};
 
 //Function for opening the denial modal
-
 function openDenyModal(userId) {
 
   const modal = document.getElementById('admin-home-deny-modal');
@@ -179,31 +335,41 @@ function openDenyModal(userId) {
   denyButton.onclick = () => denyUser(userId);
 
   modal.style.display = 'block';
+};
+
+//Function for opening the ban modal
+function openBanModal(userId) {
+
+  const modal = document.getElementById('admin-registered-view-details-ban-modal');
+  const banButton = modal.querySelector('.account-banning-ban-button');
+
+  banButton.onclick = () => banUser(userId);
+
+  modal.style.display = 'block';
+
 }
 
 //Function for approving pending registrations
 
-function approveUser(userId) {
+function approveUser(userId, firstName, lastName, role) {
   reloadPage();
   document.getElementById("admin-home-check-modal").style.display = 'none';
   fetch('/admin/approve-pending-user', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({userId})
+    body: JSON.stringify({userId, firstName, lastName, role})
   })
   .then(res=>res.json())
   .then(data =>{
-    console.log('Server response:', data);
-      const userDiv = document.querySelector(`.for-approval[data-user-id="${userId}"]`);
-      userDiv.remove();
-      console.log(`User ${userId} removed from the panel`);
+
+    console.log(data);
+    loadPendingRegistrations();
 
 })
   .catch(error =>console.error('Error approving user', error));
 };
 
 //Function for denying pending registrations
-
 function denyUser(userId){
   reloadPage();
   document.getElementById("admin-home-check-modal").style.display = 'none';
@@ -221,8 +387,36 @@ function denyUser(userId){
 
   })
   
+};
+
+//Function for banning registered students
+function banUser(userId){
+  reloadPage();
+  document.getElementById("admin-registered-view-details-ban-modal").style.display = 'none';
+  fetch('/admin/ban-user', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({userId})
+  })
+  .then(res=>res.json())
+  .then(data =>{
+    console.log('Server response:', data);
+      const userDiv = document.querySelector(`.for-approval[data-user-id="${userId}"]`);
+      userDiv.remove();
+      console.log(`User ${userId} removed from the panel`);
+})
+  .catch(error =>console.error('Error approving user', error));
+
 }
 
-document.addEventListener('DOMContentLoaded', loadPendingRegistrations);
+//Initialize all screens
+function initializePage(){
+  loadPendingRegistrations();
+  loadRegisteredTutors();
+  loadRegisteredTutees();
+};
+
+//Screen loader
+document.addEventListener('DOMContentLoaded', initializePage);
 
 

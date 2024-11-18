@@ -185,7 +185,7 @@
         </div>
       </div>
     </div>
-
+    
     <div id="tutorial-history" class="tabcontent">
       <div class="main-tutorial-history">
         <div class="generate-report">
@@ -251,8 +251,8 @@
           <div class="left-side-header">
             Registered Tutors
           </div>
-          <div class="left-side-content">
-            <div class="list-of-tutor">
+          <div id="registeredTutors" class="left-side-content">
+            <!-- <div class="list-of-tutor">
               <div class="list-of-tutor-left">
                 Jose Grayson Atun
               </div>
@@ -261,7 +261,7 @@
                   View Details
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
   
@@ -269,8 +269,8 @@
           <div class="right-side-header">
             Registered Tutees
           </div>
-          <div class="right-side-content">
-            <div class="list-of-tutee">
+          <div id="registeredTutees" class="right-side-content">
+            <!-- <div class="list-of-tutee">
               <div class="list-of-tutee-left">
                 Jose Grayson Atun
               </div>
@@ -279,7 +279,7 @@
                   View Details
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
@@ -428,9 +428,10 @@
         </div>
       </div>
       <div class="registered-view-details-modal-ban-button">
-        <button onclick="document.getElementById('admin-registered-view-details-ban-modal').style.display='block'">
+        <button class="openBanButtonModal">
           Ban
         </button>
+        <!-- onclick="document.getElementById('admin-registered-view-details-ban-modal').style.display='block'" -->
       </div>
     </div>
   </div>

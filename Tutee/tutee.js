@@ -38,5 +38,25 @@ window.onclick = function(event) {
 // Function to handle logout
 function logout() {
   // Redirect to the login page
-  window.location.href = "/Login/login.html"; // Change this to your actual login page URL
+  window.location.href = "/"; // Change this to your actual login page URL
 }
+
+function loadAvailableTutors(){
+
+  fetch('/tutee/available-tutors-registration')
+  .then(res => res.json())
+  .then(tutors =>{
+
+    const tutorSelect = document.getElementById('.tutor');
+    tutorSelect.innerHTML = `<option value="" disabled selected>Please Select</option>`;
+    tutors.forEach(tutor=>{
+
+      const option = document.createElement('option');
+      option.value = tutor.userId;
+      option.textContent = `${tutor.firstName} ${tutor.lastName}`;
+      tutorSelect.appendChild(option);
+    });
+  });
+};
+
+document.addEventListener('DOMContentLoaded', loadAvailableTutors);

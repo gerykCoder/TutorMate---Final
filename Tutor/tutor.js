@@ -40,7 +40,7 @@ window.onclick = function(event) {
 // Function to handle logout
 function logout() {
   // Redirect to the login page
-  window.location.href = "/Login/login.html"; // Change this to your actual login page URL
+  window.location.href = "/"; // Change this to your actual login page URL
 }
 
 

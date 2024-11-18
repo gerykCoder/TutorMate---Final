@@ -27,7 +27,33 @@ async function selectPendingUsers(){
         WHERE
         status = 'pending'`);
     return users;
-}
+};
+
+async function selectRegisteredTutors(){
+    const [users] = await pool.query(`
+        SELECT
+        *
+        FROM
+        users
+        WHERE
+        status = 'registered'
+        AND
+        role = 'Tutor'`);
+    return users;
+};
+
+async function selectRegisteredTutees(){
+    const [users] = await pool.query(`
+        SELECT
+        *
+        FROM
+        users
+        WHERE
+        status = 'registered'
+        AND
+        role = 'Tutee'`);
+    return users;
+};
 
 async function checkUser(email, studentNo){
     const [user] = await pool.query(`
@@ -54,6 +80,28 @@ async function insertUser(firstName, lastName, program, yearLvl, contactNo, stud
     return user[0];
 };
 
+async function insertTutor(firstName, lastName){
+
+    const [user] = await pool.query(`
+        INSERT
+        INTO
+        tutors(firstName, lastName)
+        VALUES (?, ?)`, [firstName, lastName]);
+
+    return user[0];
+};
+
+async function insertTutee(firstName, lastName){
+
+    const [user] = await pool.query(`
+        INSERT
+        INTO
+        tutees(firstName, lastName)
+        VALUES (?, ?)`, [firstName, lastName]);
+
+    return user[0];
+}
+
 async function approveUser(userId){
     
     const [user] = await pool.query(`
@@ -73,6 +121,17 @@ async function deleteUser(userId){
         users
         WHERE
         userId = ?`, [userId]);
-}
+};
 
-module.exports = {pool, selectAllUsers, selectPendingUsers, checkUser, insertUser, approveUser, deleteUser};
+async function banUser(userId){
+    
+    const [user] = await pool.query(`
+        UPDATE
+        users
+        SET
+        status = 'banned'
+        WHERE
+        userId = ?`, [userId]);
+};
+
+module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser};

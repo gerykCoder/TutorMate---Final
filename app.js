@@ -6,7 +6,7 @@ const mysqlStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
-const {pool, selectAllUsers, selectPendingUsers, checkUser, insertUser, approveUser, deleteUser} = require('./db');
+const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser} = require('./db');
 const checkRole = require('./middleware');
 const { error } = require('console');
 
@@ -35,14 +35,12 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Static Files
-app.use(express.static('Login'));
-app.use(express.static('SignUp'));
-app.use(express.static('Admin'));
-app.use(express.static('Tutee'));
-app.use(express.static('Tutor'));
-app.use(express.static('Pictures'));
+//Static Folders
+const staticFolders = ['Login', 'Signup', 'Admin', 'Tutee', 'Tutor', 'Pictures'];
 
+staticFolders.forEach(folder=>{
+    app.use(express.static(folder));
+});
 
 //Render Login
 app.get('/', (req, res)=>{
@@ -69,14 +67,17 @@ app.post('/', async(req, res)=>{
             req.session.user = user;
             console.log("User session set: ", req.session.user);
 
-            if (user.role === 'admin'){
+            if (user.role === 'Admin' && user.status === 'registered'){
                 res.redirect('/admin');
             }
-            else if (user.role === 'tutee'){
+            else if (user.role === 'Tutee' && user.status === 'registered'){
                 res.redirect('/tutee');
             }
-            else if (user.role === 'tutor'){
+            else if (user.role === 'Tutor' && user.status === 'registered'){
                 res.redirect('/tutor');
+            }
+            else{
+                window.alert('Access Denied');
             }
         }
         else{
@@ -106,17 +107,25 @@ app.post('/signup', async(req, res)=>{
 
         return res.status(400).send('Invalid Year Level');
 
-    }
+    };
 
-    if(existingUser){
+    if(existingUser && existingUser.status !== 'banned'){
 
         return res.status(400).send('User already exists');
 
+    };
+
+    if(existingUser && existingUser.status === 'banned'){
+
+        return res.status(400).send('User account was banned')
+
     }
+
     else{
 
         const pendingUser = await insertUser(firstName, lastName, program, yearLvl, contactNo, studentNo, email, password, role, profPic, regForm, status);
-        res.send(`You have succesfully registered your account. Please wait for the admin's approval for an access to your account. Thank you!`);
+        res.redirect('/');
+        // window.alert(`You have succesfully registered your account. Please wait for the admin's approval for an access to your account. Thank you!`);
         
     }
 
@@ -126,18 +135,37 @@ app.post('/signup', async(req, res)=>{
 app.get('/admin/pending-users', async(req, res)=>{
 
     //Fetch Pending Users
-    const pendingUsers = await selectPendingUsers();
+    const users = await selectPendingUsers();
     //Send Pending Users as JSON
-    res.json(pendingUsers);
+    res.json(users);
 
     });
 
 //Pending User Approval Handler
 app.post('/admin/approve-pending-user', async(req, res) => {
 
-    const {userId} = req.body;
-    await approveUser(userId);
+    const {userId, role, firstName, lastName} = req.body;
 
+    try{
+        
+        await approveUser(userId);
+
+    if (role === 'Tutor') {
+
+        await insertTutor(firstName, lastName);
+
+    }
+    else if(role === 'Tutee'){
+
+        await insertTutee(firstName, lastName);
+        
+    }
+        res.status(200).json({ message: 'User approved successfully', userId });
+    }
+    catch(error){
+        console.error('Error approving user:', error);
+        res.status(500).json({ error: 'Failed to approve user' });
+    }
     });
 
 //Pending User Denial Handler
@@ -145,22 +173,61 @@ app.post('/admin/deny-pending-user', async(req, res)=>{
 
     const {userId} = req.body;
     await deleteUser(userId);
-    
+
+    });
+
+//Banning User Handler
+app.post('/admin/ban-user', async(req, res)=>{
+
+    const {userId} = req.body;
+    try{
+        await banUser(userId);
+        res.status(200).json({ message: 'User banned successfully', userId });
+    }
+    catch(error){
+        console.error('Error banning user:', error);
+        res.status(500).json({ error: 'Failed to ban user' });
+    }
+    });
+
+//Show Registered Tutors on "Registered" Tab
+app.get('/admin/registered-tutors', async(req, res)=>{
+
+    const tutors = await selectRegisteredTutors();
+    res.json(tutors);
+    });
+
+//Show Registered Tutees on "Registered" Tab
+app.get('/admin/registered-tutees', async(req, res)=>{
+
+    const tutees = await selectRegisteredTutees();
+    res.json(tutees);
     });
 
 //Render Admin
-app.get('/admin', checkRole('admin'), async(req, res)=>{
+app.get('/admin', checkRole('Admin'), async(req, res)=>{
 
     res.sendFile(path.join(__dirname+'/Admin/admin.html'));
 
-});
+    });
 
 //Render Tutee
-app.get('/tutee', checkRole('tutee'), (req, res)=>{
+app.get('/tutee', checkRole('Tutee'), (req, res)=>{
     res.sendFile(path.join(__dirname+'/Tutee/tutee.html'));
-})
+    });
 
 //Render Tutor
-app.get('/tutor', checkRole('tutor'), (req, res)=>{
+app.get('/tutor', checkRole('Tutor'), (req, res)=>{
     res.sendFile(path.join(__dirname+'/Tutor/tutor.html'));
-})
+    });
+
+app.get('/tutee/available-tutors-registration', async(req, res)=>{
+
+    try{
+        const tutors = await selectRegisteredTutors();
+        res.json(tutors);
+    }
+    catch(error){
+        res.status(400).json("Error fetching user")
+    }
+    });
