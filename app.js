@@ -6,7 +6,7 @@ const mysqlStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
-const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser} = require('./db');
+const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser} = require('./db');
 const checkRole = require('./middleware');
 const { error } = require('console');
 
@@ -221,6 +221,17 @@ app.get('/tutor', checkRole('Tutor'), (req, res)=>{
     res.sendFile(path.join(__dirname+'/Tutor/tutor.html'));
     });
 
+app.get('/tutee/course-of-tutorial-registration', async(req, res)=>{
+
+    try{
+        const courses = await selectCourses();
+        res.json(courses);
+    }
+    catch(error){
+        res.status(400).json("Error fetching courses")
+    }
+})
+
 app.get('/tutee/available-tutors-registration', async(req, res)=>{
 
     try{
@@ -228,6 +239,6 @@ app.get('/tutee/available-tutors-registration', async(req, res)=>{
         res.json(tutors);
     }
     catch(error){
-        res.status(400).json("Error fetching user")
+        res.status(400).json("Error fetching user");
     }
     });

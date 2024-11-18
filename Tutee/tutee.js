@@ -59,4 +59,13 @@ function loadAvailableTutors(){
   });
 };
 
+function loadCourses(){
+
+  fetch('/tutee/courses-of-tutorial-registration')
+  .then(res=> res.json())
+  .then(courses =>{
+
+  })
+}
+
 document.addEventListener('DOMContentLoaded', loadAvailableTutors);

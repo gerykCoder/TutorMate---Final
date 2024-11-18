@@ -28,7 +28,7 @@
   display: none;
   border-radius: 0 15px 15px 15px;
   overflow: auto;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 180px);
   width: 100%;
 }
 

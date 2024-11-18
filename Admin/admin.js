@@ -371,22 +371,18 @@ function approveUser(userId, firstName, lastName, role) {
 
 //Function for denying pending registrations
 function denyUser(userId){
-  reloadPage();
-  document.getElementById("admin-home-check-modal").style.display = 'none';
+  document.getElementById("admin-home-deny-modal").style.display = 'none';
   fetch('/admin/deny-pending-user', {
     method: 'POST',
-    headers: {'Content-Type': 'applcation/json'},
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({userId})
   })
   .then(res=>res.json())
   .then(data =>{
-    console.log('Server response:', data);
-    const userDiv = document.querySelector(`.for-approval[data-user-id="${userId}"]`);
-    userDiv.remove();
-    console.log(`User ${userId} removed from the panel`);
-
+    loadPendingRegistrations();
   })
-  
+  .catch(error =>console.error('Error approving user', error));
+  reloadPage();
 };
 
 //Function for banning registered students

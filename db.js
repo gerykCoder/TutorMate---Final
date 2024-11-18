@@ -55,6 +55,15 @@ async function selectRegisteredTutees(){
     return users;
 };
 
+async function selectCourses(){
+    const [courses] = await pool.query(`
+        SELECT
+        *
+        FROM
+        courses`);
+    return courses;
+};
+
 async function checkUser(email, studentNo){
     const [user] = await pool.query(`
         SELECT
@@ -134,4 +143,4 @@ async function banUser(userId){
         userId = ?`, [userId]);
 };
 
-module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser};
+module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser};
