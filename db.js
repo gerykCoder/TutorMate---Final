@@ -143,4 +143,59 @@ async function banUser(userId){
         userId = ?`, [userId]);
 };
 
-module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser};
+async function getAvailability(userId) {
+    const [rows] = await pool.query(
+        `SELECT 
+        dayIndex, timeIndex 
+        FROM 
+        availability 
+        WHERE 
+        userId = ?`, [userId]);
+    return rows;
+};
+
+async function clearAvailability(userId) {
+    await pool.query(`
+        DELETE 
+        FROM 
+        availability 
+        WHERE 
+        userId = ?`, [userId]);
+};
+
+async function insertAvailability(day, timeSlot) {
+    await pool.query(
+        `INSERT 
+        INTO 
+        availability (day, timeSlot) VALUES (?, ?, ?)`,[day, timeSlot]);
+};
+
+async function saveAvailability(userId, availability) {
+    try {
+        // Loop through each availability item and insert it into the database
+        for (const item of availability) {
+            const { day, time } = item;
+
+            // Check if the availability already exists (optional)
+            const [existingAvailability] = await pool.query(`
+                SELECT * 
+                FROM availability
+                WHERE userId = ? AND day = ? AND timeSlot = ?`, [userId, day, time]);
+
+            // If the availability doesn't exist, insert it
+            if (existingAvailability.length === 0) {
+                await pool.query(`
+                    INSERT INTO availability (userId, day, timeSlot) 
+                    VALUES (?, ?, ?)`, [userId, day, time]);
+            }
+        }
+        return { message: 'Availability saved successfully!' };
+    } catch (error) {
+        console.error('Error saving availability:', error);
+        throw new Error('Failed to save availability');
+    }
+}
+
+
+
+module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser, getAvailability, clearAvailability, insertAvailability, saveAvailability};

@@ -78,7 +78,7 @@ cancelBtn.onclick = function() {
 //Function to reload page
 function reloadPage(){
   window.location.reload();
-}
+};
 
 // Function to loading pending registrations in home
 function loadPendingRegistrations(){
@@ -347,7 +347,7 @@ function openBanModal(userId) {
 
   modal.style.display = 'block';
 
-}
+};
 
 //Function for approving pending registrations
 
@@ -403,7 +403,7 @@ function banUser(userId){
 })
   .catch(error =>console.error('Error approving user', error));
 
-}
+};
 
 //Initialize all screens
 function initializePage(){

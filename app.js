@@ -6,7 +6,7 @@ const mysqlStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
-const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser} = require('./db');
+const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser, getAvailability, clearAvailability, insertAvailability, saveAvailability} = require('./db');
 const checkRole = require('./middleware');
 const { error } = require('console');
 
@@ -28,7 +28,7 @@ app.use(session({
     secret: "some_secret",
     resave: false,
     saveUninitialized: false,
-    cookie: {maxAge: 30000},
+    cookie: {maxAge: 10000000},
 }));
 
 //Body Parser and Cookie Parser
@@ -36,11 +36,20 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Static Folders
-const staticFolders = ['Login', 'Signup', 'Admin', 'Tutee', 'Tutor', 'Pictures'];
+const staticFolders = ['Login', 'Signup', 'Pictures'];
 
 staticFolders.forEach(folder=>{
     app.use(express.static(folder));
 });
+
+// Serve static files for Admin
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
+
+// Serve static files for Tutor
+app.use('/tutor', express.static(path.join(__dirname, 'tutor')));
+
+// Serve static files for Login
+app.use('/tutee', express.static(path.join(__dirname, 'tutee')));
 
 //Render Login
 app.get('/', (req, res)=>{
@@ -71,10 +80,10 @@ app.post('/', async(req, res)=>{
                 res.redirect('/admin');
             }
             else if (user.role === 'Tutee' && user.status === 'registered'){
-                res.redirect('/tutee');
+                res.redirect(`/tutee/${user.userId}`);
             }
             else if (user.role === 'Tutor' && user.status === 'registered'){
-                res.redirect('/tutor');
+                res.redirect(`/tutor/${user.userId}`);
             }
             else{
                 window.alert('Access Denied');
@@ -212,13 +221,8 @@ app.get('/admin', checkRole('Admin'), async(req, res)=>{
     });
 
 //Render Tutee
-app.get('/tutee', checkRole('Tutee'), (req, res)=>{
-    res.sendFile(path.join(__dirname+'/Tutee/tutee.html'));
-    });
-
-//Render Tutor
-app.get('/tutor', checkRole('Tutor'), (req, res)=>{
-    res.sendFile(path.join(__dirname+'/Tutor/tutor.html'));
+app.get('/tutee/:userId', checkRole('Tutee'), (req, res)=>{
+    res.sendFile(path.join(__dirname, 'Tutee', 'tutee.html'));
     });
 
 app.get('/tutee/course-of-tutorial-registration', async(req, res)=>{
@@ -242,3 +246,24 @@ app.get('/tutee/available-tutors-registration', async(req, res)=>{
         res.status(400).json("Error fetching user");
     }
     });
+
+//Render Tutor  
+app.get('/tutor/:userId', checkRole('Tutor'), (req, res)=>{
+    res.sendFile(path.join(__dirname, 'Tutor', 'tutor.html'));
+    });
+
+// Post tutor availability (to update the tutor's schedule)
+app.post('/tutor/availability', async (req, res) => {
+    const userId = req.session.user.userId;
+    const { availability } = req.body; // Get availability array
+
+    try {
+
+        await saveAvailability(userId, availability);
+
+        res.json({ success: true, message: 'Availability updated successfully' });
+    } catch (error) {
+        console.error('Error saving availability:', error);
+        res.status(500).json({ error: 'Failed to save availability' });
+    }
+});
