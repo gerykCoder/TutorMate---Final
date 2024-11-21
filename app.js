@@ -76,6 +76,11 @@ app.post('/', async(req, res)=>{
             req.session.user = user;
             console.log("User session set: ", req.session.user);
 
+            if (user.role !== role) {
+                res.status(403).send('Access Denied: Incorrect role for login');
+                return;
+              }
+
             if (user.role === 'Admin' && user.status === 'registered'){
                 res.redirect('/admin');
             }

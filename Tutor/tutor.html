@@ -336,14 +336,17 @@
           </div>
         </div>
         <div class="schedule-button">
+          <button class="course-of-tutorial-button" id="course-of-tutorial-button" onclick="openModal('tutor-time-availability-teachable-course-modal')">
+            Teachable Course
+          </button>
           <button class="edit-button" id="edit-button" onclick="toggleEditMode()">
             EDIT
           </button>
           <button class="save-button" id="save-button" style="display:none;" onclick="saveChanges()">
-              SAVE
+            SAVE
           </button>
           <button class="cancel-button" id="cancel-button" style="display:none;" onclick="cancelChanges()">
-              CANCEL
+            CANCEL
           </button>
         </div>
       </div>
@@ -355,7 +358,6 @@
   <!-- Modal HTML -->
 
   <div id="logout-modal" class="logout-modal modal">
-    <span onclick="document.getElementById('logout-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
     <form class="logout-modal-content" action="/action_page.php">
       <div class="container">
         <h1>Log out</h1>
@@ -372,30 +374,6 @@
   <div id="tutor-home-view-details-modal" class="tutor-home-view-details-modal modal">
     <div class="tutor-home-view-details-modal-content">
       <h3>Tutorial Details</h3>
-      <!-- <div class="tutor-home-view-details-modal-container"> 
-        <div class="home-view-details-left-side-content">
-          <div>Status:</div>
-          <div>Tutee Name:</div>
-          <div>Program:</div>
-          <div>Course of Tutorial:</div>
-          <div>Topic:</div>
-          <div>Expected Number of Attendees:</div>
-          <div>Date of Tutorial:</div>
-          <div>Tutorial Starting Time:</div>
-          <div>Tutorial Ending Time:</div>
-        </div>
-        <div class="home-view-details-right-side-content">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div> -->
       <table class="tutorial-details">
         <tr>
           <td>Status:</td>
@@ -514,6 +492,36 @@
       <div class="button-container">
         <button class="btn complete-btn" onclick="closeModal('tutor-home-complete-modal')">Complete</button>
         <button class="btn tutor-home-complete-cancel-btn" onclick="closeModal('tutor-home-complete-modal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tutor-time-availability-teachable-course-modal" class="tutor-time-availability-teachable-course-modal modal">
+    <div class="modal-content">
+      <h3>Teachable Course</h3>
+      <p>Please choose the course/s that you prefer to teach.</p>
+
+      <div class="teachable-courses">
+        <input type="checkbox" id="course1" name="course1" value="Advanced-Engineering-Mathematics">
+        <label for="course1">Advanced Engineering Mathematics</label>
+        <br>
+
+        <input type="checkbox" id="course2" name="course2" value="calculus-1">
+        <label for="course2">Calculus 1 (Differential Calculus)</label>
+        <br>
+
+        <input type="checkbox" id="course3" name="course3" value="calculus-2">
+        <label for="course3">Calculus 2 (Integral Calculus)</label>
+        <br>
+      </div>
+      
+      <div class="button-container">
+        <button class="btn" onclick="closeModal('tutor-home-cancel-modal')">
+          Save
+        </button>
+        <button class="tutor-home-cancel-no-btn" onclick="closeModal('tutor-home-cancel-modal')">
+          Cancel
+        </button>
       </div>
     </div>
   </div>

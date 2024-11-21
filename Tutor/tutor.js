@@ -50,7 +50,7 @@ function openModal(modalId) {
     document.getElementById(modalId).style.display = 'block';
   }
   
-  function closeModal(modalId) {
+function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
   }
 
@@ -61,6 +61,7 @@ function reloadPage(){
 
   window.location.reload();
 }
+
 let isEditMode = false;
 const checkboxes = document.querySelectorAll(".checkbox");
 

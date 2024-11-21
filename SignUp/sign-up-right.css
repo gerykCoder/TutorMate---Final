@@ -54,6 +54,17 @@
   font-size: 1.3rem;
   font-weight: 700;
   border-radius: 15px;
-  
+  cursor: pointer;
+}
+
+input[type="file"] {
+  font-size: 17px;
+  color: #b8b8b8;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+input[type="radio"]{
+  cursor: pointer;
 }
 

@@ -68,11 +68,13 @@
   background-color: white;
   font-size: 16px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .fa-square-check, .fa-square-xmark{
   font-size: 26px;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 /******************************** Tutorial History Main ********************************/ 
@@ -219,6 +221,7 @@
   justify-content: end;
 }
 
+.course-of-tutorial-button,
 .edit-button,
 .cancel-button,
 .save-button {
@@ -231,6 +234,10 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.course-of-tutorial-button{
+  font-weight: 500;
 }
 
 .schedule-table td {
