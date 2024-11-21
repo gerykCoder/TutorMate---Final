@@ -55,34 +55,149 @@ function closeModal(modalId) {
   document.getElementById(modalId).style.display = 'none';
 }
 
-function loadAvailableTutors(){
-
-  fetch('/tutee/available-tutors-registration')
-  .then(res => res.json())
-  .then(tutors =>{
-
-    const tutorSelect = document.getElementById('.tutor');
-    tutorSelect.innerHTML = `<option value="" disabled selected>Please Select</option>`;
-    tutors.forEach(tutor=>{
-
-      const option = document.createElement('option');
-      option.value = tutor.userId;
-      option.textContent = `${tutor.firstName} ${tutor.lastName}`;
-      tutorSelect.appendChild(option);
-    });
-  });
-};
-
-function loadCourses(){
-
-  fetch('/tutee/courses-of-tutorial-registration')
-  .then(res=> res.json())
-  .then(courses =>{
-
-  })
+function reloadPage(){
+   window.location.reload();
 }
 
-document.addEventListener('DOMContentLoaded', loadAvailableTutors);
+function loadRegistration(){
+
+  //Tutor and Course Relationship
+  fetch('/api/tutee/tutorial-registration')
+  .then(res => res.json())
+  .then(({courses, tutors, firstName, lastName})=>{
+
+   const selectElementCourses = document.getElementById('course');
+   const selectElementTutors = document.getElementById('tutor');
+
+   courses.forEach(course=>{
+    const option = document.createElement('option');
+    option.value = course.course;
+    option.textContent = course.course;
+
+    selectElementCourses.appendChild(option);
+   });
+
+        selectElementCourses.addEventListener('change', () => {
+        const selectedCourseName = selectElementCourses.value;
+
+        // Clear the tutor dropdown
+        selectElementTutors.innerHTML = '<option value="" disabled selected>Please Select a Tutor</option>';
+
+        // Filter tutors who can handle the selected course
+        const filteredTutors = tutors.filter(tutor => tutor.coursesHandled.includes(selectedCourseName));
+
+        // Populate tutors dropdown with filtered tutors
+        filteredTutors.forEach(tutor => {
+          const option = document.createElement('option');
+          option.value = `${tutor.firstName} ${tutor.lastName}`;
+          option.textContent = `${tutor.firstName} ${tutor.lastName}`;
+          selectElementTutors.appendChild(option);
+        });
+      });
+
+          const registerButton = document.getElementById('registration-tutorial-register-button');
+          registerButton.addEventListener('click', async()=>{
+        
+            const tuteeAmount = document.getElementById('NoOfTutees').value;
+            const tutee = `${firstName} ${lastName}`;
+            const selectedCourse = document.getElementById('course').value;
+            const selectedTutor = document.getElementById('tutor').value;
+            const topicsForTutorial = document.getElementById('topic').value;
+            const preferredDate = document.getElementById('date').value;
+            const startingTime = document.getElementById('timeStart').value;
+            const endingTime = document.getElementById('timeEnd').value;
+            const time = `${startingTime} - ${endingTime}`;
+        
+            const registrationDetails= {
+        
+              noOfTutees: tuteeAmount,
+              course: selectedCourse,
+              topics: topicsForTutorial,
+              date: preferredDate,
+              time: time,
+              tutee: tutee,
+              tutor: selectedTutor,
+              status: 'Pending'
+            };
+        try{
+
+          const response = await fetch('/api/tutee/tutorial-registration', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({registrationDetails})
+          });
+
+            if (!response.ok) {
+              const { error } = await response.json(); // Get error message from backend
+              alert(error); // Display error as an alert
+            }else {
+              const newTutorial = await response.json();
+              console.log('Tutorial successfully registered:', newTutorial);
+              alert('Tutorial successfully registered!'); // Success alert
+          }
+        }
+        catch (error){
+              console.error('Error during registration:', error);
+              alert('An unexpected error occurred. Please try again.'); // Generic error alert
+
+        }
+            
+          });
+      });
+
+};
+
+function loadPendingTutorials(){
+
+  fetch('/api/tutee/tutorial-registration-pending-tutorials')
+  .then(res=>res.json())
+  .then(data=>{
+
+    const panel = document.getElementById('pendingTutorials');
+    data.forEach(tutorial=>{
+
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('pending-tutorial');
+
+      userDiv.innerHTML = `
+                <div class="pending-tutorial-left">
+                  ${tutorial.tutor}
+                </div>
+                <div class="pending-tutorial-right">
+                  <button class="view-details" onclick="openPendingModal(${tutorial.tutorialNo})"> 
+                    View Details
+                  </button>
+                  <i class="fa-solid fa-square-xmark" onclick="openModal('tutee-registration-delete-modal')"></i>
+                </div>`
+      panel.appendChild(userDiv);
+    });
+  })
+};
+
+function openPendingModal(tutorialNo){
+
+  fetch('/api/tutee/tutorial-registration-pending-tutorials')
+  .then(res=>res.json())
+  .then(data => {
+
+    console.log(data);
+    const tutorial = data.find(t=>t.tutorialNo === tutorialNo);
+    const modal = document.getElementById('tutee-registration-view-details-modal');
+    const rows = modal.querySelectorAll('.tutorial-details tr');
+
+      rows[0].children[1].textContent = tutorial.status;
+      rows[1].children[1].textContent = tutorial.tutor;
+      rows[2].children[1].textContent = tutorial.course;
+      rows[3].children[1].textContent = tutorial.topics;
+      rows[4].children[1].textContent = tutorial.noOfTutees;
+      rows[5].children[1].textContent = tutorial.date;
+      rows[6].children[1].textContent = tutorial.time;
+
+      modal.style.display = 'block';
+
+  });
+
+};
 
 /********************** Time Registration *********************/
 
@@ -152,43 +267,6 @@ function show(timePickable) {
 
 	return picker;
 }
-
-// function buildPicker(timePickable) {
-// 	const picker = document.createElement("div");
-// 	const hourOptions = [9, 10, 11, 12, 1, 2, 3, 4, 5].map(numberToOption);
-// 	const minuteOptions = [0, 30].map(numberToOption);
-
-// 	picker.classList.add("time-picker");
-// 	picker.innerHTML = `
-// 		<select class="time-picker__select">
-// 			${hourOptions.join("")}
-// 		</select>
-// 		:
-// 		<select class="time-picker__select">
-// 			${minuteOptions.join("")}
-// 		</select>
-// 		<select class="time-picker__select">
-// 			<option value="am">am</option>
-// 			<option value="pm">pm</option>
-// 		</select>
-// 	`;
-
-// 	const selects = getSelectsFromPicker(picker);
-
-// 	selects.hour.addEventListener("change", () => timePickable.value = getTimeStringFromPicker(picker));
-// 	selects.minute.addEventListener("change", () => timePickable.value = getTimeStringFromPicker(picker));
-// 	selects.meridiem.addEventListener("change", () => timePickable.value = getTimeStringFromPicker(picker));
-
-// 	if (timePickable.value) {
-// 		const { hour, minute, meridiem } = getTimePartsFromPickable(timePickable);
-
-// 		selects.hour.value = hour;
-// 		selects.minute.value = minute;
-// 		selects.meridiem.value = meridiem;
-// 	}
-
-// 	return picker;
-// }
 
 function buildPicker(timePickable) {
   const picker = document.createElement("div");
@@ -275,192 +353,4 @@ function numberToOption(number) {
 }
 
 activate();
-
-// function activate() {
-//   document.head.insertAdjacentHTML("beforeend", `
-//       <style>
-//           .time-picker {
-//               position: absolute;
-//               display: inline-block;
-//               padding: 10px;
-//               background: #eeeeee;
-//               border-radius: 6px;
-//           }
-//           .time-picker__select {
-//               -webkit-appearance: none;
-//               -moz-appearance: none;
-//               appearance: none;
-//               outline: none;
-//               text-align: center;
-//               border: 1px solid #dddddd;
-//               border-radius: 6px;
-//               padding: 6px 10px;
-//               background: #ffffff;
-//               cursor: pointer;
-//               font-family: 'Heebo', sans-serif;
-//           }
-//       </style>
-//   `);
-
-//   const startTimePickable = document.getElementById("timeStart");
-//   const endTimePickable = document.getElementById("timeEnd");
-
-//   // Activate pickers
-//   setupPicker(startTimePickable, { minHour: 9, maxHour: 17 }, () => {
-//       updateEndTimeOptions(startTimePickable, endTimePickable);
-//   });
-
-//   setupPicker(endTimePickable, { minHour: 9, maxHour: 18 });
-
-//   startTimePickable.addEventListener("input", () => {
-//       updateEndTimeOptions(startTimePickable, endTimePickable);
-//   });
-// }
-
-// function setupPicker(inputElement, range, onChangeCallback) {
-//   let activePicker = null;
-
-//   inputElement.addEventListener("focus", () => {
-//       if (activePicker) return;
-
-//       activePicker = showPicker(inputElement, range, onChangeCallback);
-
-//       const onClickAway = ({ target }) => {
-//           if (
-//               target === activePicker ||
-//               target === inputElement ||
-//               activePicker.contains(target)
-//           ) {
-//               return;
-//           }
-
-//           document.removeEventListener("mousedown", onClickAway);
-//           document.body.removeChild(activePicker);
-//           activePicker = null;
-//       };
-
-//       document.addEventListener("mousedown", onClickAway);
-//   });
-// }
-
-// function showPicker(inputElement, range, onChangeCallback) {
-//   const picker = buildPicker(inputElement, range, onChangeCallback);
-//   const { bottom: top, left } = inputElement.getBoundingClientRect();
-
-//   picker.style.top = `${top}px`;
-//   picker.style.left = `${left}px`;
-
-//   document.body.appendChild(picker);
-
-//   return picker;
-// }
-
-// function buildPicker(inputElement, range, onChangeCallback) {
-//   const picker = document.createElement("div");
-//   const hourOptions = generateHourOptions(range.minHour, range.maxHour);
-//   const minuteOptions = [0, 30].map(numberToOption);
-
-//   picker.classList.add("time-picker");
-//   picker.innerHTML = `
-//       <select class="time-picker__select hour-select">
-//           ${hourOptions.join("")}
-//       </select>
-//       :
-//       <select class="time-picker__select minute-select">
-//           ${minuteOptions.join("")}
-//       </select>
-//       <select class="time-picker__select meridiem-select" disabled>
-//           <option value="am">am</option>
-//           <option value="pm">pm</option>
-//       </select>
-//   `;
-
-//   const selects = getSelectsFromPicker(picker);
-
-//   selects.hour.addEventListener("change", () => {
-//       validateAndSetTime(inputElement, picker);
-//       if (onChangeCallback) onChangeCallback();
-//   });
-
-//   selects.minute.addEventListener("change", () => {
-//       validateAndSetTime(inputElement, picker);
-//       if (onChangeCallback) onChangeCallback();
-//   });
-
-//   if (inputElement.value) {
-//       const { hour, minute, meridiem } = getTimePartsFromPickable(inputElement);
-//       selects.hour.value = hour;
-//       selects.minute.value = minute;
-//       selects.meridiem.value = meridiem;
-//   }
-
-//   return picker;
-// }
-
-// function updateEndTimeOptions(startTimeInput, endTimeInput) {
-//   const { hour: startHour, minute: startMinute, meridiem: startMeridiem } = getTimePartsFromPickable(startTimeInput);
-//   const startTime = convertTo24HourFormat(parseInt(startHour, 10), startMeridiem);
-//   const endTimeRange = {
-//       minHour: startTime + 1, // 1 hour after the start time
-//       maxHour: 18 // 6 PM
-//   };
-
-//   // Update the end time picker options
-//   const endPicker = document.querySelector(".time-picker");
-//   if (endPicker) {
-//       document.body.removeChild(endPicker);
-//   }
-
-//   setupPicker(endTimeInput, endTimeRange);
-// }
-
-// function generateHourOptions(minHour, maxHour) {
-//   return Array.from({ length: maxHour - minHour + 1 }, (_, i) => {
-//       const hour = (minHour + i) % 12 || 12; // Convert to 12-hour format
-//       return numberToOption(hour);
-//   });
-// }
-
-// function validateAndSetTime(inputElement, picker) {
-//   const selects = getSelectsFromPicker(picker);
-
-//   let selectedHour = parseInt(selects.hour.value, 10);
-//   let selectedMinute = parseInt(selects.minute.value, 10);
-
-//   if (selectedHour >= 9 && selectedHour <= 11) {
-//       selects.meridiem.value = "am";
-//   } else {
-//       selects.meridiem.value = "pm";
-//   }
-
-//   inputElement.value = `${selectedHour}:${selectedMinute.toString().padStart(2, "0")} ${selects.meridiem.value}`;
-// }
-
-// function getTimePartsFromPickable(inputElement) {
-//   const pattern = /^(\d+):(\d+) (am|pm)$/;
-//   const match = inputElement.value.match(pattern);
-//   if (!match) return { hour: "9", minute: "0", meridiem: "am" };
-
-//   const [, hour, minute, meridiem] = match;
-//   return { hour, minute, meridiem };
-// }
-
-// function getSelectsFromPicker(timePicker) {
-//   const [hour, minute, meridiem] = timePicker.querySelectorAll(".time-picker__select");
-
-//   return { hour, minute, meridiem };
-// }
-
-// function convertTo24HourFormat(hour, meridiem) {
-//   if (meridiem === "pm" && hour < 12) return hour + 12;
-//   if (meridiem === "am" && hour === 12) return 0;
-//   return hour;
-// }
-
-// function numberToOption(number) {
-//   const padded = number.toString().padStart(2, "0");
-//   return `<option value="${padded}">${padded}</option>`;
-// }
-
-// activate();
 

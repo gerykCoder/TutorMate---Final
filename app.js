@@ -6,7 +6,7 @@ const mysqlStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
-const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser, getAvailability, clearAvailability, insertAvailability, saveAvailability} = require('./db');
+const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectTutors, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser, deleteTutorAvailability, saveTutorAvailability, selectTutorAvailability, insertTutorialIntoTutees, checkExistingTutorialTutee, selectPendingTutorials} = require('./db');
 const checkRole = require('./middleware');
 const { error } = require('console');
 
@@ -166,12 +166,12 @@ app.post('/admin/approve-pending-user', async(req, res) => {
 
     if (role === 'Tutor') {
 
-        await insertTutor(firstName, lastName);
+        await insertTutor(userId, firstName, lastName);
 
     }
     else if(role === 'Tutee'){
 
-        await insertTutee(firstName, lastName);
+        await insertTutee(userId, firstName, lastName);
         
     }
         res.status(200).json({ message: 'User approved successfully', userId });
@@ -230,26 +230,59 @@ app.get('/tutee/:userId', checkRole('Tutee'), (req, res)=>{
     res.sendFile(path.join(__dirname, 'Tutee', 'tutee.html'));
     });
 
-app.get('/tutee/course-of-tutorial-registration', async(req, res)=>{
+app.get('/api/tutee/tutorial-registration', async(req, res)=>{
 
-    try{
-        const courses = await selectCourses();
-        res.json(courses);
-    }
-    catch(error){
-        res.status(400).json("Error fetching courses")
-    }
-})
+    //Tutee
+    const {firstName, lastName} = req.session.user
 
-app.get('/tutee/available-tutors-registration', async(req, res)=>{
+    //Fetch courses from db
+    const courses = await selectCourses();
+    const tutors = await selectTutors();
 
-    try{
-        const tutors = await selectRegisteredTutors();
-        res.json(tutors);
+    console.log(tutors);
+    //Send courses to frontend as JSON
+    res.json({courses, tutors, firstName, lastName});
+
+    });
+
+app.post('/api/tutee/tutorial-registration', async(req, res)=>{
+    
+    const {registrationDetails} = req.body;
+
+    // Extract details from the registration request
+
+    const { date, time, tutee } = registrationDetails;
+
+    try {
+        // Query to check if a session with the same date, time, and tutee exists
+        const [existingSession] = await checkExistingTutorialTutee(date, time, tutee);
+
+        // If a session exists, return an error response
+        if (existingSession) {
+            return res.status(400).json({
+                error: "You already have a tutorial session scheduled for this date and time.",
+            });
+        }
+        else{
+
+            // If no session exists, insert the new registration
+            await insertTutorialIntoTutees(registrationDetails);
+            res.json({ message: "Tutorial session registered successfully!" });
+
+        }
+
+    } catch (error) {
+        console.error("Error during tutorial registration:", error);
+        res.status(500).json({ error: "An error occurred while registering the tutorial session." });
     }
-    catch(error){
-        res.status(400).json("Error fetching user");
-    }
+    });
+
+app.get('/api/tutee/tutorial-registration-pending-tutorials', async(req, res)=>{
+
+    const pendingTutorials = await selectPendingTutorials();
+
+    res.json(pendingTutorials);
+    
     });
 
 //Render Tutor  
@@ -257,16 +290,34 @@ app.get('/tutor/:userId', checkRole('Tutor'), (req, res)=>{
     res.sendFile(path.join(__dirname, 'Tutor', 'tutor.html'));
     });
 
+app.get('/api/tutor/availability', async (req, res)=>{
+
+    const {userId} = req.session.user;
+
+    const availability = await selectTutorAvailability(userId);
+
+    console.log('Backend availability:', availability);
+    res.json({availability});
+
+});
+
 // Post tutor availability (to update the tutor's schedule)
-app.post('/tutor/availability', async (req, res) => {
-    const userId = req.session.user.userId;
+app.post('/api/tutor/availability', async (req, res) => {
+    const {userId} = req.session.user;
     const { availability } = req.body; // Get availability array
 
     try {
 
-        await saveAvailability(userId, availability);
+        // First, delete previous availability for the tutor
+        await deleteTutorAvailability(userId);
+
+        // Then, insert the new availability
+        if (availability.length > 0) {
+            await saveTutorAvailability(userId, availability);
+        }
 
         res.json({ success: true, message: 'Availability updated successfully' });
+        
     } catch (error) {
         console.error('Error saving availability:', error);
         res.status(500).json({ error: 'Failed to save availability' });

@@ -55,6 +55,17 @@ async function selectRegisteredTutees(){
     return users;
 };
 
+async function selectTutors(){
+
+    const [tutors] = await pool.query(`
+        SELECT
+        *
+        FROM
+        tutors`);
+
+    return tutors;
+}
+
 async function selectCourses(){
     const [courses] = await pool.query(`
         SELECT
@@ -78,6 +89,7 @@ async function checkUser(email, studentNo){
     return user[0];
 };
 
+//Registration functions
 async function insertUser(firstName, lastName, program, yearLvl, contactNo, studentNo, email, password, role, profPic, regForm, status){
 
     const [user] = await pool.query(`
@@ -89,28 +101,29 @@ async function insertUser(firstName, lastName, program, yearLvl, contactNo, stud
     return user[0];
 };
 
-async function insertTutor(firstName, lastName){
+async function insertTutor(userId, firstName, lastName){
 
     const [user] = await pool.query(`
         INSERT
         INTO
         tutors(firstName, lastName)
-        VALUES (?, ?)`, [firstName, lastName]);
+        VALUES (?, ?, ?)`, [userId, firstName, lastName]);
 
     return user[0];
 };
 
-async function insertTutee(firstName, lastName){
+async function insertTutee(userId, firstName, lastName){
 
     const [user] = await pool.query(`
         INSERT
         INTO
-        tutees(firstName, lastName)
-        VALUES (?, ?)`, [firstName, lastName]);
+        tutees(userId, firstName, lastName)
+        VALUES (?, ?, ?)`, [userId, firstName, lastName]);
 
     return user[0];
 }
 
+//Admin Pending Tutorials approval functions
 async function approveUser(userId){
     
     const [user] = await pool.query(`
@@ -143,59 +156,63 @@ async function banUser(userId){
         userId = ?`, [userId]);
 };
 
-async function getAvailability(userId) {
-    const [rows] = await pool.query(
-        `SELECT 
-        dayIndex, timeIndex 
-        FROM 
-        availability 
-        WHERE 
-        userId = ?`, [userId]);
-    return rows;
+//Tutor functions
+async function deleteTutorAvailability(userId) {
+    await pool.query('DELETE FROM availability WHERE userId = ?', [userId]);
 };
 
-async function clearAvailability(userId) {
-    await pool.query(`
-        DELETE 
-        FROM 
-        availability 
-        WHERE 
-        userId = ?`, [userId]);
-};
-
-async function insertAvailability(day, timeSlot) {
-    await pool.query(
-        `INSERT 
-        INTO 
-        availability (day, timeSlot) VALUES (?, ?, ?)`,[day, timeSlot]);
-};
-
-async function saveAvailability(userId, availability) {
-    try {
-        // Loop through each availability item and insert it into the database
-        for (const item of availability) {
-            const { day, time } = item;
-
-            // Check if the availability already exists (optional)
-            const [existingAvailability] = await pool.query(`
-                SELECT * 
-                FROM availability
-                WHERE userId = ? AND day = ? AND timeSlot = ?`, [userId, day, time]);
-
-            // If the availability doesn't exist, insert it
-            if (existingAvailability.length === 0) {
-                await pool.query(`
-                    INSERT INTO availability (userId, day, timeSlot) 
-                    VALUES (?, ?, ?)`, [userId, day, time]);
-            }
-        }
-        return { message: 'Availability saved successfully!' };
-    } catch (error) {
-        console.error('Error saving availability:', error);
-        throw new Error('Failed to save availability');
+async function saveTutorAvailability(userId, availability) {
+    const query = 'INSERT INTO availability (userId, day, timeslot) VALUES (?, ?, ?)';
+    
+    for (let { day, time } of availability) {
+        await pool.query(query, [userId, day, time]);
     }
-}
+};
+
+async function selectTutorAvailability(userId) {
+
+    const [availability] = await pool.query(`
+        SELECT day, timeslot
+        FROM availability
+        WHERE userId = ?`, [userId]);
+
+    return availability;
+};
+
+//Tutee functions
+async function insertTutorialIntoTutees(registrationDetails){
+    
+    const query = 
+    `
+        INSERT INTO
+        tutee_tutorials
+        (noOfTutees, course, topics, date, time, tutee, tutor, status) VALUES (?,?,?,?,?,?,?,?)`;
+
+    const {noOfTutees, course, topics, date, time, tutee, tutor, status} = registrationDetails;
+        await pool.query(query, [noOfTutees, course, topics, date, time, tutee, tutor, status]);
+};
+
+async function checkExistingTutorialTutee(date, time, tutee) {
+
+    const [existingSession] = await pool.query(`
+        SELECT * 
+        FROM tutee_tutorials 
+        WHERE date = ? AND time = ? AND tutee = ?`,[date, time, tutee]);
+
+    return existingSession;
+};
+
+async function selectPendingTutorials(){
+
+    const [pendingTutorials] = await pool.query(`
+        SELECT *
+        FROM tutee_tutorials
+        WHERE status='pending'`);
+
+    return pendingTutorials;
+};
 
 
 
-module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser, getAvailability, clearAvailability, insertAvailability, saveAvailability};
+
+module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectTutors, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, deleteUser, banUser, saveTutorAvailability, deleteTutorAvailability, selectTutorAvailability, insertTutorialIntoTutees, checkExistingTutorialTutee, selectPendingTutorials};

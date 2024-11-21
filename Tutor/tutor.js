@@ -62,38 +62,69 @@ function reloadPage(){
   window.location.reload();
 }
 
-let isEditMode = false;
 const checkboxes = document.querySelectorAll(".checkbox");
+
+function loadAvailability() {
+  fetch('/api/tutor/availability')
+      .then(res => {
+          if (!res.ok) {
+              throw new Error('Failed to fetch availability');
+          }
+          return res.json();
+      })
+      .then(({ availability }) => {
+          console.log('Frontend availability:', availability); // Log data
+          availability.forEach(({ day, timeslot }) => {
+              const checkbox = document.querySelector(`input[data-day="${day}"][data-time="${timeslot}"]`);
+              if (checkbox) {
+                  checkbox.checked = true;
+              } else {
+                  console.warn(`Checkbox not found for day: ${day}, timeslot: ${timeslot}`);
+              }
+          });
+      })
+      .catch(err => console.error('Error loading availability:', err));
+
+      // Attach event listeners after checkboxes are loaded
+      const editButton = document.getElementById('edit-button');
+      editButton.addEventListener('click', toggleEditMode);
+  
+      const saveButton = document.getElementById('save-button');
+      saveButton.addEventListener('click', saveChanges);
+  
+      const cancelButton = document.getElementById('cancel-button');
+      cancelButton.addEventListener('click', cancelChanges);
+}
 
 // Function to toggle between edit and view mode
 function toggleEditMode() {
-    
-    isEditMode = !isEditMode;
-    document.getElementById("edit-button").style.display = isEditMode ? 'none' : 'block';
-    document.getElementById("save-button").style.display = isEditMode ? 'block' : 'none';
-    document.getElementById("cancel-button").style.display = isEditMode ? 'block' : 'none';
 
-        if (isEditMode) {
-          checkboxes.forEach(checkbox=>{
+    document.getElementById("edit-button").style.display = 'none';
+    document.getElementById("save-button").style.display = 'block';
+    document.getElementById("cancel-button").style.display = 'block';
+
+    checkboxes.forEach(checkbox=>{
             checkbox.disabled = false;
-          })
-        } else {
-            checkboxes.disabled = true;
-        }
+    });
 };
 
 function saveChanges(){
 
     const availability = [];
 
-    document.querySelectorAll('.checkbox:checked').forEach(checkbox => {
-      const day = checkbox.dataset.day; // Get the day from the checkbox
-      const time = checkbox.closest('tr').dataset.time; // Get the time from the parent <tr>
-      
-      availability.push({ day, time }); // Add to the availability array
-  });
+    checkboxes.forEach(checkbox=>{
 
-    fetch('/tutor/availability', {
+      const day = checkbox.dataset.day;
+      const time = checkbox.closest('tr').dataset.time;
+
+      //If checkboxes are checked
+      if(checkbox.checked){
+
+        availability.push({day, time});
+      }
+    })
+
+    fetch('/api/tutor/availability', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({availability})
@@ -108,3 +139,16 @@ function saveChanges(){
 
 
 };
+
+function cancelChanges() {
+
+  document.getElementById("edit-button").style.display = 'block';
+  document.getElementById("save-button").style.display = 'none';
+  document.getElementById("cancel-button").style.display = 'none';
+
+  checkboxes.forEach(checkbox=>{
+    checkbox.disabled = true;
+  })
+
+};
+

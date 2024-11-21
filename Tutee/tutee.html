@@ -39,7 +39,7 @@
       <div class="sidebar-link" onclick="openPage('home', this, '#D9D9D9')" id="defaultOpen">
         <div>HOME</div>
       </div>
-      <div class="sidebar-link" onclick="openPage('registration', this, '#D9D9D9')" id="defaultOpen">
+      <div class="sidebar-link" onclick="openPage('registration', this, '#D9D9D9'); loadRegistration(); loadPendingTutorials()" id="defaultOpen">
         <div>REGISTRATION</div>
       </div>
       <div class="sidebar-link" onclick="openPage('list-of-tutors', this, '#D9D9D9')" id="defaultOpen">
@@ -123,11 +123,6 @@
                 <label for="course">Course of Tutorial:</label>
                 <select name="course" id="course">
                   <option value="" disabled selected>Please Select</option>
-                  <option value="calc1">Calculus 1</option>
-                  <option value="calc2">Calculus 2</option>
-                  <option value="MMW">Math in the Modern World</option>
-                  <option value="DE">Differential Equations</option>
-                  <option value="LA">Linear Algebra</option>
                 </select> <br>
               </div>
     
@@ -158,11 +153,7 @@
               <div>
                 <label for="tutor">Available Tutor:</label> 
                 <select name="tutor" id="tutor">
-                  <!-- <option value="" disabled selected>Please Select</option>
-                  <option value="jose">Jose Grayson Atun</option>
-                  <option value="geryk">Geryk Kean Barrot</option>
-                  <option value="justin">Justin Edwin Guiriba</option>
-                  <option value="iuris">Iuris Alijahray Maceda</option> -->
+                  <option value="" disabled selected>Please Select</option>
                 </select>
               </div> 
             </form>
@@ -179,8 +170,8 @@
             <div class="right-side-upper-header">
               Pending Tutorials
             </div>
-            <div class="right-side-upper-content">
-              <div class="pending-tutorial">
+            <div id="pendingTutorials" class="right-side-upper-content">
+              <!-- <div id="pendingTutorials" class="pending-tutorial">
                 <div class="pending-tutorial-left">
                   Jose Grayson Atun
                 </div>
@@ -190,7 +181,7 @@
                   </button>
                   <i class="fa-solid fa-square-xmark" onclick="openModal('tutee-registration-delete-modal')"></i>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="right-side-lower">
@@ -302,7 +293,7 @@
       <p>Are you sure you want to register this tutorial?</p>
 
       <div class="button-container">
-        <button class="registration-tutorial-register-button" >
+        <button id="registration-tutorial-register-button" class="registration-tutorial-register-button" >
           Register
         </button>
         <button class="registration-tutorial-cancel-button" onclick="closeModal('tutee-register-modal')">
@@ -341,13 +332,17 @@
           <td></td>
         </tr>
         <tr>
+          <td>Tutorial Time:</td>
+          <td></td>
+        </tr>
+        <!-- <tr>
           <td>Tutorial Starting Time:</td>
           <td></td>
         </tr>
         <tr>
           <td>Tutorial Ending Time:</td>
           <td></td>
-        </tr>
+        </tr> -->
       </table>
       <div class="button-container">
         <button class="tutee-view-details-close-button" onclick="closeModal('tutee-registration-view-details-modal')">
