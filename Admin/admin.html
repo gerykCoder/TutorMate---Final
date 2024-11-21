@@ -161,7 +161,7 @@
               <td><div class="pending-count">4</div></td>
               <td><div class="scheduled-count">1</div></td>
               <td>
-                <button class="admin-tutorial-session-view-details" onclick="document.getElementById('admin-tutorial-session-view-details-modal').style.display='block'">
+                <button class="admin-tutorial-session-view-details" onclick="openModal('admin-tutorial-session-view-details-modal')">
                   View Details
                 </button>
               </td>
@@ -171,7 +171,7 @@
               <td><div class="pending-count">4</div></td>
               <td><div class="scheduled-count">1</div></td>
               <td>
-                <button class="admin-tutorial-session-view-details" onclick="document.getElementById('admin-tutorial-session-view-details-modal').style.display='block'">
+                <button class="admin-tutorial-session-view-details" onclick="openModal('admin-tutorial-session-view-details-modal')">
                   View Details
                 </button>
               </td>
@@ -368,8 +368,91 @@
   </div>
 
   <div id="admin-tutorial-session-view-details-modal" class="pending-scheduled-tutorials-modal modal">
-    <div>
-      
+    <div class="scheduled-tutorials-content">
+      <section class="left-scheduled-tutorials">
+        <div class="left-scheduled-tutorials-header">
+          Pending Tutorials
+        </div>
+        <div class="left-scheduled-tutorials-content">
+          <div class="pending-tutorial">
+            <div class="pending-tutorial-left">
+              Jose Grayson Atun
+            </div>
+            <div class="pending-tutorial-right">
+              <button class="view-details" onclick="openModal('admin-inside-view-details-modal')"> 
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="right-scheduled-tutorials">
+        <div class="right-scheduled-tutorials-header">
+          Schedule Tutorials
+        </div>
+        <div class="right-scheduled-tutorials-content">
+          <div class="schedule-tutorials">
+            <div class="schedule-tutorials-left">
+              Jose Grayson Atun
+            </div>
+            <div class="schedule-tutorials-right">
+              <button class="view-details" onclick="openModal('admin-inside-view-details-modal')"> 
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="admin-inside-view-details-modal" class="admin-inside-view-details-modal modal">
+    <div class="admin-inside-view-details-content">
+      <h3>Tutorial Details</h3>
+      <table class="tutorial-details">
+        <tr>
+          <td>Status:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tutee Name:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Program:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Course of Tutorial:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Topic:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Expected Number of Attendees:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Date of Tutorial:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tutorial Starting Time:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Tutorial Ending Time:</td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="button-container">
+        <button class="home-view-details-close-button" onclick="closeModal('admin-inside-view-details-modal')">
+          Close
+        </button>
+      </div>
     </div>
   </div>
 

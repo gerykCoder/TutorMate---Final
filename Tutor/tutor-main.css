@@ -53,10 +53,6 @@
   border-radius: 8px;
 }
 
-.main-home-tutor .fa-user{
-  margin: 0 10px 0 14px;
-}
-
 .schedule-tutorials-right, .pending-tutorial-right{
   margin-right: 15px;
   display: flex;
@@ -238,10 +234,6 @@
 
 .course-of-tutorial-button{
   font-weight: 500;
-}
-
-.schedule-table td {
-  cursor: pointer; /* Show pointer on hover */
 }
 
 /*

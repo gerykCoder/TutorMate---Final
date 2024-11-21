@@ -216,14 +216,11 @@
             </button>
           </div>
           <div class="main-upper-sort">
-            <label for="sorting">Sort by:</label>
-            <select name="sorting" id="sorting">
-              <option value="name">Name</option>
-              <option value="year">Year</option>
-              <option value="program">Program</option>
-            </select>
             <label for="course">Course:</label>
             <select name="course" id="course">
+              <option value="all">
+                All
+              </option>
               <option value="advCalc">
                 Advanced Calculus
               </option>
@@ -244,28 +241,10 @@
         </div>
         <div class="main-lower">
           <div class="perso-info"> 
-            <img class="perso-info-profile" src="Geryk.jpg" alt="Geryk" >
+            <img class="perso-info-profile" src="/Geryk.jpg" alt="Geryk" />
             <p class="perso-info-name">Geryk Kean Barrot</p>
             <p class="perso-info-detail">4th Year | BS Math</p>
-            <button>View Availability</button>
-          </div>
-          <div class="perso-info"> 
-            <img class="perso-info-profile" src="Grayson.png" alt="Grayson" >
-            <p class="perso-info-name">Jose Grayson Atun</p>
-            <p class="perso-info-detail">4th Year | BS Math</p>
-            <button>View Availability</button>
-          </div>
-          <div class="perso-info"> 
-            <img class="perso-info-profile" src="Iuris.jpg" alt="Iuris" >
-            <p class="perso-info-name">Iuris Alijahray Maceda</p>
-            <p class="perso-info-detail">4th Year | BS Math</p>
-            <button>View Availability</button>
-          </div>
-          <div class="perso-info"> 
-            <img class="perso-info-profile" src="Justin.png" alt="Justin" >
-            <p class="perso-info-name">Justin Edwin Guiriba</p>
-            <p class="perso-info-detail">4th Year | BS Math</p>
-            <button>View Availability</button>
+            <button onclick="openModal('tutee-tutor-schedule-modal')">View Availability</button>
           </div>
         </div>
       </div>
@@ -380,6 +359,191 @@
           No
         </button>
       </div>
+    </div>
+  </div>
+
+  <div id="tutee-tutor-schedule-modal" class="tutee-tutor-schedule-modal modal">
+    <div class="tutee-tutor-schedule-content">
+      <h3>Tutor's Schedule of Availability</h3>
+      <table id="availabilityTable">
+        <thead>
+          <tr>
+            <th>Time Intervals</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+          </tr>
+        </thead>
+
+        <tbody>
+           <!-- Rows for time slots -->
+          <tr data-time="9:00 - 9:30">
+            <th>9:00 AM - 9:30 AM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="9:00 - 9:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="9:00 - 9:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="9:00 - 9:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="9:00 - 9:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="9:00 - 9:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="9:00 - 9:30" disabled></td>
+          </tr>
+          <tr data-time="9:30 - 10:00">
+            <th>9:30 AM - 10:00 AM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="9:30 - 10:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="9:30 - 10:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="9:30 - 10:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="9:30 - 10:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="9:30 - 10:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="9:30 - 10:00" disabled></td>
+          </tr>
+          <tr data-time="10:00 - 10:30">
+            <th>10:00 AM - 10:30 AM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="10:00 - 10:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="10:00 - 10:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="10:00 - 10:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="10:00 - 10:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="10:00 - 10:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="10:00 - 10:30" disabled></td>
+          </tr>
+          <tr data-time="10:30 - 11:00">
+            <th>10:30 AM - 11:00 AM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="10:30 - 11:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="10:30 - 11:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="10:30 - 11:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="10:30 - 11:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="10:30 - 11:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="10:30 - 11:00" disabled></td>
+          </tr>
+          <tr data-time="11:00 - 11:30">
+            <th>11:00 AM - 11:30 AM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="11:00 - 11:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="11:00 - 11:30"disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="11:00 - 11:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="11:00 - 11:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="11:00 - 11:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="11:00 - 11:30" disabled></td>
+          </tr>
+          <tr data-time="11:30 - 12:00">
+            <th>11:30 AM - 12:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="11:30 - 12:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="11:30 - 12:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="11:30 - 12:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="11:30 - 12:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="11:30 - 12:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="11:30 - 12:00" disabled></td>
+          </tr>
+          <tr data-time="12:00 - 12:30">
+            <th>12:00 PM - 12:30 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="12:00 - 12:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="12:00 - 12:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="12:00 - 12:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="12:00 - 12:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="12:00 - 12:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="12:00 - 12:30" disabled></td>
+          </tr>
+          <tr data-time="12:30 - 1:00">
+            <th>12:30 PM - 1:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="12:30 - 1:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="12:30 - 1:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="12:30 - 1:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="12:30 - 1:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="12:30 - 1:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="12:30 - 1:00" disabled></td>
+          </tr>
+          <tr data-time="1:00 - 1:30">
+            <th>1:00 PM - 1:30 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="1:00 - 1:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="1:00 - 1:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="1:00 - 1:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="1:00 - 1:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="1:00 - 1:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="1:00 - 1:30" disabled></td>
+          </tr>
+          <tr data-time="1:30 - 2:00">
+            <th>1:30 PM - 2:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="1:30 - 2:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="1:30 - 2:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="1:30 - 2:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="1:30 - 2:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="1:30 - 2:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="1:30 - 2:00" disabled></td>
+          </tr>
+          <tr data-time="2:00 - 2:30">
+            <th>2:00 PM - 2:30 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="2:00 - 2:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="2:00 - 2:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="2:00 - 2:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="2:00 - 2:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="2:00 - 2:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="2:00 - 2:30" disabled></td>
+          </tr>
+          <tr data-time="2:30 - 3:00">
+            <th>2:30 PM - 3:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="2:30 - 3:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="2:30 - 3:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="2:30 - 3:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="2:30 - 3:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="2:30 - 3:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="2:30 - 3:00" disabled></td>
+          </tr>
+          <tr data-time="3:00 - 3:30">
+            <th>3:00 PM - 3:30 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="3:00 - 3:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="3:00 - 3:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="3:00 - 3:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="3:00 - 3:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="3:00 - 3:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="3:00 - 3:30" disabled></td>
+          </tr>
+          <tr data-time="3:30 - 4:00">
+            <th>3:30 PM - 4:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="3:30 - 4:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="3:30 - 4:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="3:30 - 4:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="3:30 - 4:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="3:30 - 4:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="3:30 - 4:00" disabled></td>
+          </tr>
+          <tr data-time="4:00 - 4:30">
+            <th>4:00 PM - 4:30 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="4:00 - 4:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="4:00 - 4:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="4:00 - 4:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="4:00 - 4:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="4:00 - 4:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="4:00 - 4:30" disabled></td>
+          </tr>
+          <tr data-time="4:30 - 5:00">
+            <th>4:30 PM - 5:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="4:30 - 5:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="4:30 - 5:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="4:30 - 5:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="4:30 - 5:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="4:30 - 5:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="4:30 - 5:00" disabled></td>
+          </tr>
+          <tr data-time="5:00 - 5:30">
+            <th>5:00 PM - 5:30 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="5:00 - 5:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="5:00 - 5:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="5:00 - 5:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="5:00 - 5:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="5:00 - 5:30" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="5:00 - 5:30" disabled></td>
+          </tr>
+          <tr data-time="5:30 - 6:00">
+            <th>5:30 PM - 6:00 PM</th>
+            <td><input type="checkbox" class="checkbox" data-day="Monday" data-time="5:30 - 6:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Tuesday" data-time="5:30 - 6:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Wednesday" data-time="5:30 - 6:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Thursday" data-time="5:30 - 6:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Friday" data-time="5:30 - 6:00" disabled></td>
+            <td><input type="checkbox" class="checkbox" data-day="Saturday" data-time="5:30 - 6:00" disabled></td>
+          </tr> 
+        </tbody>
+      </table>
     </div>
   </div>
 

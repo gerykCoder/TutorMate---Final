@@ -131,3 +131,35 @@
   width: 50%;
   padding-left: 15px; /* Optional for spacing */
 }
+
+/******************************** View Availability ********************************/
+
+.tutee-tutor-schedule-content{
+  background-color: white;
+  width: 900px;
+  margin: 5% auto auto auto;
+  padding: 2px 20px 20px 20px;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.tutee-tutor-schedule-modal table{
+  width: 100%;
+  min-height: 100%;
+}
+
+.tutee-tutor-schedule-modal thead th{
+  position: sticky;
+  top: 0;
+  background-color: #616060;
+  color: white;
+}
+
+.tutee-tutor-schedule-modal table,
+.tutee-tutor-schedule-modal th,
+.tutee-tutor-schedule-modal td{
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: .3rem;
+}
+
