@@ -2,13 +2,53 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const mysqlStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const path = require('path');
+const multer = require('multer');
 const cors = require('cors');
-const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectTutors, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, updateTuteeId, updateTutorId, deleteUser, banUser, deleteTutorAvailability, saveTutorAvailability, selectTutorAvailability, updateTutorTeachableCourses, insertTutorialIntoTutees, checkExistingTutorialTutee, selectPendingTutorialsTutee, selectPendingTutorialsTutor, selectScheduledTutorialsTutor, selectScheduledTutorialsTutee, deletePendingTutorialTutee, deletePendingTutorialTutor, updateTutorialStatusToScheduledTutor, updateTutorialStatusToScheduledTutee, deleteScheduledTutorialTutee, deleteScheduledTutorialTutor, insertCompletedTutorialTutor, selectCompletedTutorialTutor, insertDeniedTutorialTutor, selectAllTutorialsTutor, insertTutorialIntoTutors, selectTutorAvailabilityCourses, insertCancelledTutorialTutor} = require('./db');
+const fs = require('fs');
+const {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectTutors, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, updateTuteeId, updateTutorId, deleteUser, banUser, countTutorialByStatus, deleteTutorAvailability, saveTutorAvailability, selectTutorAvailability, updateTutorTeachableCourses, checkExistingTutorialTutee, selectPendingTutorialsTutee, selectPendingTutorialsTutor, selectScheduledTutorialsTutor, selectScheduledTutorialsTutee, updateTutorialStatusToScheduled, deleteScheduledTutorial, selectCompletedTutorialTutor, selectAllTutorials, selectAllTutorialsTutor, selectTutorAvailabilityCourses, insertTutorial, deletePendingTutorial, insertIntoAllTutorials, selectPendingTutorialsAdmin, selectScheduledTutorialsAdmin, updateTutorialStatusToCancelled, selectAllAvailability, countPendingOrScheduledAdmin, countCompletedOrCancelledAdmin, countTutorialPerTutorAdmin, countAccsForApprovalAdmin,  deleteScheduledTutorialAdmin,insertCancelledByAdminToAllTutorials} = require('./db');
 const checkRole = require('./middleware');
-const { error } = require('console');
+const { error, count } = require('console');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        if(file.fieldname === 'profPic'){
+            cb(null, 'profilePics')
+        }
+        else if(file.fieldname === 'regForm'){
+            cb(null, 'regForms')
+        }
+ 
+    },
+    filename: (req, file, cb)=>{
+        console.log(file);
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+});
+
+const maxSize = 5*1000*1000;
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        const allowedExtensions = {
+            profPic: ['.jpg', '.jpeg', '.png'],
+            regForm: ['.pdf']
+        };
+        const ext = path.extname(file.originalname).toLowerCase();
+
+        if (file.fieldname === 'profPic' && !allowedExtensions.profPic.includes(ext)) {
+            return cb(new Error('Invalid file type for profile picture. Allowed: JPG, JPEG, PNG.'));
+        }
+        if (file.fieldname === 'regForm' && !allowedExtensions.regForm.includes(ext)) {
+            return cb(new Error('Invalid file type for registration form. Allowed: PDF.'));
+        }
+
+        cb(null, true);
+    },
+    limits: {fileSize: maxSize}
+});
 
 //Server Port
 app.listen(3000);
@@ -42,6 +82,9 @@ staticFolders.forEach(folder=>{
     app.use(express.static(folder));
 });
 
+app.use('/profilePics', express.static(path.join(__dirname, 'profilePics')));
+app.use('/regForms', express.static(path.join(__dirname, 'regForms')));
+
 // Serve static files for Admin
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
@@ -50,6 +93,7 @@ app.use('/tutor', express.static(path.join(__dirname, 'tutor')));
 
 // Serve static files for Login
 app.use('/tutee', express.static(path.join(__dirname, 'tutee')));
+
 
 //Render Login
 app.get('/', (req, res)=>{
@@ -110,9 +154,12 @@ app.get('/signup', (req, res)=>{
 });
 
 //POST request handler for Signup
-app.post('/signup', async(req, res)=>{
+app.post('/signup', upload.fields([
+    { name: 'profPic', maxCount: 1 }, // For Profile Picture
+    { name: 'regForm', maxCount: 1 } // For Registration Form
+]), async(req, res)=>{
     
-    const {firstName, lastName, program, yearLvl, contactNo, studentNo, email, password, role, profPic, regForm, status} = req.body
+    const {firstName, lastName, program, yearLvl, contactNo, studentNo, email, password, role, status} = req.body
 
     console.log(`Received Data - First Name: ${firstName}, Last Name: ${lastName}, Program: ${program}, Year Lvl: ${yearLvl}, Contact No.: ${contactNo}, Student No.: ${studentNo}, Email: ${email}, Password: ${password}, Role: ${role}`);
 
@@ -124,35 +171,58 @@ app.post('/signup', async(req, res)=>{
 
                 return res.status(400).send('Invalid Year Level');
 
-            };
+            }
 
-            if(existingUser && existingUser.status !== 'banned'){
+            if(existingUser){
 
                 return res.status(400).send('User already exists');
 
-            };
+            }
 
-            if(existingUser && existingUser.status === 'banned'){
+            else if(existingUser && existingUser.status === 'banned'){
 
                 return res.status(400).send('User account was banned')
 
             }
 
             else{
+                    // Extract file paths from uploaded files
+                    const profPicPath = req.files['profPic'][0].path.replace(/\\/g, '/');
+                    const regFormPath = req.files['regForm'][0].path.replace(/\\/g, '/');
+                    console.log(profPicPath);
 
-                await insertUser(firstName, lastName, program, yearLvl, contactNo, studentNo, email, password, role, profPic, regForm, status);
-                res.redirect('/');
-                // window.alert(`You have succesfully registered your account. Please wait for the admin's approval for an access to your account. Thank you!`);
+                    await insertUser(firstName, lastName, program, yearLvl, contactNo, studentNo, email, password, role, profPicPath, regFormPath, status);
+                    res.redirect('/');
             }
-
         }
-        catch(error){
-
-            alert('Please fill out the details');
+        catch(error){   
+            console.error(error);
+            return res.status(500).send('An error occurred. Please try again.');
         }
     });
 
-//Gets Pending Users from the Database
+//Render Admin
+app.get('/admin', checkRole('Admin'), async(req, res)=>{
+
+    res.sendFile(path.join(__dirname+'/Admin/admin.html'));
+
+    });
+
+app.get('/admin/home-counts', async(req, res)=>{
+
+    const pendingOrScheduled = await countPendingOrScheduledAdmin();
+    const completedOrCancelled = await countCompletedOrCancelledAdmin();
+    const tutorialPerTutor = await countTutorialPerTutorAdmin();
+    const accsForApproval = await countAccsForApprovalAdmin();
+
+    res.json({
+        pendingOrScheduled: pendingOrScheduled[0], 
+        completedOrCancelled: completedOrCancelled[0], 
+        tutorialPerTutor: tutorialPerTutor, 
+        accsForApproval: accsForApproval[0]});
+})
+
+    //Gets Pending Users from the Database
 app.get('/admin/pending-users', async(req, res)=>{
 
     //Fetch Pending Users
@@ -165,7 +235,7 @@ app.get('/admin/pending-users', async(req, res)=>{
 //Pending User Approval Handler
 app.post('/admin/approve-pending-user', async(req, res) => {
 
-    const {userId, role, firstName, lastName, program} = req.body;
+    const {userId, firstName, lastName, program, yearLvl, profPic, role} = req.body;
 
     try{
         
@@ -173,7 +243,7 @@ app.post('/admin/approve-pending-user', async(req, res) => {
 
     if (role === 'Tutor') {
 
-        await insertTutor(userId, firstName, lastName);
+        await insertTutor(userId, firstName, lastName, program, yearLvl, profPic);
         await updateTutorId(userId);
 
     }
@@ -195,6 +265,24 @@ app.post('/admin/approve-pending-user', async(req, res) => {
 app.post('/admin/deny-pending-user', async(req, res)=>{
 
     const {userId} = req.body;
+
+    const [users] = await pool.query('SELECT profPic, regForm FROM users WHERE userId = ?', [userId]);
+    const user = users[0];
+
+    const profPicPath = path.join(__dirname, user.profPic);
+    console.log(profPicPath);
+    const regFormPath = path.join(__dirname, user.regForm);
+
+    if(fs.existsSync(profPicPath)){
+        fs.unlinkSync(profPicPath);
+        console.log(`Deleted file: ${profPicPath}`);
+    }
+
+    if (fs.existsSync(regFormPath)) {
+        fs.unlinkSync(regFormPath);
+        console.log(`Deleted file: ${regFormPath}`);
+    }
+
     await deleteUser(userId);
 
     });
@@ -204,6 +292,23 @@ app.post('/admin/ban-user', async(req, res)=>{
 
     const {userId} = req.body;
     try{
+        const [users] = await pool.query('SELECT profPic, regForm FROM users WHERE userId = ?', [userId]);
+        const user = users[0];
+    
+        const profPicPath = path.join(__dirname, user.profPic);
+        console.log(profPicPath);
+        const regFormPath = path.join(__dirname, user.regForm);
+    
+        if(fs.existsSync(profPicPath)){
+            fs.unlinkSync(profPicPath);
+            console.log(`Deleted file: ${profPicPath}`);
+        }
+    
+        if (fs.existsSync(regFormPath)) {
+            fs.unlinkSync(regFormPath);
+            console.log(`Deleted file: ${regFormPath}`);
+        }
+
         await banUser(userId);
         res.status(200).json({ message: 'User banned successfully', userId });
     }
@@ -227,17 +332,55 @@ app.get('/admin/registered-tutees', async(req, res)=>{
     res.json(tutees);
     });
 
-//Render Admin
-app.get('/admin', checkRole('Admin'), async(req, res)=>{
+app.get('/admin/tutorial-session', async(req, res)=>{
 
-    res.sendFile(path.join(__dirname+'/Admin/admin.html'));
+
+    const tutorialCount = await countTutorialByStatus();
+    const [tutorials] = await pool.query(`SELECT * FROM tutorials`);
+    const tutors = await selectTutors();
+    
+    res.json({tutorialCount, tutorials, tutors});
+    });
+
+app.get('/admin/tutorial-session-details', async(req, res)=>{
+
+    const pendingTutorials = await selectPendingTutorialsAdmin();
+    const scheduledTutorials = await selectScheduledTutorialsAdmin();
+
+    res.json({pendingTutorials, scheduledTutorials});
+});
+
+app.post('/admin/tutorial-session-cancel-tutorials', async(req, res)=>{
+
+    const {cancelDate} = req.body;
+
+    await insertCancelledByAdminToAllTutorials(cancelDate);
+    await deleteScheduledTutorialAdmin(cancelDate);
+    // await updateTutorialStatusToCancelled(cancelDate);
+
+    res.redirect('/admin');
+    
+});
+
+app.get('/admin/tutorial-history', async(req, res)=>{
+
+    const allTutorials = await selectAllTutorials();
+
+    res.json(allTutorials);
 
     });
 
 //Render Tutee
-app.get('/tutee/:userId', checkRole('Tutee'), (req, res)=>{
+app.get('/tutee/:tuteeId', checkRole('Tutee'), (req, res)=>{
     res.sendFile(path.join(__dirname, 'Tutee', 'tutee.html'));
     });
+
+app.get('/api/tutee/user-name', async(req, res)=>{
+
+    const {lastName} = req.session.user;
+
+    res.json({lastName});
+})
 
 app.get('/api/tutee/tutorial-registration', async(req, res)=>{
 
@@ -276,8 +419,7 @@ app.post('/api/tutee/tutorial-registration', async(req, res)=>{
         else{
 
             // If no session exists, insert the new registration
-            await insertTutorialIntoTutees(registrationDetails);
-            await insertTutorialIntoTutors(registrationDetails);
+            await insertTutorial(registrationDetails);
             res.json({ message: "Tutorial session registered successfully!" });
 
         }
@@ -301,12 +443,10 @@ app.post('/api/tutee/tutorial-registration-pending-tutorials', async(req, res)=>
 
     const {id} = req.body;
 
-    await deletePendingTutorialTutor(id);
-    await deletePendingTutorialTutee(id);
+    await deletePendingTutorial(id);
 
 });
     
-
 app.get('/api/tutee/tutorial-registration-scheduled-tutorials', async(req, res)=>{
 
     const {tuteeId} = req.session.user;
@@ -318,17 +458,35 @@ app.get('/api/tutee/tutorial-registration-scheduled-tutorials', async(req, res)=
 
 app.post('/api/tutee/tutorial-registration-cancel-scheduled-tutorials', async(req, res)=>{
 
-    const {id} = req.body;
+    const {id, cancelledTutorial} = req.body;
 
-    await deleteScheduledTutorialTutee(id);
-    await deleteScheduledTutorialTutor(id);
+    const {tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status} = cancelledTutorial;
+    await insertIntoAllTutorials(tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status);
+    await deleteScheduledTutorial(id);
+
 });
+
+app.get('/api/tutee/tutorial-list-of-tutors', async(req, res)=>{
+
+    const courses = await selectCourses();
+    const availability = await selectAllAvailability();
+    const tutors = await selectTutors();
+
+    res.json({courses, availability, tutors});
+})
 
 
 //Render Tutor  
 app.get('/tutor/:tutorId', checkRole('Tutor'), (req, res)=>{
     res.sendFile(path.join(__dirname, 'Tutor', 'tutor.html'));
     });
+
+app.get('/api/tutor/user-name', async(req, res)=>{
+
+    const {lastName} = req.session.user;
+
+    res.json({lastName});
+})
 
 app.get('/api/tutor/availability', async (req, res)=>{
 
@@ -395,7 +553,7 @@ app.get('/api/tutor/selected-courses', async(req, res)=>{
         console.error('Error fetching selected courses:', error);
         res.status(500).json({ error: 'Failed to fetch selected courses' });
     }
-})
+});
 
 app.get('/api/tutor/tutorial-registration-pending-tutorials', async(req, res)=>{
 
@@ -410,8 +568,7 @@ app.post('/api/tutor/tutorial-registration-accept-pending-tutorials', async(req,
 
     const {id} = req.body;
 
-    await updateTutorialStatusToScheduledTutor(id);
-    await updateTutorialStatusToScheduledTutee(id);
+    await updateTutorialStatusToScheduled(id);
 
 });
 
@@ -419,41 +576,39 @@ app.post('/api/tutor/tutorial-registration-deny-pending-tutorials', async(req, r
 
     const {id, pendingTutorial} = req.body;
 
-    const {tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status} = pendingTutorial;
+    const {tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status} = pendingTutorial;
 
-    await insertDeniedTutorialTutor(tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status);
-    await deletePendingTutorialTutee(id);
-    await deletePendingTutorialTutor(id);
+    await insertIntoAllTutorials(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status);
+    await deletePendingTutorial(id)
+});
+
+app.get('/api/tutor/tutorial-registration-scheduled-tutorials', async(req, res)=>{
+
+    const {tutorId, firstName, lastName} = req.session.user;
+    const tutor = `${firstName} ${lastName}`;
+    const scheduledTutorials = await selectScheduledTutorialsTutor(tutorId);
+
+    res.json({tutor, scheduledTutorials});
 
 });
 
 app.post('/api/tutor/tutorial-registration-complete-scheduled-tutorials', async(req, res)=>{
 
     const {completedTutorial, id} = req.body;
-    const {tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status} = completedTutorial;
+    const {tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status} = completedTutorial;
 
-    await insertCompletedTutorialTutor(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status);
-    await deleteScheduledTutorialTutee(id);
-    await deleteScheduledTutorialTutor(id);
+    await insertIntoAllTutorials(tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status);
+    await deleteScheduledTutorial(id);
 
 });
 
 app.post('/api/tutor/tutorial-registration-cancel-scheduled-tutorials', async(req, res)=>{
 
     const {id, cancelledTutorial} = req.body;
-    const {tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status} = cancelledTutorial;
-    await insertCancelledTutorialTutor(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status);
-    await deleteScheduledTutorialTutee(id);
-    await deletePendingTutorialTutor(id);
-
-});
-
-app.get('/api/tutor/tutorial-registration-scheduled-tutorials', async(req, res)=>{
-
-    const {tutorId} = req.session.user;
-    const scheduledTutorials = await selectScheduledTutorialsTutor(tutorId);
-
-    res.json(scheduledTutorials);
+    const {tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status} = cancelledTutorial;
+    
+    await insertIntoAllTutorials(tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status);
+    await deleteScheduledTutorial(id)
 
 });
 
@@ -466,5 +621,4 @@ app.get('/api/tutor/tutorial-history', async(req, res)=>{
     res.json(allTutorials);
 
 });
-
 

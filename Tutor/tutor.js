@@ -62,7 +62,27 @@ function reloadPage(){
   window.location.reload();
 }
 
+function tutorName(){
 
+  fetch('/api/tutor/user-name')
+  .then(res=>res.json())
+  .then(({lastName})=>{
+
+    const tutorNamePanel = document.getElementById('tutorNamePanel');
+  
+        // Clear all current content inside #tuteeName
+        tutorNamePanel.innerHTML = `
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-user"></i>`;
+  
+        // Add the tutee's name after the icons
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = lastName;
+        nameSpan.style.marginLeft = '10px'; // Add spacing between the icons and the name
+  
+        tutorNamePanel.appendChild(nameSpan);
+})
+};
 
 //Loads Pending Tutorials
 function loadPendingTutorials(){
@@ -165,7 +185,8 @@ function denyPendingRegistration(id){
 
     const pendingTutorial = {
 
-      // tutor: tutorial.tutor,
+      tutorId: tutorial.tutorId,
+      tutor: tutorial.tutor,
       tutee: tutorial.tutee,
       program: tutorial.program,
       course: tutorial.course,
@@ -196,10 +217,10 @@ function loadScheduledTutorials(){
 
   fetch('/api/tutor/tutorial-registration-scheduled-tutorials')
   .then(res=>res.json())
-  .then(data=>{
+  .then(({tutor, scheduledTutorials})=>{
 
     const panel = document.getElementById('scheduledTutorials');
-    data.forEach(tutorial=>{
+    scheduledTutorials.forEach(tutorial=>{
 
       const userDiv = document.createElement('div');
       userDiv.classList.add('schedule-tutorials');
@@ -226,10 +247,10 @@ function openScheduledModal(id){
 
   fetch('/api/tutor/tutorial-registration-scheduled-tutorials')
   .then(res=>res.json())
-  .then(data => {
+  .then(({tutor, scheduledTutorials}) => {
 
-    console.log(data);
-    const tutorial = data.find(t=>t.id === id);
+    console.log(scheduledTutorials);
+    const tutorial = scheduledTutorials.find(t=>t.id === id);
     const modal = document.getElementById('tutor-home-view-details-modal');
     const rows = modal.querySelectorAll('.tutorial-details tr');
 
@@ -261,13 +282,13 @@ function completeScheduledRegistration(id){
 
   fetch('/api/tutor/tutorial-registration-scheduled-tutorials')
   .then(res=>res.json())
-  .then(data=>{
+  .then(({tutor, scheduledTutorials})=>{
 
     const completeButton = document.getElementById('completeButton');
     completeButton.addEventListener('click', ()=>{
 
       window.location.reload();
-      const tutorial = data.find(t=>t.id === id);
+      const tutorial = scheduledTutorials.find(t=>t.id === id);
       const course = document.querySelector('input[name="course"]').value;
       const topic = document.querySelector('input[name="topic"]').value;
       const noOfTutees = document.querySelector('input[name="attendees"]').value;
@@ -277,10 +298,11 @@ function completeScheduledRegistration(id){
       const completedTutorial = {
 
         tutorId: tutorial.tutorId,
+        tutor: tutor,
         tutee: tutorial.tutee,
         program: tutorial.program,
         course: course,
-        topic: topic,
+        topics: topic,
         noOfTutees: noOfTutees,
         date: tutorial.date,
         roomNo: roomNo,
@@ -318,9 +340,9 @@ function cancelScheduledRegistration(id){
 
   fetch('/api/tutor/tutorial-registration-scheduled-tutorials')
   .then(res=>res.json())
-  .then(data=>{
+  .then(({tutor, scheduledTutorials})=>{
 
-    const tutorial = data.find(t=>t.id === id);
+    const tutorial = scheduledTutorials.find(t=>t.id === id);
 
     const cancelledTutorial = {
 
@@ -328,12 +350,12 @@ function cancelScheduledRegistration(id){
       tutee: tutorial.tutee,
       program: tutorial.program,
       course: tutorial.course,
-      topic: tutorial.topic,
+      topics: tutorial.topics,
       noOfTutees: 'None',
       date: tutorial.date,
       roomNo: 'None',
       totalTime: 'None',
-      status: 'Cancelled'
+      status: 'Cancelled By Tutor'
     };
 
     const cancelButton = document.getElementById('cancelButton');
@@ -366,7 +388,7 @@ function loadAllTutorials(){
                 <td>${tutorial.tutee}</td>
                 <td>${tutorial.program}</td>
                 <td>${tutorial.course}</td>
-                <td>${tutorial.topic}</td>
+                <td>${tutorial.topics}</td>
                 <td>${tutorial.noOfTutees}</td>
                 <td>${tutorial.date}</td>
                 <td>${tutorial.roomNo}</td>
@@ -477,7 +499,12 @@ function openCoursesModal(){
 
     fetch('/api/tutor/selected-courses')
     .then(res => res.json())
-    .then(selectedCourses => {
+    .then(selectedCoursesResponse => {
+      
+    // Parse the selected courses string into an array
+    const selectedCourses = selectedCoursesResponse.coursesHandled
+    ? selectedCoursesResponse.coursesHandled.split(', ').map(course => course.trim())
+    : [];
 
     const modal = document.getElementById('tutor-time-availability-teachable-course-modal');
     const container = document.getElementById('teachable-courses');
@@ -487,15 +514,15 @@ function openCoursesModal(){
     courses.forEach(course=>{
 
       const courseEntry = document.createElement('input');
-      courseEntry.type = "checkbox";
-      courseEntry.name = `${course.course}`;
+      courseEntry.type = 'checkbox';
+      courseEntry.name = `course-${course.courseId}`;
       courseEntry.value = `${course.course}`;
       courseEntry.id = `course-${course.courseId}`;
 
-        // Pre-check if course is already selected
-        if (selectedCourses.includes(course.course)) {
-          courseEntry.checked = true;
-        }
+    // Pre-check if course is already selected
+    if (selectedCourses.includes(course.course)) {
+      courseEntry.checked = true;
+    }
 
       // Create the label
       const label = document.createElement('label');
@@ -552,6 +579,7 @@ function openCoursesModal(){
 };
 
 
+document.addEventListener('DOMContentLoaded', tutorName);
 document.addEventListener('DOMContentLoaded', loadPendingTutorials);
 document.addEventListener('DOMContentLoaded', loadScheduledTutorials);
 document.addEventListener('DOMContentLoaded', loadAllTutorials);

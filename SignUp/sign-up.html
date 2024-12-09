@@ -18,7 +18,7 @@
 
 </head>
 <body>
-  <form id="signUpForm" action="/signup" method="post">
+  <form id="signUpForm" action="/signup" method="post" enctype="multipart/form-data">
   <div class="wrapper">
     <div class="LeftSignUp">
       <div class="header">
@@ -28,8 +28,8 @@
         <input type="hidden" name="status" value="pending">
         <input class="PersoInfoInput" type="text" name="firstName" placeholder="First Name" required>
         <input class="PersoInfoInput" type="text" name="lastName" placeholder="Last Name" required>
-        <input class="PersoInfoInput" type="program" name="program" placeholder="Program" required>
-        <input class="PersoInfoInput" type="yearLevel" name="yearLvl" placeholder="Year Level" required>
+        <select class="PersoInfoInput dropdown" id="program" type="program" name="program" placeholder="Program" required></select>
+        <select class="PersoInfoInput dropdown" id="yearLvl" type="yearLevel" name="yearLvl" placeholder="Year Level" required></select>
         <input class="PersoInfoInput" type="tel" name="contactNo" placeholder="Contact Number" required>
       </div>
       <div class="Agreement">

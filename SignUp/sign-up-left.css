@@ -34,6 +34,10 @@ h1{
   box-shadow: 0 .1rem .3rem gray;
 }
 
+.dropdown{
+  width: 52%;
+}
+
 .Agreement{
   text-align: center;
   margin-top: 20px;

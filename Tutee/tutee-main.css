@@ -90,6 +90,13 @@
   background-color: #D9D9D9;
 }
 
+.registrationNote{
+
+  display: block;
+  font-weight: bold;
+  text-align: justify;
+}
+
 .left-side-content div{
   margin-bottom: 3vh;
 }

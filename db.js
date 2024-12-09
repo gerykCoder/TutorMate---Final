@@ -83,7 +83,7 @@ async function checkUser(email, studentNo){
         users
         WHERE
         email=?
-        AND
+        OR
         studentNo=?`, [email, studentNo]);
 
     return user[0];
@@ -101,13 +101,13 @@ async function insertUser(firstName, lastName, program, yearLvl, contactNo, stud
     return user[0];
 };
 
-async function insertTutor(userId, firstName, lastName){
+async function insertTutor(userId, firstName, lastName, program, yearLvl, profPic){
 
     const [user] = await pool.query(`
         INSERT
         INTO
-        tutors(userId, firstName, lastName)
-        VALUES (?, ?, ?)`, [userId, firstName, lastName]);
+        tutors(userId, firstName, lastName, program, yearLvl, profPic)
+        VALUES (?, ?, ?, ?, ?, ?)`, [userId, firstName, lastName, program, yearLvl, profPic]);
 
     return user[0];
 };
@@ -174,6 +174,86 @@ async function banUser(userId){
         userId = ?`, [userId]);
 };
 
+async function countTutorialByStatus(){
+
+    const [tutorCount] = await pool.query(`
+        SELECT tutor,
+        SUM(CASE when status='Pending' then 1 else 0 END) AS pending_count,
+        SUM(CASE when status='Scheduled' then 1 else 0 END) AS scheduled_count
+        FROM tutorials
+        GROUP BY tutor`);
+
+    return tutorCount;
+
+};
+
+async function countPendingOrScheduledAdmin(){
+
+    const [tutorialCount] = await pool.query(`
+        SELECT 
+        SUM(CASE when status='Pending' then 1 else 0 END) AS pending_count,
+        SUM(CASE when status='Scheduled' then 1 else 0 END) AS scheduled_count
+        FROM tutorials
+        `)
+    return tutorialCount;
+};
+
+async function countCompletedOrCancelledAdmin(){
+
+    const [tutorialCount] = await pool.query(`
+        SELECT
+        SUM(CASE when status='Completed' then 1 else 0 END) AS completed_count,
+        SUM(CASE when status IN ('Cancelled By Admin', 'Cancelled By Tutor', 'Cancelled By Tutee') then 1 else 0 END) AS cancelled_count
+        FROM all_tutorials
+        `)
+
+    return tutorialCount;
+};
+
+async function countTutorialPerTutorAdmin(){
+
+    const [tutorialCount] = await pool.query(`
+        SELECT tutor, 
+        COUNT(*) AS tutorial_count
+        FROM all_tutorials
+        WHERE status = 'Completed'
+        GROUP BY tutor
+        `)
+    return tutorialCount;
+}
+
+async function countAccsForApprovalAdmin(){
+
+    const [accounts] = await pool.query(`
+        SELECT COUNT(*) AS account_count
+        FROM users
+        WHERE status = 'pending'
+        `)
+    return accounts;
+};
+
+
+
+async function selectPendingTutorialsAdmin(){
+
+    const [tutorials] = await pool.query(`
+        SELECT *
+        FROM tutorials WHERE status='Pending'
+    `)
+
+    return tutorials;
+};
+
+async function selectScheduledTutorialsAdmin(){
+
+    const [tutorials] = await pool.query(`
+        SELECT *
+        FROM tutorials WHERE status='Scheduled'
+    `)
+
+    return tutorials;
+};
+
 //Tutor functions
 async function deleteTutorAvailability(tutorId) {
     await pool.query('DELETE FROM availability WHERE tutorId = ?', [tutorId]);
@@ -206,46 +286,34 @@ async function updateTutorTeachableCourses(coursesHandled, tutorId){
 };
 
 //Tutee functions
-async function insertTutorialIntoTutees(registrationDetails){
+
+async function insertTutorial(registrationDetails){
     
     const query = 
     `
         INSERT INTO
-        tutee_tutorials
-        (tuteeId, status, tutor, course, topics, noOfTutees, date, time) VALUES (?,?,?,?,?,?,?,?)`;
+        tutorials
+        (tuteeId, tutorId, tutee, tutor, program, course, topics, noOfTutees, date, time, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
 
-    const {tuteeId, status, tutor, course, topics, noOfTutees, date, time} = registrationDetails;
-        await pool.query(query, [tuteeId, status, tutor, course, topics, noOfTutees, date, time]);
+    const {tuteeId, tutorId, tutee, tutor, program, course, topics, noOfTutees, date, time, status} = registrationDetails;
+        await pool.query(query, [tuteeId, tutorId, tutee, tutor, program, course, topics, noOfTutees, date, time, status]);
 };
-
-async function insertTutorialIntoTutors(registrationDetails){
-
-    const query = 
-    `
-    INSERT INTO
-    tutor_tutorials
-    (tutorId, noOfTutees, course, topics, date, time, tutee, program, status) VALUES (?,?,?,?,?,?,?,?,?)`;
-
-const {tutorId, noOfTutees, course, topics, date, time, tutee, program, status} = registrationDetails;
-    await pool.query(query, [tutorId, noOfTutees, course, topics, date, time, tutee, program, status]);
-
-}
 
 async function checkExistingTutorialTutee(date, time, tuteeId) {
 
     const [existingSession] = await pool.query(`
         SELECT * 
-        FROM tutee_tutorials 
+        FROM tutorials 
         WHERE date = ? AND time = ? AND tuteeId = ?`,[date, time, tuteeId]);
 
     return existingSession;
 };
 
 async function selectPendingTutorialsTutee(tuteeId){
-
+    
     const [pendingTutorials] = await pool.query(`
         SELECT *
-        FROM tutee_tutorials
+        FROM tutorials
         WHERE status = 'Pending'
         AND tuteeId = ?`, [tuteeId]);
 
@@ -256,32 +324,25 @@ async function selectScheduledTutorialsTutee(tuteeId){
 
     const [scheduledTutorials] = await pool.query(`
         SELECT *
-        FROM tutee_tutorials
+        FROM tutorials
         WHERE status = 'Scheduled'
         AND tuteeId = ?`, [tuteeId]);
     
     return scheduledTutorials;
-}
-
-async function deletePendingTutorialTutee(id){
-
-    await pool.query(`
-        DELETE FROM tutee_tutorials
-        WHERE id=?`, [id]);
 };
 
-async function deletePendingTutorialTutor(id){
+async function deletePendingTutorial(id){
 
     await pool.query(`
-        DELETE FROM tutor_tutorials
-        WHERE id=?`, [id]);
+        DELETE FROM tutorials
+        WHERE id=?`,[id]);
 }
 
 async function selectPendingTutorialsTutor(tutorId){
 
     const [pendingTutorials] = await pool.query(`
         SELECT *
-        FROM tutor_tutorials
+        FROM tutorials
         WHERE status = 'Pending'
         AND tutorId = ?`, [tutorId]);
 
@@ -292,57 +353,34 @@ async function selectScheduledTutorialsTutor(tutorId){
 
     const [scheduledTutorials] = await pool.query(`
         SELECT *
-        FROM tutor_tutorials
+        FROM tutorials
         WHERE status = 'Scheduled'
         AND tutorId = ?`, [tutorId]);
 
     return scheduledTutorials;
 };
 
-async function updateTutorialStatusToScheduledTutor(id){
+async function updateTutorialStatusToScheduled(id){
 
     await pool.query(`
-        UPDATE tutor_tutorials
+        UPDATE tutorials
         SET status='Scheduled'
         WHERE id=?`, [id]);
 };
 
-async function updateTutorialStatusToScheduledTutee(id){
+async function deleteScheduledTutorial(id){
 
     await pool.query(`
-        UPDATE tutee_tutorials
-        SET status='Scheduled'
+        DELETE FROM tutorials
         WHERE id=?`, [id]);
 };
 
-async function deleteScheduledTutorialTutee(id){
-
-    await pool.query(`
-        DELETE FROM tutee_tutorials
-        WHERE id=?`, [id]);
-};
-
-async function deleteScheduledTutorialTutor(id){
-
-    await pool.query(`
-        DELETE FROM tutor_tutorials
-        WHERE id=?`, [id]);
-};
-
-async function insertCompletedTutorialTutor(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status){
+async function insertIntoAllTutorials(tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status){
 
     await pool.query(`
         INSERT INTO
-        all_tutorials(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status]);
-};
-
-async function insertDeniedTutorialTutor(tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status){
-
-    await pool.query(`
-        INSERT INTO
-        all_tutorials(tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status)
-        VALUES (?,?,?,?,?,?,?,?,?,?)`, [tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status]);
+        all_tutorials(tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status]);
 };
 
 async function selectCompletedTutorialTutor(tutor){
@@ -350,6 +388,14 @@ async function selectCompletedTutorialTutor(tutor){
     await pool.query(`
         SELECT * FROM all_tutorials
         WHERE status='Completed' AND tutor=?`, [tutor]);
+};
+
+async function selectAllTutorials(){
+
+    const [allTutorials] = await pool.query(`
+        SELECT * FROM all_tutorials`);
+
+    return allTutorials;
 };
 
 async function selectAllTutorialsTutor(tutorId){
@@ -368,17 +414,41 @@ async function selectTutorAvailabilityCourses(tutorId){
         FROM tutors
         WHERE tutorId=?`, [tutorId]);
 
-    return courses;
+    return courses[0];
 
 };
 
-async function insertCancelledTutorialTutor(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status){
+async function updateTutorialStatusToCancelled(date){
+
+    await pool.query(`
+        UPDATE tutorials
+        SET status='Cancelled By Admin'
+        WHERE date=?`, [date]);
+};
+
+async function deleteScheduledTutorialAdmin(date){
+
+    await pool.query(`
+        DELETE FROM tutorials
+        WHERE date=?`, [date]);
+};
+
+async function insertCancelledByAdminToAllTutorials(date){
 
     await pool.query(`
         INSERT INTO
-        all_tutorials(tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?)`, [tutorId, tutor, tutee, program, course, topic, noOfTutees, date, roomNo, totalTime, status])
+        all_tutorials(tutorId, tutor, tutee, program, course, topics, noOfTutees, date, roomNo, totalTime, status)
+        SELECT tutorId, tutor, tutee, program, course, topics, noOfTutees, date, 'None', 'None', 'Cancelled By Admin'
+        FROM tutorials
+        WHERE date=?`, [date]);
+}
+
+async function selectAllAvailability(){
+
+    const [availability] = await pool.query(`
+        SELECT * FROM
+        availability`);
+    return availability;
 };
 
-
-module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectTutors, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, updateTuteeId, updateTutorId, deleteUser, banUser, saveTutorAvailability, deleteTutorAvailability, selectTutorAvailability, updateTutorTeachableCourses, insertTutorialIntoTutees, insertTutorialIntoTutors, checkExistingTutorialTutee, selectPendingTutorialsTutee, deletePendingTutorialTutee, deletePendingTutorialTutor, selectPendingTutorialsTutor, selectScheduledTutorialsTutee, selectScheduledTutorialsTutor, updateTutorialStatusToScheduledTutor, updateTutorialStatusToScheduledTutee, deleteScheduledTutorialTutee, deleteScheduledTutorialTutor, insertCompletedTutorialTutor, selectCompletedTutorialTutor, insertDeniedTutorialTutor, selectAllTutorialsTutor, selectTutorAvailabilityCourses, insertCancelledTutorialTutor};
+module.exports = {pool, selectAllUsers, selectPendingUsers, selectRegisteredTutors, selectRegisteredTutees, selectTutors, selectCourses, checkUser, insertUser, insertTutor, insertTutee, approveUser, updateTuteeId, updateTutorId, deleteUser, banUser, countTutorialByStatus, saveTutorAvailability, deleteTutorAvailability, selectTutorAvailability, updateTutorTeachableCourses, checkExistingTutorialTutee, selectPendingTutorialsTutee, selectPendingTutorialsTutor, selectScheduledTutorialsTutee, selectScheduledTutorialsTutor, updateTutorialStatusToScheduled, deleteScheduledTutorial, selectCompletedTutorialTutor, selectAllTutorials, selectAllTutorialsTutor, selectTutorAvailabilityCourses, insertTutorial, deletePendingTutorial, insertIntoAllTutorials, selectPendingTutorialsAdmin, selectScheduledTutorialsAdmin, updateTutorialStatusToCancelled, selectAllAvailability, countPendingOrScheduledAdmin, countCompletedOrCancelledAdmin, countTutorialPerTutorAdmin, countAccsForApprovalAdmin, selectPendingTutorialsTutee, selectScheduledTutorialsTutee, selectPendingTutorialsTutor, selectScheduledTutorialsTutor, deleteScheduledTutorialAdmin, insertCancelledByAdminToAllTutorials};

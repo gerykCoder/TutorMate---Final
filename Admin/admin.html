@@ -62,40 +62,39 @@
         <section class="upper-main">
           <div class="summary-info">
             <div class="summary-number">
-              <div>
-                12
+              <div id="pendingCountPanel">
+                
               </div>
             </div>
             Pending Tutorials
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              <div>
-                12
+              <div id="scheduledCountPanel">
+                
               </div>
             </div>
             Scheduled Tutorials
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              <div>
-                12
+              <div id="completedCountPanel">
+                
               </div>
             </div>
             Total Tutorial for this sem
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              <div>
-                12
+              <div id="cancelledCountPanel">
+                
               </div>
             </div>
             Cancelled Tutorials
           </div>
           <div class="summary-info">
             <div class="summary-number">
-              <div>
-                12
+              <div id="forApprovalCountPanel">
               </div>
             </div>
             Accounts for Approval
@@ -107,8 +106,8 @@
             <div class="left-section-header">
               Tutorial Count per Tutor
             </div>
-            <div class="left-section-content">
-              <div class="tutor-count">
+            <div id="tutor-count-panel" class="left-section-content">
+              <!-- <div class="tutor-count">
                 <div class="tutor-count-left">
                   Jarque 
                 </div>
@@ -117,7 +116,7 @@
                     <div>12</div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
     
@@ -147,26 +146,28 @@
     <div id="tutorial-session" class="tabcontent">
       <div class="main-tutorial-session">
         <div class="main-table">
-          <table>
-            <tr>
-              <th>Tutor</th>
-              <th>Pending</th>
-              <th>Scheduled</th>
-              <th></th>
-            </tr>
-            <tr>
-              <td>
-                  Jose Grayson Atun
-              </td>
+          <table id="tutorial-session-table">
+              <thead>
+                <tr>
+                  <th>Tutor</th>
+                  <th>Pending</th>
+                  <th>Scheduled</th>
+                  <th></th>
+                </tr>
+              </thead>
+            <!-- <tr> -->
+              <tbody>
+              <!-- <td>Jose Grayson Atun</td>
               <td><div class="pending-count">4</div></td>
               <td><div class="scheduled-count">1</div></td>
               <td>
                 <button class="admin-tutorial-session-view-details" onclick="openModal('admin-tutorial-session-view-details-modal')">
                   View Details
                 </button>
-              </td>
-            </tr>
-            <tr>
+              </td> -->
+              </tbody>
+            <!-- </tr> -->
+            <!-- <tr>
               <td>Jose Grayson Atun</td>
               <td><div class="pending-count">4</div></td>
               <td><div class="scheduled-count">1</div></td>
@@ -175,7 +176,7 @@
                   View Details
                 </button>
               </td>
-            </tr>
+            </tr> -->
           </table>
         </div>
         <div class="tutorial-cancellation">
@@ -198,7 +199,7 @@
             Tutorial History
           </div>
           <section class="tutorial-history-table">
-            <table>
+            <table id="tutorial-history-table">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -211,11 +212,12 @@
                   <th>Date</th>
                   <th>Room No.</th>
                   <th>Total Time</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>1</td>
+                  <!-- <td>1</td>
                   <td>Justin Edwin Guiriba</td>
                   <td>Geryk Kean Barrot</td>
                   <td>Architecture</td>
@@ -237,7 +239,7 @@
                   <td>09/24/24</td>
                   <td>Q-9207</td>
                   <td>120 mins</td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </section>
@@ -373,8 +375,8 @@
         <div class="left-scheduled-tutorials-header">
           Pending Tutorials
         </div>
-        <div class="left-scheduled-tutorials-content">
-          <div class="pending-tutorial">
+        <div id="pendingPanel" class="left-scheduled-tutorials-content">
+          <!-- <div class="pending-tutorial">
             <div class="pending-tutorial-left">
               Jose Grayson Atun
             </div>
@@ -383,16 +385,16 @@
                 View Details
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
   
       <section class="right-scheduled-tutorials">
         <div class="right-scheduled-tutorials-header">
-          Schedule Tutorials
+          Scheduled Tutorials
         </div>
-        <div class="right-scheduled-tutorials-content">
-          <div class="schedule-tutorials">
+        <div id="scheduledPanel" class="right-scheduled-tutorials-content">
+          <!-- <div class="schedule-tutorials">
             <div class="schedule-tutorials-left">
               Jose Grayson Atun
             </div>
@@ -401,7 +403,7 @@
                 View Details
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
     </div>
@@ -410,7 +412,7 @@
   <div id="admin-inside-view-details-modal" class="admin-inside-view-details-modal modal">
     <div class="admin-inside-view-details-content">
       <h3>Tutorial Details</h3>
-      <table class="tutorial-details">
+      <table id="tutorialDetails" class="tutorial-details">
         <tr>
           <td>Status:</td>
           <td></td>
@@ -440,11 +442,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>Tutorial Starting Time:</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Tutorial Ending Time:</td>
+          <td>Tutorial Time:</td>
           <td></td>
         </tr>
       </table>
@@ -459,7 +457,7 @@
   <div id="admin-tutorial-session-cancellation-modal" class="tutorial-cancellation-modal modal">
     <div class="tutorial-cancellation-content">
       <h2>Cancel Tutorials for Selected Date</h2>
-    
+      <form action="/admin/tutorial-session-cancel-tutorials" id="tutorialCancellation" method="POST">
       <!-- Date Selection -->
       <label for="cancelDate">Select the date for tutorial suspension:</label><br>
       <input type="date" id="cancelDate" name="cancelDate"><br><br>
@@ -472,7 +470,8 @@
       <p>Are you sure you want to cancel all tutorials on the selected date? A notification will be sent to all students and tutors.</p>
 
       <!-- Buttons -->
-      <button id="confirmCancelBtn" class="confirm-btn">Confirm Cancellation</button>
+      <button id="confirmCancelBtn" class="confirm-btn" type="submit">Confirm Cancellation</button>
+      </form>
       <button id="cancelBtn" class="cancel-btn">Cancel</button>
     </div>
   </div>
@@ -497,6 +496,7 @@
           <div>Student Number:</div>
           <div>TIP Email:</div>
           <div>Registration Form:</div>
+
         </div>
         <div class="registered-right-side-content">
           <div></div>
