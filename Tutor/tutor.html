@@ -58,8 +58,8 @@
           <div class="upper-main-header">
             Pending Tutorials
           </div>
-          <div class="upper-main-content">
-            <div class="pending-tutorial">
+          <div id="pendingTutorials" class="upper-main-content">
+            <!-- <div class="pending-tutorial">
               <div class="pending-tutorial-left">
                 Jose Grayson Atun
               </div>
@@ -70,16 +70,16 @@
                 <i class="fa-solid fa-square-check" onclick="openModal('tutor-home-accept-modal')"></i>
                 <i class="fa-solid fa-square-xmark" onclick="openModal('tutor-home-deny-modal')"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </section>
     
         <section class="lower-main">
           <div class="lower-main-header">
-            Schedule Tutorials
+            Scheduled Tutorials
           </div>
-          <div class="lower-main-content">
-            <div class="schedule-tutorials">
+          <div id="scheduledTutorials" class="lower-main-content">
+            <!-- <div class="schedule-tutorials">
               <div class="schedule-tutorials-left">
                 Jose Grayson Atun
               </div>
@@ -90,7 +90,7 @@
                 <i class="fa-solid fa-square-check" onclick="openModal('tutor-home-complete-modal')"></i>
                 <i class="fa-solid fa-square-xmark" onclick="openModal('tutor-home-cancel-modal')"></i>
               </div>
-            </div>
+            </div> -->
           </div>
         </section>
       </div>
@@ -114,10 +114,11 @@
                 <th>Date</th>
                 <th>Room No.</th>
                 <th>Total Time</th>
+                <th>Status</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
+            <tbody id="tutorialHistorySlots">
+              <!-- <tr>
                 <td>1</td>
                 <td>Geryk Kean Barrot</td>
                 <td>Architecture</td>
@@ -138,7 +139,7 @@
                 <td>09/24/24</td>
                 <td>Q-9207</td>
                 <td>120 mins</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -334,7 +335,7 @@
           </div>
         </div>
         <div class="schedule-button">
-          <button class="course-of-tutorial-button" id="course-of-tutorial-button" onclick="openModal('tutor-time-availability-teachable-course-modal')">
+          <button class="course-of-tutorial-button" id="course-of-tutorial-button" onclick="openCoursesModal()">
             Teachable Course
           </button>
           <button class="edit-button" id="edit-button">
@@ -402,13 +403,17 @@
           <td></td>
         </tr>
         <tr>
+          <td>Tutorial Time:</td>
+          <td></td>
+        </tr>
+        <!-- <tr>
           <td>Tutorial Starting Time:</td>
           <td></td>
         </tr>
         <tr>
           <td>Tutorial Ending Time:</td>
           <td></td>
-        </tr>
+        </tr> -->
       </table>
       <div class="button-container">
         <button class="home-view-details-close-button" onclick="closeModal('tutor-home-view-details-modal')">
@@ -423,7 +428,7 @@
       <h3>Accept Tutorial</h3>
       <p>Are you sure you want to accept this tutorial?</p>
       <div class="button-container">
-        <button class="btn" onclick="closeModal('tutor-home-accept-modal')">
+        <button id="acceptButton" class="btn">
           Yes
         </button>
         <button class="tutor-home-accept-no-btn" onclick="closeModal('tutor-home-accept-modal')">
@@ -439,7 +444,7 @@
       <p>Provide a reason for denying this tutorial (optional):</p>
       <textarea rows="3" cols="50"></textarea>
       <div class="button-container">
-        <button class="btn" onclick="closeModal('tutor-home-deny-modal')">
+        <button id="denyButton" class="btn">
           Submit
         </button>
       </div>
@@ -452,7 +457,7 @@
       <p>Are you sure you want to cancel this tutorial?</p>
       <textarea rows="3" cols="50"></textarea>
       <div class="button-container">
-        <button class="btn" onclick="closeModal('tutor-home-cancel-modal')">
+        <button id="cancelButton" class="btn">
           Yes
         </button>
         <button class="tutor-home-cancel-no-btn" onclick="closeModal('tutor-home-cancel-modal')">
@@ -488,7 +493,7 @@
         </tr>
       </table>
       <div class="button-container">
-        <button class="btn complete-btn" onclick="closeModal('tutor-home-complete-modal')">Complete</button>
+        <button id="completeButton" class="btn complete-btn">Complete</button>
         <button class="btn tutor-home-complete-cancel-btn" onclick="closeModal('tutor-home-complete-modal')">Cancel</button>
       </div>
     </div>
@@ -499,8 +504,8 @@
       <h3>Teachable Course</h3>
       <p>Please choose the course/s that you prefer to teach.</p>
 
-      <div class="teachable-courses">
-        <input type="checkbox" id="course1" name="course1" value="Advanced-Engineering-Mathematics">
+      <div id="teachable-courses" class="teachable-courses">
+        <!-- <input type="checkbox" id="course1" name="course1" value="Advanced-Engineering-Mathematics">
         <label for="course1">Advanced Engineering Mathematics</label>
         <br>
 
@@ -510,14 +515,14 @@
 
         <input type="checkbox" id="course3" name="course3" value="calculus-2">
         <label for="course3">Calculus 2 (Integral Calculus)</label>
-        <br>
+        <br> -->
       </div>
       
       <div class="button-container">
-        <button class="btn" onclick="closeModal('tutor-home-cancel-modal')">
+        <button id="saveButtonCourses" class="btn">
           Save
         </button>
-        <button class="tutor-home-cancel-no-btn" onclick="closeModal('tutor-home-cancel-modal')">
+        <button id="cancelButtonCourses" class="tutor-home-cancel-no-btn">
           Cancel
         </button>
       </div>

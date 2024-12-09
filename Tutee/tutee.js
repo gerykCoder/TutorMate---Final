@@ -64,7 +64,7 @@ function loadRegistration(){
   //Tutor and Course Relationship
   fetch('/api/tutee/tutorial-registration')
   .then(res => res.json())
-  .then(({courses, tutors, firstName, lastName})=>{
+  .then(({courses, tutors, tuteeId, tuteeName, program})=>{
 
    const selectElementCourses = document.getElementById('course');
    const selectElementTutors = document.getElementById('tutor');
@@ -89,7 +89,7 @@ function loadRegistration(){
         // Populate tutors dropdown with filtered tutors
         filteredTutors.forEach(tutor => {
           const option = document.createElement('option');
-          option.value = `${tutor.firstName} ${tutor.lastName}`;
+          option.value = tutor.tutorId;
           option.textContent = `${tutor.firstName} ${tutor.lastName}`;
           selectElementTutors.appendChild(option);
         });
@@ -97,29 +97,36 @@ function loadRegistration(){
 
           const registerButton = document.getElementById('registration-tutorial-register-button');
           registerButton.addEventListener('click', async()=>{
-        
-            const tuteeAmount = document.getElementById('NoOfTutees').value;
-            const tutee = `${firstName} ${lastName}`;
+
+            reloadPage();
+            const tutorDropdown = document.getElementById('tutor');
+            const tutorId = tutorDropdown.value;
+            const selectedTutor = tutorDropdown.options[tutorDropdown.selectedIndex].textContent;
             const selectedCourse = document.getElementById('course').value;
-            const selectedTutor = document.getElementById('tutor').value;
             const topicsForTutorial = document.getElementById('topic').value;
+            const tuteeAmount = document.getElementById('NoOfTutees').value;
             const preferredDate = document.getElementById('date').value;
             const startingTime = document.getElementById('timeStart').value;
             const endingTime = document.getElementById('timeEnd').value;
             const time = `${startingTime} - ${endingTime}`;
         
             const registrationDetails= {
-        
-              noOfTutees: tuteeAmount,
+
+              tutorId: tutorId,
+              tuteeId: tuteeId,
+              status: 'Pending',
+              tutee: tuteeName,
+              program: program,
+              tutor: selectedTutor,
               course: selectedCourse,
               topics: topicsForTutorial,
+              noOfTutees: tuteeAmount,
               date: preferredDate,
               time: time,
-              tutee: tutee,
-              tutor: selectedTutor,
-              status: 'Pending'
+              
             };
-        try{
+
+        // try{
 
           const response = await fetch('/api/tutee/tutorial-registration', {
             method: 'POST',
@@ -135,12 +142,12 @@ function loadRegistration(){
               console.log('Tutorial successfully registered:', newTutorial);
               alert('Tutorial successfully registered!'); // Success alert
           }
-        }
-        catch (error){
-              console.error('Error during registration:', error);
-              alert('An unexpected error occurred. Please try again.'); // Generic error alert
+        // }
+        // catch (error){
+        //       console.error('Error during registration:', error);
+        //       alert('An unexpected error occurred. Please try again.'); // Generic error alert
 
-        }
+        // }
             
           });
       });
@@ -164,24 +171,24 @@ function loadPendingTutorials(){
                   ${tutorial.tutor}
                 </div>
                 <div class="pending-tutorial-right">
-                  <button class="view-details" onclick="openPendingModal(${tutorial.tutorialNo})"> 
+                  <button class="view-details" onclick="openPendingModal(${tutorial.id})"> 
                     View Details
                   </button>
-                  <i class="fa-solid fa-square-xmark" onclick="openModal('tutee-registration-delete-modal')"></i>
+                  <i class="fa-solid fa-square-xmark" onclick="openDeleteModal(${tutorial.id})"></i>
                 </div>`
       panel.appendChild(userDiv);
     });
-  })
+  });
 };
 
-function openPendingModal(tutorialNo){
+function openPendingModal(id){
 
   fetch('/api/tutee/tutorial-registration-pending-tutorials')
   .then(res=>res.json())
   .then(data => {
 
     console.log(data);
-    const tutorial = data.find(t=>t.tutorialNo === tutorialNo);
+    const tutorial = data.find(t=>t.id === id);
     const modal = document.getElementById('tutee-registration-view-details-modal');
     const rows = modal.querySelectorAll('.tutorial-details tr');
 
@@ -198,6 +205,117 @@ function openPendingModal(tutorialNo){
   });
 
 };
+
+function openDeleteModal(id){
+
+  const modal = document.getElementById('tutee-registration-delete-modal');
+  modal.addEventListener('click', deletePendingRegistration(id));
+
+  modal.style.display = 'block';
+};
+
+function deletePendingRegistration(id){
+
+  const deleteButton = document.getElementById('deleteButton');
+  deleteButton.addEventListener('click', ()=>{
+
+    window.location.reload();
+    fetch('/api/tutee/tutorial-registration-pending-tutorials',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+      })
+      .then(res=>res.json())
+      .then()
+  })
+};
+
+function loadScheduledTutorials(){
+
+  fetch('/api/tutee/tutorial-registration-scheduled-tutorials')
+  .then(res=>res.json())
+  .then(data=>{
+
+    const panel = document.getElementById('scheduledTutorials');
+    data.forEach(tutorial=>{
+
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('scheduled-tutorial');
+
+      userDiv.innerHTML = `
+                <div class="scheduled-tutorial-left">
+                  ${tutorial.tutor}
+                </div>
+                <div class="scheduled-tutorial-right">
+                  <button class="view-details" onclick="openScheduledModal(${tutorial.id})"> 
+                    View Details
+                  </button>
+                  <i class="fa-solid fa-square-xmark" onclick="openCancelModal(${tutorial.id})"></i>
+                </div> `;
+
+      panel.appendChild(userDiv);
+
+    })
+
+  })
+};
+
+function openScheduledModal(id){
+
+  fetch('/api/tutee/tutorial-registration-scheduled-tutorials')
+  .then(res=>res.json())
+  .then(data => {
+
+    console.log(data);
+    const tutorial = data.find(t=>t.id === id);
+    const modal = document.getElementById('tutee-registration-view-details-modal');
+    const rows = modal.querySelectorAll('.tutorial-details tr');
+
+      rows[0].children[1].textContent = tutorial.status;
+      rows[1].children[1].textContent = tutorial.tutor;
+      rows[2].children[1].textContent = tutorial.course;
+      rows[3].children[1].textContent = tutorial.topics;
+      rows[4].children[1].textContent = tutorial.noOfTutees;
+      rows[5].children[1].textContent = tutorial.date;
+      rows[6].children[1].textContent = tutorial.time;
+
+      modal.style.display = 'block';
+
+})
+};
+
+function openCancelModal(id){
+
+  const modal = document.getElementById('tutee-registration-cancel-modal');
+  modal.addEventListener('click', cancelScheduledRegistration(id));
+
+  modal.style.display = 'block';
+
+};
+
+function cancelScheduledRegistration(id){
+
+  const cancelButton = document.getElementById('cancelButton');
+  cancelButton.addEventListener('click', ()=>{
+
+    window.location.reload();
+
+    fetch('/api/tutee/tutorial-registration-cancel-scheduled-tutorials',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+      }
+     )
+  })
+}
+
+document.addEventListener('DOMContentLoaded', loadRegistration);
+document.addEventListener('DOMContentLoaded', loadPendingTutorials);
+document.addEventListener('DOMContentLoaded', loadScheduledTutorials);
+
+
 
 /********************** Time Registration *********************/
 

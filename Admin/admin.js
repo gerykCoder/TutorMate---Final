@@ -114,7 +114,7 @@ function loadPendingRegistrations(){
                   <button class="admin-home-view-details" onclick="showDetailsHomeModal(${user.userId})"> 
                     View Details
                   </button>
-                  <i id="check-button" class="fa-solid fa-square-check" onclick="openApprovalModal(${user.userId}, '${user.firstName}', '${user.lastName}', '${user.role}')"></i>
+                  <i id="check-button" class="fa-solid fa-square-check" onclick="openApprovalModal(${user.userId}, '${user.firstName}', '${user.lastName}', '${user.program}', '${user.role}')"></i>
                   <i id="x-button" class="fa-solid fa-square-xmark" onclick="openDenyModal(${user.userId})"></i>
                 </div>
       `;
@@ -324,13 +324,13 @@ function showDetailsRegisteredModalTutees(userId){
 };
 
 //Function for opening the approval modal
-function openApprovalModal(userId, firstName, lastName, role) {
+function openApprovalModal(userId, firstName, lastName, program, role) {
 
   const modal = document.getElementById('admin-home-check-modal');
 
   // Dynamically update the approve button's onclick handler
   const approveButton = modal.querySelector('.account-approval-approve-button');
-  approveButton.onclick = () => approveUser(userId, firstName, lastName, role);
+  approveButton.onclick = () => approveUser(userId, firstName, lastName, program, role);
 
   modal.style.display = 'block';
 };
@@ -361,13 +361,13 @@ function openBanModal(userId) {
 
 //Function for approving pending registrations
 
-function approveUser(userId, firstName, lastName, role) {
+function approveUser(userId, firstName, lastName, program, role) {
   reloadPage();
   document.getElementById("admin-home-check-modal").style.display = 'none';
   fetch('/admin/approve-pending-user', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({userId, firstName, lastName, role})
+    body: JSON.stringify({userId, firstName, lastName, program, role})
   })
   .then(res=>res.json())
   .then(data =>{
