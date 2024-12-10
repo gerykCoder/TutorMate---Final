@@ -395,7 +395,7 @@ function loadTutorialList(){
             userDiv.innerHTML = `
               <img class="perso-info-profile" src="/${tutor.profPic}" />
               <p class="perso-info-name">${tutor.firstName} ${tutor.lastName}</p>
-              <p class="perso-info-detail">Year: ${tutor.yearLvl} || ${tutor.program}</p>
+              <p class="perso-info-detail">${tutor.yearLvl} || ${tutor.program}</p>
               <button id="view-availability" onclick="openAvailabilityModal(${tutor.tutorId})">View Availability</button>
             `;
   

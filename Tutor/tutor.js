@@ -282,14 +282,25 @@ function completeScheduledRegistration(id){
 
   fetch('/api/tutor/tutorial-registration-scheduled-tutorials')
   .then(res=>res.json())
-  .then(({tutor, scheduledTutorials})=>{
+  .then(({tutor, scheduledTutorials, courses})=>{
+
+    const selectElementCourses = document.getElementById('courseDropdown');
+
+    courses.forEach(course=>{
+
+      const option = document.createElement('option');
+      option.value = course.course;
+      option.textContent = course.course;
+
+      selectElementCourses.appendChild(option);
+
+    });
 
     const completeButton = document.getElementById('completeButton');
     completeButton.addEventListener('click', ()=>{
 
-      window.location.reload();
       const tutorial = scheduledTutorials.find(t=>t.id === id);
-      const course = document.querySelector('input[name="course"]').value;
+      const course = document.querySelector('select[name="courseDropdown"]').value;
       const topic = document.querySelector('input[name="topic"]').value;
       const noOfTutees = document.querySelector('input[name="attendees"]').value;
       const roomNo = document.querySelector('input[name="room-number"]').value;
@@ -319,7 +330,8 @@ function completeScheduledRegistration(id){
         .then(res=>res.json())
         .then(
           alert('Tutorial Completed!')
-        );
+        )
+        window.location.reload();
   
     })
 
@@ -384,7 +396,6 @@ function loadAllTutorials(){
       const userDiv = document.createElement('tr');
       userDiv.innerHTML = `
 
-                <td>${tutorial.id}</td>
                 <td>${tutorial.tutee}</td>
                 <td>${tutorial.program}</td>
                 <td>${tutorial.course}</td>

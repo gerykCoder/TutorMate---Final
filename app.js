@@ -356,7 +356,6 @@ app.post('/admin/tutorial-session-cancel-tutorials', async(req, res)=>{
 
     await insertCancelledByAdminToAllTutorials(cancelDate);
     await deleteScheduledTutorialAdmin(cancelDate);
-    // await updateTutorialStatusToCancelled(cancelDate);
 
     res.redirect('/admin');
     
@@ -587,8 +586,9 @@ app.get('/api/tutor/tutorial-registration-scheduled-tutorials', async(req, res)=
     const {tutorId, firstName, lastName} = req.session.user;
     const tutor = `${firstName} ${lastName}`;
     const scheduledTutorials = await selectScheduledTutorialsTutor(tutorId);
+    const courses = await selectCourses();
 
-    res.json({tutor, scheduledTutorials});
+    res.json({tutor, scheduledTutorials, courses});
 
 });
 

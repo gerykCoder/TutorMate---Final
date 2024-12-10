@@ -105,7 +105,7 @@
           <table>
             <thead>
               <tr>
-                <th>No.</th>
+                <!-- <th>No.</th> -->
                 <th>Student</th>
                 <th>Program</th>
                 <th>Course</th>
@@ -473,7 +473,11 @@
       <table class="tutorial-details">
         <tr>
           <td>Course of Tutorial:</td>
-          <td><input type="text" name="course" /></td>
+          <td>
+            <select id="courseDropdown" name="courseDropdown">
+            <option value="" disabled selected>Please Select</option>
+          </select>
+        </td>
         </tr>
         <tr>
           <td>Topic/s:</td>

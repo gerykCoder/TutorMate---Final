@@ -488,10 +488,15 @@ function loadTutorialSessions() {
           if (!uniqueTutors.has(tutorial.tutor)) {
               uniqueTutors.add(tutorial.tutor);
 
-              const row = document.createElement('tr');
-
               // Check if the tutor has counts, otherwise default to 0
               const counts = countsMap[tutorial.tutor] || { pending_count: 0, scheduled_count: 0 };
+
+              // Skip tutors with both counts being zero
+              if (counts.pending_count === 0 && counts.scheduled_count === 0) {
+                return;
+              }
+
+              const row = document.createElement('tr');
 
               row.innerHTML = `
                   <td>${tutorial.tutor}</td>
@@ -628,7 +633,7 @@ function loadAllTutorials(){
                   <td>${tutorial.tutee}</td>
                   <td>${tutorial.program}</td>
                   <td>${tutorial.course}</td>
-                  <td>${tutorial.topic}</td>
+                  <td>${tutorial.topics}</td>
                   <td>${tutorial.noOfTutees}</td>
                   <td>${tutorial.date}</td>
                   <td>${tutorial.roomNo}</td>
