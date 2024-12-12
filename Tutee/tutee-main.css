@@ -10,6 +10,14 @@
   flex-wrap: wrap;
 }
 
+.mytabs .guidelines li{
+  margin-bottom: 10px;
+}
+
+.mytabs .announcement .important{
+  font-weight: bold;
+}
+
 .mytabs input[type="radio"] {
   display: none;
 }

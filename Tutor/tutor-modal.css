@@ -106,6 +106,20 @@
   color: black;
 }
 
+.modal .tutorial-details select{
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.modal .tutorial-details select:focus {
+  border-color: #3f3f3f;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
 /******************************** Tutorial Availability - Teachable Course ********************************/ 
 
 .teachable-courses{

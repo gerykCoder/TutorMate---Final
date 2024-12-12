@@ -103,11 +103,11 @@ function loadHomeCounts(){
     const cancelledPanel = document.getElementById('cancelledCountPanel');
     const accsForApprovalPanel = document.getElementById('forApprovalCountPanel');
 
-      pendingPanel.textContent = pendingOrScheduled.pending_count;
-      scheduledPanel.textContent = pendingOrScheduled.scheduled_count;
-      completedPanel.textContent = completedOrCancelled.completed_count;
-      cancelledPanel.textContent = completedOrCancelled.cancelled_count;
-      accsForApprovalPanel.textContent = accsForApproval.account_count;
+      pendingPanel.textContent = pendingOrScheduled.pending_count || 0;
+      scheduledPanel.textContent = pendingOrScheduled.scheduled_count || 0;
+      completedPanel.textContent = completedOrCancelled.completed_count || 0;
+      cancelledPanel.textContent = completedOrCancelled.cancelled_count || 0;
+      accsForApprovalPanel.textContent = accsForApproval.account_count || 0;
 
       const panel = document.getElementById('tutor-count-panel');
       tutorialPerTutor.forEach(tutor => {

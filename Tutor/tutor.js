@@ -99,7 +99,6 @@ function loadPendingTutorials(){
 
       userDiv.innerHTML = `
               <div class="pending-tutorial-left">
-                <i class="fa-solid fa-user"></i>
                 ${tutorial.tutee}
               </div>
               <div class="pending-tutorial-right">
@@ -227,7 +226,6 @@ function loadScheduledTutorials(){
 
       userDiv.innerHTML = `
               <div class="schedule-tutorials-left">
-                <i class="fa-solid fa-user"></i>
                 ${tutorial.tutee}
               </div>
               <div class="schedule-tutorials-right">

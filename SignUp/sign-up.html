@@ -30,11 +30,12 @@
         <input class="PersoInfoInput" type="text" name="lastName" placeholder="Last Name" required>
         <select class="PersoInfoInput dropdown" id="program" type="program" name="program" placeholder="Program" required></select>
         <select class="PersoInfoInput dropdown" id="yearLvl" type="yearLevel" name="yearLvl" placeholder="Year Level" required></select>
-        <input class="PersoInfoInput" type="tel" name="contactNo" placeholder="Contact Number" required>
+        <input class="PersoInfoInput" type="tel" id="contactNo" name="contactNo" placeholder="09XXX-XXX-XXXX" required>
+
       </div>
       <div class="Agreement">
         Already have an account? <a href="login.html">Log in!</a> <br>
-        <input type="checkbox"> I agree to the <a href="#" onclick="document.getElementById('terms-and-conditions-modal').style.display='block'">Terms and Conditions</a>
+        <input type="checkbox" required> I agree to the <a href="#" onclick="document.getElementById('terms-and-conditions-modal').style.display='block'">Terms and Conditions</a>
       </div>
     </div>
     <div class="RightSignUp">
@@ -42,7 +43,7 @@
         Note: Your registration will undergo verification by the admin which may take up to one day. Please monitor your gmail account for a notification confirming that your registration has been successfully completed.
       </div>
       <div class="SchoolInfo">
-        <input class="SchoolInfoInput" type="text" name="studentNo" placeholder="Student Number" required>
+        <input class="SchoolInfoInput" type="text" id="studentNo" name="studentNo" placeholder="Student Number" required>
         <input class="SchoolInfoInput" type="email" name="email" placeholder="TIP Email" required>
         <input class="SchoolInfoInput" type="password" name="password" placeholder="Password" required>
       </div>
@@ -50,11 +51,11 @@
         Profile Picture <br>
         <input type="file" id="profPic" name="profPic"><br><br>
         Registration Form (PDF File) <br>
-        <input type="file" id="regForm" name="regForm">
+        <input type="file" id="regForm" name="regForm" accept="application/pdf">
       </div>
       <div class="SelectRole">
         Select your role: <br>
-        <input type="radio" name="role" value="Tutee">
+        <input type="radio" name="role" value="Tutee" required>
         <label for="student">Student</label> <br>
         <input type="radio" name="role" value="Tutor">
         <label for="tutor">Tutor</label>
