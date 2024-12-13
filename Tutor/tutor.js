@@ -99,7 +99,7 @@ function loadPendingTutorials(){
 
       userDiv.innerHTML = `
               <div class="pending-tutorial-left">
-                ${tutorial.tutee}
+                ${tutorial.tutee} | ${tutorial.course}
               </div>
               <div class="pending-tutorial-right">
                 <button class="view-details" onclick="openPendingModal(${tutorial.id})"> 
@@ -226,7 +226,7 @@ function loadScheduledTutorials(){
 
       userDiv.innerHTML = `
               <div class="schedule-tutorials-left">
-                ${tutorial.tutee}
+                ${tutorial.tutee} | ${tutorial.course}
               </div>
               <div class="schedule-tutorials-right">
                 <button class="view-details" onclick="openScheduledModal(${tutorial.id})"> 
@@ -334,8 +334,6 @@ function completeScheduledRegistration(id){
     })
 
   })
-    
-
 };
 
 function openCancelModal(id){

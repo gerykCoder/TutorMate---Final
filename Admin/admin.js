@@ -491,11 +491,6 @@ function loadTutorialSessions() {
               // Check if the tutor has counts, otherwise default to 0
               const counts = countsMap[tutorial.tutor] || { pending_count: 0, scheduled_count: 0 };
 
-              // Skip tutors with both counts being zero
-              if (counts.pending_count === 0 && counts.scheduled_count === 0) {
-                return;
-              }
-
               const row = document.createElement('tr');
 
               row.innerHTML = `
