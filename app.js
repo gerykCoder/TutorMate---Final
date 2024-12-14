@@ -100,6 +100,18 @@ app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname+'/Login/login.html'));
 })
 
+//Logout Handler
+app.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).json({ message: 'Logout failed' });
+      }
+      res.clearCookie('connect.sid'); // Clear the session cookie
+      res.redirect('/');
+    });
+  });
+
 //POST request handler for Login Form
 app.post('/', async(req, res)=>{
 

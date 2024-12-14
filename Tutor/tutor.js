@@ -355,6 +355,7 @@ function cancelScheduledRegistration(id){
     const cancelledTutorial = {
 
       tutorId: tutorial.tutorId,
+      tutor: tutor,
       tutee: tutorial.tutee,
       program: tutorial.program,
       course: tutorial.course,

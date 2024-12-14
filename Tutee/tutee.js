@@ -122,6 +122,7 @@ function loadRegistration(){
           registerButton.addEventListener('click', async()=>{
 
             reloadPage();
+
             const tutorDropdown = document.getElementById('tutor');
             const tutorId = tutorDropdown.value;
             const selectedTutor = tutorDropdown.options[tutorDropdown.selectedIndex].textContent;
@@ -327,6 +328,7 @@ function cancelScheduledRegistration(id){
       const cancelledTutorial = {
   
         tutorId: tutorial.tutorId,
+        tutor: tutorial.tutor,
         tutee: tutorial.tutee,
         program: tutorial.program,
         course: tutorial.course,
@@ -355,11 +357,11 @@ function cancelScheduledRegistration(id){
     });
 };
 
-function loadTutorialList(){
+function loadTutorialList() {
 
   fetch('/api/tutee/tutorial-list-of-tutors')
-  .then(res=>res.json())
-  .then(({courses, tutors})=>{
+  .then(res => res.json())
+  .then(({courses, tutors}) => {
 
     const selectElementCourses = document.getElementById('courseDropdown');
     const searchBar = document.getElementById('searchBar');
@@ -368,60 +370,76 @@ function loadTutorialList(){
 
     let filteredTutors = tutors;
 
-      // Function to filter tutors based on the selected course and search query
-      function filterTutors() {
-        const searchQuery = searchBar.value.trim().toLowerCase();
-        const selectedCourse = selectElementCourses.value;
+    // Function to filter tutors based on the selected course and search query
+    function filterTutors() {
+      const searchQuery = searchBar.value.trim().toLowerCase();
+      const selectedCourse = selectElementCourses.value;
 
-        // Filter by course and search query
-        filteredTutors = tutors.filter(tutor => {
-          const tutorCourses = tutor.coursesHandled.split(', ').map(course => course.trim());
-          const matchesCourse = selectedCourse ? tutorCourses.includes(selectedCourse) : true;
-          const matchesSearch = tutor.firstName.toLowerCase().includes(searchQuery) || tutor.lastName.toLowerCase().includes(searchQuery);
-          return matchesCourse && matchesSearch;
-        });
+      // Filter by course and search query
+      filteredTutors = tutors.filter(tutor => {
+        const tutorCourses = tutor.coursesHandled.split(', ').map(course => course.trim());
+        const matchesCourse = selectedCourse ? tutorCourses.includes(selectedCourse) : true; // Empty string matches all courses
+        const matchesSearch = tutor.firstName.toLowerCase().includes(searchQuery) || tutor.lastName.toLowerCase().includes(searchQuery);
+        return matchesCourse && matchesSearch;
+      });
 
-        // Render the filtered tutors
-        renderTutors(filteredTutors);
+      // Render the filtered tutors
+      renderTutors(filteredTutors);
+    }
+
+    // Function to render tutors in the container
+    function renderTutors(tutorsList) {
+      container.innerHTML = ''; // Clear the current list
+      tutorsList.forEach(tutor => {
+        const userDiv = document.createElement('div');
+        userDiv.classList.add('perso-info');
+
+        userDiv.innerHTML = `
+          <img class="perso-info-profile" src="/${tutor.profPic}" />
+          <p class="perso-info-name">${tutor.firstName} ${tutor.lastName}</p>
+          <p class="perso-info-detail">${tutor.yearLvl} || ${tutor.program}</p>
+          <button id="view-availability" onclick="openAvailabilityModal(${tutor.tutorId})">View Availability</button>
+        `;
+
+        container.appendChild(userDiv);
+      });
+    }
+
+    // Event listener for course dropdown change
+    selectElementCourses.addEventListener('change', filterTutors);
+
+    // Event listener for search button click
+    searchBtn.addEventListener('click', filterTutors);
+
+    // Event listener for Enter key in the search bar
+    searchBar.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        filterTutors();
       }
+    });
 
-        // Function to render tutors in the container
-        function renderTutors(tutorsList) {
-          container.innerHTML = ''; // Clear the current list
-          tutorsList.forEach(tutor => {
-            const userDiv = document.createElement('div');
-            userDiv.classList.add('perso-info');
-  
-            userDiv.innerHTML = `
-              <img class="perso-info-profile" src="/${tutor.profPic}" />
-              <p class="perso-info-name">${tutor.firstName} ${tutor.lastName}</p>
-              <p class="perso-info-detail">${tutor.yearLvl} || ${tutor.program}</p>
-              <button id="view-availability" onclick="openAvailabilityModal(${tutor.tutorId})">View Availability</button>
-            `;
-  
-            container.appendChild(userDiv);
-          });
-        }
-  
-        // Event listener for course dropdown change
-        selectElementCourses.addEventListener('change', filterTutors);
-  
-        // Event listener for search button click
-        searchBtn.addEventListener('click', filterTutors);
-  
-        // Initial rendering of tutors
-        renderTutors(filteredTutors);
-        
-        // Add courses to the dropdown
-        courses.forEach(course => {
-          const option = document.createElement('option');
-          option.value = course.course;
-          option.textContent = course.course;
-          selectElementCourses.appendChild(option);
-        });
-      })
+    // Initial rendering of tutors
+    renderTutors(filteredTutors);
 
-  };
+    // Add "All" option to the dropdown
+    const allOption = document.createElement('option');
+    allOption.value = ''; // Value is empty string to represent "All"
+    allOption.textContent = 'All';
+    selectElementCourses.appendChild(allOption);
+
+    // Add courses to the dropdown
+    courses.forEach(course => {
+      const option = document.createElement('option');
+      option.value = course.course;
+      option.textContent = course.course;
+      selectElementCourses.appendChild(option);
+    });
+
+    // Set default selection to "All"
+    selectElementCourses.value = '';
+  });
+
+};
 
 function openAvailabilityModal(tutorId){
 
